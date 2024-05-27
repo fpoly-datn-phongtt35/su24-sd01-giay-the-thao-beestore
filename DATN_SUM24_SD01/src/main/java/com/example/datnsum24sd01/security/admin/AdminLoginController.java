@@ -1,6 +1,5 @@
-package com.example.datnsum24sd01.controller.security.admin;
+package com.example.datnsum24sd01.security.admin;
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

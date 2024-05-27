@@ -11,14 +11,10 @@ public class ChiTietSanPhamCustomerController {
 
 
 
-    @GetMapping("/cua-hang")
-    public String getAllShopCustomer(Model model)  {
-      return "customer-template/shop";
-        }
 
     @GetMapping("/trang-chu")
-    public String get3TrangChuCustomer(Model model) {
-       return "customer-template/index";
+    public String gettrangchu(Model model) {
+       return "customer-template/trangchu";
     }
 
 
