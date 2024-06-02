@@ -302,7 +302,7 @@
                                     <td th:text="${pgg.ten}"></td>
                                     <td style="width: 25px" th:text="${pgg.mucGiamGia + '%'}"></td>
                                     <td>
-                                        <!--                                        </validate so tien vnd >-->
+
                                         <span th:if="${pgg.mucGiamToiDa == null}">không giới hạn</span>
                                         <span th:if="${pgg.mucGiamToiDa != null}"
                                               th:text="${#numbers.formatDecimal(pgg.mucGiamToiDa, 0, 'POINT', 0, 'COMMA') + ' VND'}"></span>
