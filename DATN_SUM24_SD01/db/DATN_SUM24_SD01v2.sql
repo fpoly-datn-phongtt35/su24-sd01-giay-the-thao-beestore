@@ -1,5 +1,5 @@
-Create Database DATN_SUM26_SD01;
-use DATN_SUM26_SD01;
+Create Database DATN_SUM24_SD01;
+use DATN_SUM24_SD01;
 
 -- 1. Nhà Cung Cấp
 create table nha_cung_cap
