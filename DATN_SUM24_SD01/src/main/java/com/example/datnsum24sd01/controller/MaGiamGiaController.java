@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,7 +40,13 @@ public class MaGiamGiaController {
         return "admin-template/ma_giam_gia/ma_giam_gia";
     }
 
-
+    @GetMapping("/deletepgg/{id}")
+    public String deletepgg(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        String noti =
+               service.delete(id);
+        redirectAttributes.addFlashAttribute("deleteMessage", noti);
+        return "redirect:/admin/ma-giam-gia";
+    }
     @GetMapping("/view-add")
     public String viewAdd(@ModelAttribute("phieuGiamGia") PhieuGiamGiaRequest phieuGiamGiaRequest,
                           Model model) {

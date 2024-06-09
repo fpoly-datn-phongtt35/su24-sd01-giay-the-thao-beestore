@@ -6,6 +6,7 @@ import com.example.datnsum24sd01.request.PhieuGiamGiaRequest;
 import com.example.datnsum24sd01.responsitory.PhieuGiamGiaResponsitory;
 import com.example.datnsum24sd01.service.PhieuGiamGiaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,20 +40,24 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
-    public void updateTrangThai() {
-        responsitory.updateTrangThaiDangHoatDong();
-        responsitory.updateTrangThaiDungHoatDong1();
-        responsitory.updateTrangThaiDungHoatDong2();
-        responsitory.updateTrangThaiSapDienRa();
+    public String delete(Long id) {
+        String noti = "";
+        try {
+            responsitory.deleteById(id);
+            noti = "Thành Công!";
+        } catch (DataIntegrityViolationException e) {
+
+        }
+        return noti;
     }
+
 
     @Override
     public PhieuGiamGia add(PhieuGiamGiaRequest phieuGiamGiaRequest) {
         PhieuGiamGia pgg = new PhieuGiamGia();
         LocalDateTime time = LocalDateTime.now();
-        String ma = "PGG" + String.valueOf(time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() ;
+        String ma = "BEESTORE" + String.valueOf( time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() ;
         pgg.setMa(ma);
         pgg.setTen(phieuGiamGiaRequest.getTen());
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
@@ -111,6 +116,13 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
             phieuGiamGia.setTrangThai(TrangThaiPhieuKhuyenMai.DANG_DIEN_RA);
             responsitory.save(phieuGiamGia);
         }
+    }
+    @Override
+    public void updateTrangThai() {
+        responsitory.updateTrangThaiDangHoatDong();
+        responsitory.updateTrangThaiDungHoatDong1();
+        responsitory.updateTrangThaiDungHoatDong2();
+        responsitory.updateTrangThaiSapDienRa();
     }
 
     @Override

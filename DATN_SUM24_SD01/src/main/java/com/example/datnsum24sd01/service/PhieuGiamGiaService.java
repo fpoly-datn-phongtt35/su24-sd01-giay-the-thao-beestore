@@ -14,7 +14,7 @@ public interface PhieuGiamGiaService {
     List<PhieuGiamGia> getListHoatDong();
 
     List<PhieuGiamGia> getByTrangThai(TrangThaiPhieuKhuyenMai trangThaiKhuyenMai);
-
+    String delete(Long id);
     void updateTrangThai();
 
     PhieuGiamGia add(PhieuGiamGiaRequest phieuGiamGiaRequest);

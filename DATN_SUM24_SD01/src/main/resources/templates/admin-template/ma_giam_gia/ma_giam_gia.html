@@ -317,13 +317,17 @@
                                         <a th:href="@{'/admin/ma-giam-gia/view-update/' + ${pgg.id}}">
                                             <i class="fa fa-fa fa-eye" style="font-size: 13px"></i>
                                         </a>
-                                        <label class="switch">
-                                            <input type="checkbox"
-                                                   th:checked="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"
-                                                   th:onchange="return confirmToggle(this.checked)"
-                                                   th:onclick="window.location.href='@{${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') ? '/admin/ma-giam-gia/bat/' + pgg.id : '/admin/ma-giam-gia/huy/' + pgg.id}}'">
-                                            <span class="slider"></span>
-                                        </label>
+                                        <a th:href="@{'/admin/ma-giam-gia/deletepgg/' + ${pgg.id}}"
+                                           onclick="return confirm(' Bạn Chắc Chắn Muốn Xóa Mã Giảm Giá  Này Chứ ?')">
+                                            <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;">
+                                        </a>
+<!--                                        <label class="switch">-->
+<!--                                            <input type="checkbox"-->
+<!--                                                   th:checked="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
+<!--                                                   th:onchange="return confirmToggle(this.checked)"-->
+<!--                                                   th:onclick="window.location.href='@{${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') ? '/admin/ma-giam-gia/bat/' + pgg.id : '/admin/ma-giam-gia/huy/' + pgg.id}}'">-->
+<!--                                            <span class="slider"></span>-->
+<!--                                        </label>-->
 <!--                                        </test thử tắt bật bằng 1 nút>-->
 
                                         <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}"
