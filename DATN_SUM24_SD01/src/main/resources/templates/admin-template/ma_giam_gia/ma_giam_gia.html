@@ -258,9 +258,9 @@
 
 <p></p>
                     <ul class="nav nav-tabs">
-                        <button class="">
-                            <a href="/admin/ma-giam-gia">Tất Cả</a>
-                        </button>
+<!--                        <button class="">-->
+<!--                            <a href="/admin/ma-giam-gia">Tất Cả</a>-->
+<!--                        </button>-->
                         <li class="" th:each="tt : ${listTrangThai}">
                             <button th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
                                     data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">

@@ -52,7 +52,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
     public PhieuGiamGia add(PhieuGiamGiaRequest phieuGiamGiaRequest) {
         PhieuGiamGia pgg = new PhieuGiamGia();
         LocalDateTime time = LocalDateTime.now();
-        String ma = "PGG" + String.valueOf(time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
+        String ma = "PGG" + String.valueOf(time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() ;
         pgg.setMa(ma);
         pgg.setTen(phieuGiamGiaRequest.getTen());
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
