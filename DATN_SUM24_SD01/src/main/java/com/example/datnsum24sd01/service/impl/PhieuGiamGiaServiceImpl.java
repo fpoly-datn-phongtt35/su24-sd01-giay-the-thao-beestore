@@ -57,14 +57,14 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
     public PhieuGiamGia add(PhieuGiamGiaRequest phieuGiamGiaRequest) {
         PhieuGiamGia pgg = new PhieuGiamGia();
         LocalDateTime time = LocalDateTime.now();
-        String ma = "BEESTORE" + String.valueOf( time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() ;
+        //tự gen mã pgg mặc định BEESTORE+NGÀY THÁNG NĂM GIỜ PHÚT
+        String ma = "BEESTORE" + String.valueOf( time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() +time.getHour()+time.getMinute()+time.getSecond() ;
         pgg.setMa(ma);
         pgg.setTen(phieuGiamGiaRequest.getTen());
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
         pgg.setMucGiamToiDa(phieuGiamGiaRequest.getMucGiamToiDa());
-        pgg.setNgayTao(LocalDate.now());
-        pgg.setNgaySua(LocalDate.now());
+        pgg.setNgayTao(LocalDateTime.now());
         pgg.setSoLuong(phieuGiamGiaRequest.getSoLuong());
         pgg.setGiaTriDonHang(phieuGiamGiaRequest.getGiaTriDonHang());
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());
@@ -91,7 +91,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
         pgg.setMucGiamToiDa(phieuGiamGiaRequest.getMucGiamToiDa());
-        pgg.setNgaySua(LocalDate.now());
+        pgg.setNgaySua(LocalDateTime.now());
         pgg.setSoLuong(phieuGiamGiaRequest.getSoLuong());
         pgg.setGiaTriDonHang(phieuGiamGiaRequest.getGiaTriDonHang());
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());

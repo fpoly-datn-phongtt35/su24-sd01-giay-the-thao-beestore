@@ -17,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static jakarta.persistence.EnumType.ORDINAL;
 
@@ -40,10 +41,10 @@ public class PhieuGiamGia {
     private String ten;
 
     @Column(name = "ngay_tao")
-    private LocalDate ngayTao;
+    private LocalDateTime ngayTao;
 
     @Column(name = "ngay_sua")
-    private LocalDate ngaySua;
+    private LocalDateTime ngaySua;
 
     @Column(name = "mo_ta")
     private String moTa;
