@@ -257,17 +257,17 @@
                 </div>
 
 <p></p>
-                    <ul class="nav nav-tabs">
-<!--                        <button class="">-->
-<!--                            <a href="/admin/ma-giam-gia">Tất Cả</a>-->
-<!--                        </button>-->
-                        <li class="" th:each="tt : ${listTrangThai}">
-                            <button th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
-                                    data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">
-                                <a th:href="@{/admin/ma-giam-gia/trang-thai/{status}(status=${tt})}"
-                                   th:text="${tt.getDisplayName()}"></a>
-                            </button>
-                        </li>
+                    <ul style=" margin-left: 600px" class="nav tabs">
+
+                            <li  th:each="tt : ${listTrangThai}">
+                                <button  th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
+                                        data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">
+                                    <a th:href="@{/admin/ma-giam-gia/trang-thai/{status}(status=${tt})}"
+                                       th:text="${tt.getDisplayName()}"></a>
+                                </button>
+                            </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -280,8 +280,8 @@
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th hidden>STT</th>
-                                    <th style="width: 25px">Id</th>
+                                    <th >STT</th>
+<!--                                    <th style="width: 25px">Id</th>-->
                                     <th>Mã</th>
                                     <th>Tên</th>
                                     <th style="width: 25px">Mức giảm</th>
@@ -296,8 +296,8 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="pgg, state : ${listMaGiam}">
-                                    <td hidden th:text="${state.index}"></td>
-                                    <td style="width: 25px" th:text="${pgg.id}"></td>
+                                    <td th:text="${state.index+1}"></td>
+<!--                                    <td style="width: 25px" th:text="${pgg.id}"></td>-->
                                     <td th:text="${pgg.ma}"></td>
                                     <td th:text="${pgg.ten}"></td>
                                     <td style="width: 25px" th:text="${pgg.mucGiamGia + '%'}"></td>
@@ -330,22 +330,53 @@
 <!--                                        </label>-->
 <!--                                        </test thử tắt bật bằng 1 nút>-->
 
-                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}"
+<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}"-->
+<!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
+<!--                                           onclick="return confirm('Bạn  Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+<!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
+<!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
+<!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
+<!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+<!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
+<!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+
+
+                                        <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
+                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
                                            th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"
-                                           onclick="return confirm('Bạn  Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">
-                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>
+                                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">
+                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
                                         </a>
+
+                                        <!-- Icon indicating the discount coupon is stopped -->
                                         <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">
-                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>
+                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
                                         </a>
-                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"
+
+                                        <!-- Link to start the discount coupon if it is not active and not upcoming -->
+                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
                                            th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"
                                            onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">
-                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>
+                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
                                         </a>
+
+                                        <!-- Icon indicating the discount coupon is active -->
                                         <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">
-                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>
+                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
                                         </a>
+
+                                        <!-- Icon indicating the discount coupon is upcoming -->
+                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">
+                                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>
+                                        </a>
+
                                     </td>
 
                                 </tr>
@@ -414,7 +445,7 @@
 
             return false;
         } else {
-            document.getElementById('errorMessageDate').innerHTML = ''; // Xóa thông báo lỗi nếu đã được hiển thị
+            document.getElementById('errorMessageDate').innerHTML = '';
             return true;
         }
     }

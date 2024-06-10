@@ -55,21 +55,39 @@ public class PhieuGiamGiaRequest {
     private LocalDate ngayKetThuc;
 
     private TrangThaiPhieuKhuyenMai trangThai;
-
-    public  TrangThaiPhieuKhuyenMai htTrangThai() {
-        LocalDate DaysAgo = this.ngayBatDau.minusDays(4);
-        if (LocalDate.now().isEqual(ngayBatDau)) {
-            return  TrangThaiPhieuKhuyenMai.DANG_DIEN_RA;
-        } else if (LocalDate.now().isAfter(DaysAgo) && LocalDate.now().isBefore(ngayBatDau)) {
-            return  TrangThaiPhieuKhuyenMai.SAP_DIEN_RA;
-        } else if (ngayBatDau.isAfter(LocalDate.now())) {
-            return  TrangThaiPhieuKhuyenMai.DA_KET_THUC;
-        } else if (ngayKetThuc.isBefore(LocalDate.now())) {
-            return  TrangThaiPhieuKhuyenMai.DA_KET_THUC;
-        } else if(soLuong == 0){
-            return  TrangThaiPhieuKhuyenMai.DA_KET_THUC;
+    public TrangThaiPhieuKhuyenMai htTrangThai() {
+        LocalDate now = LocalDate.now();
+        //kiểm tra trạng SAP_DIEN_RAthái nếu ngày hiện tại cách ngày bắt đầu trong vòng 4 ngày.
+        LocalDate daysAgo = this.ngayBatDau.minusDays(4);
+//        kiểm tra xem ngày hiện tại có phải là ngày bắt đầu chương trình khuyến mãi hay không hoặc bất kỳ ngày nào trong thời gian khuyến mãi
+        if (now.isEqual(ngayBatDau) || (now.isAfter(ngayBatDau) && now.isBefore(ngayKetThuc.plusDays(1)))) {
+            return TrangThaiPhieuKhuyenMai.DANG_DIEN_RA;
+        } else if (now.isAfter(daysAgo) && now.isBefore(ngayBatDau)) {
+            return TrangThaiPhieuKhuyenMai.SAP_DIEN_RA;
+            //kiểm tra trạng DA_KET_THUCthái nếu ngày kết thúc khuyến mãi đã qua hoặc số lượng bằng 0.
+        } else if (now.isAfter(ngayKetThuc) || soLuong == 0) {
+            return TrangThaiPhieuKhuyenMai.DA_KET_THUC;
+        } else if (ngayBatDau.isAfter(now)) {
+            return TrangThaiPhieuKhuyenMai.SAP_DIEN_RA;  // Assuming there is a status for "not started yet"
         } else {
-            return  TrangThaiPhieuKhuyenMai.DANG_DIEN_RA;
+            return TrangThaiPhieuKhuyenMai.DA_KET_THUC;
         }
     }
+//    public  TrangThaiPhieuKhuyenMai htTrangThai() {
+//        LocalDate DaysAgo = this.ngayBatDau.minusDays(4);
+//        if (LocalDate.now().isEqual(ngayBatDau)) {
+//            return  TrangThaiPhieuKhuyenMai.DANG_DIEN_RA;
+//        } else if (LocalDate.now().isAfter(DaysAgo) && LocalDate.now().isBefore(ngayBatDau)) {
+//            return  TrangThaiPhieuKhuyenMai.SAP_DIEN_RA;
+//        } else if (ngayBatDau.isAfter(LocalDate.now())) {
+//            return  TrangThaiPhieuKhuyenMai.DA_KET_THUC;
+//        } else if (ngayKetThuc.isBefore(LocalDate.now())) {
+//            return  TrangThaiPhieuKhuyenMai.DA_KET_THUC;
+//        } else if(soLuong == 0){
+//            return  TrangThaiPhieuKhuyenMai.DA_KET_THUC;
+//        } else {
+//            return  TrangThaiPhieuKhuyenMai.DANG_DIEN_RA;
+//        }
+//    }
 }
+
