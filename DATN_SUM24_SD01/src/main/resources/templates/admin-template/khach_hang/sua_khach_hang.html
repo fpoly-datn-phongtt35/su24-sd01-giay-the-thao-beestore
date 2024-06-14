@@ -114,71 +114,182 @@
         <!-- Navbar End -->
 
         <div class="container-fluid pt-4">
-            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết  Khách Hàng</h6>
+            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Khách Hàng</h6>
             <div class="bg-light rounded p-4 row" style="width: 98%; margin-right: 1%; margin-left: 1%;">
                 <div class="col-md-6" style="width:55%; margin-bottom: 20px;">
-                    <form th:action="@{/admin/khach-hang/update}" method="post">
+                    <form th:action="@{'/admin/khach-hang/update/' + ${khachHang.id}}" th:object="${khachHang}" method="post"
+                          onsubmit="return validateForm()">
+                        <input type="hidden" name="id" th:value="${khachHang.id}" />
 
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Mã Khách Hàng</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"  readonly/>
+                            <label for="ma" class="form-label">Mã Khách Hàng</label>
+                            <input type="text" class="form-control" id="ma" th:value="${khachHang.ma}" disabled />
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword11" class="form-label">Họ Và Tên</label>
-                            <input type="text" class="form-control" id="exampleInputPassword11" />
 
-                        </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword12" class="form-label">Số Điện Thoại</label>
-                            <input type="text" class="form-control" id="exampleInputPassword12" />
+                            <label for="ten" class="form-label">Họ Và Tên</label>
+                            <input type="text" class="form-control" id="ten" name="ten" th:value="${khachHang.ten}" />
+                            <div id="tenError" class="text-danger"></div>
+                        </div>
 
-                            </div>
-                        </div>
                         <div class="mb-3">
-                            <label class="form-label">Giới Tính</label>
+                            <label class="form-label">Giới Tính:</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gioiTinh" id="namRadio" value="NAM"
-                                       />
+                                <input class="form-check-input" type="radio" id="namRadio" th:field="*{gioiTinh}" value="1"
+                                       th:checked="${khachHang.gioiTinh == 1}" />
                                 <label class="form-check-label" for="namRadio">Nam</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gioiTinh" id="nuRadio" value="NU"
-                                       />
+                                <input class="form-check-input" type="radio" id="nuRadio" th:field="*{gioiTinh}" value="0"
+                                       th:checked="${khachHang.gioiTinh == 0}" />
                                 <label class="form-check-label" for="nuRadio">Nữ</label>
                             </div>
                         </div>
+
                         <div class="mb-3">
-                            <label for="exampleInputPassword13" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="exampleInputPassword13"  readonly/>
+                            <label for="sdt" class="form-label">Số Điện Thoại</label>
+                            <input type="text" class="form-control" id="sdt" name="sdt" th:value="${khachHang.sdt}" onchange="checkSdt()"/>
+                            <div id="sdtError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Trạng Thái</label>
+                            <label for="ngaySinh" class="form-label">Ngày sinh</label>
+                            <input type="text" class="form-control" id="ngaySinh" name="ngaySinh"
+                                   th:value="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}" />
+                            <div id="ngaySinhError" class="text-danger"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" th:value="${khachHang.email}"  onchange="checkEmail()"/>
+                            <div id="emailError" class="text-danger"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="matKhau" class="form-label">Mật khẩu</label>
+                            <input type="text" class="form-control" id="matKhau" name="matKhau" th:value="${khachHang.matKhau}" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ngayTao" class="form-label">Ngày tạo</label>
+                            <input type="text" class="form-control" id="ngayTao" name="ngayTao"
+                                   th:value="${#dates.format(khachHang.ngayTao, 'dd/MM/yyyy')}" disabled />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ngaySua" class="form-label">Ngày Sửa Gần Nhất</label>
+                            <input type="text" class="form-control" id="ngaySua" name="ngaySua"
+                                   th:value="${#dates.format(khachHang.ngaySua, 'dd/MM/yyyy')}" disabled />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tichDiem" class="form-label">Tích điểm</label>
+                            <input type="text" class="form-control" id="tichDiem" name="tichDiem" th:value="${khachHang.tichDiem}" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Trạng Thái:</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="trangThai" id="hoatDongRadio"
-                                       value="DANG_HOAT_DONG" />
-                                <label class="form-check-label" for="hoatDongRadio">Đang Hoạt Động</label>
+                                <input class="form-check-input" type="radio" id="hoatDongRadio" th:field="*{trangThai}" value="1"
+                                       th:checked="*{trangThai == 1}" />
+                                <label class="form-check-label" for="hoatDongRadio">Hoạt Động</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="trangThai" id="ngungHoatDongRadio"
-                                       value="DUNG_HOAT_DONG"/>
-                                <label class="form-check-label" for="ngungHoatDongRadio">Dừng Hoạt Động</label>
+                                <input class="form-check-input" type="radio" id="khongHoatDongRadio" th:field="*{trangThai}"
+                                       value="0" th:checked="*{trangThai == 0}" />
+                                <label class="form-check-label" for="khongHoatDongRadio">Không Hoạt Động</label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary " >
-                            Sửa Khách Hàng
+
+                        <a href="/admin/khach-hang" class="btn btn-success">Quay Lại</a>
+
+                        <button type="submit" class="btn btn-primary"
+                                onclick="return confirm('bạn xác nhận muốn sửa thông tin khách hàng chứ?')">
+                            Lưu
                         </button>
+
                     </form>
                 </div>
-
-
             </div>
-            <!-- Recent Sales End -->
         </div>
 
+        <script>
 
-         </div>
+
+            function validateForm() {
+                var ten = document.getElementById("ten").value;
+                var sdt = document.getElementById("sdt").value;
+                var ngaySinh = document.getElementById("ngaySinh").value;
+                var email = document.getElementById("email").value;
+
+                var tenError = document.getElementById("tenError");
+                var sdtError = document.getElementById("sdtError");
+                var ngaySinhError = document.getElementById("ngaySinhError");
+                var emailError = document.getElementById("emailError");
+
+                tenError.textContent = "";
+                sdtError.textContent = "";
+                ngaySinhError.textContent= "";
+                emailError.textContent = "";
+
+                var isValid = true;
+
+                if (ten.trim() === "") {
+                    tenError.textContent = "Họ và tên không được để trống";
+                    isValid = false;
+                }
+
+                if (sdt.trim() === "") {
+                    sdtError.textContent = "Số điện thoại không được để trống";
+                    isValid = false;
+                } else if (!isValidPhoneNumber(sdt)) {
+                    sdtError.textContent = "Số điện thoại không hợp lệ";
+                    isValid = false;
+                }
+
+                if (ngaySinh.trim() === "") {
+                    ngaySinhError.textContent = "Ngày sinh không được để trống";
+                    isValid = false;
+                } else if (!isValidDate(ngaySinh)) {
+                    ngaySinhError.textContent = "Ngày sinh không hợp lệ";
+                    isValid = false;
+                }
+
+                if (email.trim() === "") {
+                    emailError.textContent = "Email không được để trống";
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    emailError.textContent = "Email không hợp lệ";
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            function isValidPhoneNumber(phoneNumber) {
+                // Kiểm tra định dạng số điện thoại bằng biểu thức chính quy
+                var phonePattern = /^\d{10,11}$/;
+                return phonePattern.test(phoneNumber);
+            }
+
+            function isValidEmail(email) {
+                // Kiểm tra định dạng email bằng biểu thức chính quy
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailPattern.test(email);
+            }
+
+            function isValidDate(dateString) {
+                // Kiểm tra định dạng ngày tháng bằng biểu thức chính quy
+                var datePattern = /^(0?[1-9]|[12]\d|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
+                return datePattern.test(dateString);
+            }
+        </script>
+
+                <!-- Recent Sales End -->
+    </div>
+
+
+</div>
 </div>
 
 

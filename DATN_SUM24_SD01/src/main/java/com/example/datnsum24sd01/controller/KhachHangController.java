@@ -1,33 +1,86 @@
 package com.example.datnsum24sd01.controller;
 
+import com.example.datnsum24sd01.entity.KhachHang;
+import com.example.datnsum24sd01.request.KhachHangRequest;
+import com.example.datnsum24sd01.service.KhachHangService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/khach-hang")
 public class KhachHangController {
 
+    @Autowired
+    private KhachHangService khachHangService;
 
-
-    @GetMapping
+    @GetMapping()
     public String getAll(Model model) {
-      return "admin-template/khach_hang/khach_hang";
+        List<KhachHang> khachHangList = khachHangService.getAll();
+        model.addAttribute("list", khachHangList);
+        return "admin-template/khach_hang/khach_hang";
     }
 
-
-
-    @GetMapping("/view-update")
-    public String viewUpdate( Model model) {
-         return "admin-template/khach_hang/sua_khach_hang";
+    @GetMapping("/view-update/{id}")
+    public String viewUpdate(Model model, @PathVariable Integer id) {
+        KhachHang khachHang = khachHangService.getOne(id);
+        if (khachHang == null) {
+            return "redirect:/admin/khach-hang";
+        }
+        model.addAttribute("khachHang", khachHang);
+        return "admin-template/khach_hang/sua_khach_hang";
     }
 
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
-     return "admin-template/khach_hang/them_khach_hang";
+        model.addAttribute("newKhachHang", new KhachHangRequest());
+        return "admin-template/khach_hang/them_khach_hang";
     }
 
+    @PostMapping("/add")
+    public String add(@Valid @ModelAttribute("newKhachHang") KhachHangRequest khachHangRequest, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "admin-template/khach_hang/them_khach_hang";
+        }
+        khachHangService.add(khachHangRequest);
+        return "redirect:/admin/khach-hang";
+    }
 
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("khachHang") KhachHang khachHang, BindingResult result, Model model) {
+        KhachHang updatedKhachHang = khachHangService.update(khachHang);
+        if (updatedKhachHang != null) {
+            return "redirect:/admin/khach-hang";
+        } else {
+            model.addAttribute("error", "Khách hàng không tồn tại.");
+            return "admin-template/khach_hang/sua_khach_hang";
+        }
 
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        String noti = khachHangService.delete(id);
+        redirectAttributes.addFlashAttribute("deleteMessage", noti);
+        return "redirect:/admin/khach-hang";
+    }
+
+    @GetMapping("/sdt/{sdt}")
+    public ResponseEntity<Boolean> checkSdtDuplicate(@PathVariable String sdt) {
+        boolean exists = khachHangService.checkSdtDuplicate(sdt);
+        return ResponseEntity.ok(exists);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email) {
+        boolean exists = khachHangService.checkEmailDuplicate(email);
+        return ResponseEntity.ok(exists);
+    }
 }

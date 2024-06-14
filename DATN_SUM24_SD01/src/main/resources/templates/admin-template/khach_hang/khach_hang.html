@@ -207,10 +207,11 @@
             </div>
             <div class="create" style="width: 20%;">
                 <button type="submit" class="btn btn-outline-primary mb-2">
-                    <a th:href="@{../admin/khach_hang/view-add}" style="color: darkgreen;">Thêm Khách Hàng</a>
+                    <a th:href="@{/admin/khach-hang/view-add}" style="color: darkgreen;">Thêm Khách Hàng</a>
                 </button>
+
             </div>
-            <div class="container-fluid pt-4">
+            <div class="container-fluid pt-2">
                 <div class="bg-light text-center rounded p-4">
                     <div>
                         <div class="bg-light rounded h-100 p-4">
@@ -218,18 +219,43 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Mã</th>
                                     <th>Tên</th>
-                                    <th>SĐT</th>
-                                    <th>CCCD</th>
                                     <th>Giới tính</th>
+                                    <th>Ngày sinh</th>
+                                    <th>SĐT</th>
                                     <th>Email</th>
-                                    <th>Trạng Thái</th>
+                                    <th>Mật Khẩu</th>
                                     <th>Ngày Tạo</th>
-
+                                    <th>Ngày Sửa</th>
+                                    <th>Tích Điểm</th>
+                                    <th>Trạng Thái</th>
                                     <th>Thao tác</th>
                                 </tr>
-
                                 </thead>
+
+
+                                <tbody>
+                                <tr th:each="khachHang : ${list}">
+                                    <td th:text="${khachHang.id}">ID</td>
+                                    <td th:text="${khachHang.ma}">Mã</td>
+                                    <td th:text="${khachHang.ten}">Tên</td>
+                                    <td th:text="${khachHang.gioiTinh == 1 ? 'Nam' : 'Nữ'}">Giới tính</td>
+                                    <td th:text="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}"></td>
+                                    <td th:text="${khachHang.sdt}">SĐT</td>
+                                    <td th:text="${khachHang.email}">Email</td>
+                                    <td th:text="${khachHang.matKhau}">Mật Khẩu</td>
+                                    <td th:text="${#dates.format(khachHang.ngayTao, 'dd/MM/yyyy')}">Ngày Tạo</td>
+                                    <td th:text="${#dates.format(khachHang.ngaySua, 'dd/MM/yyyy')}">Ngày Sửa</td>
+                                    <td th:text="${khachHang.tichDiem}">Tích Điểm</td>
+                                    <td th:text="${khachHang.trangThai == 1 ? 'Hoạt động' : 'Không hoạt động'}">Trạng Thái</td>
+                                    <td>
+                                        <a th:href="@{'/admin/khach-hang/view-update/' + ${khachHang.id}}" class="btn btn-primary btn-sm">Sửa</a>
+                                        <a th:href="@{'/admin/khach-hang/delete/' + ${khachHang.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+
 
 
 

@@ -113,60 +113,153 @@
             </nav>
 
             <!-- Navbar End -->
-
             <div class="container-fluid pt-4">
                 <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Khách Hàng</h6>
                 <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                    <form >
+                    <form id="customerForm" action="#" th:action="@{/admin/khach-hang/add}" th:object="${newKhachHang}" method="post" onsubmit="return validateForm()">
                         <div class="mb-3">
-                            <label for="exampleInputPassword111" class="form-label">Mã Khách Hàng</label>
-                            <input type="text" class="form-control" id="exampleInputPassword111"/>
-
+                            <label for="ten" class="form-label">Tên:</label>
+                            <input type="text" class="form-control" id="ten" th:field="*{ten}" />
+                            <div id="tenError" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword11" class="form-label">Họ Và Tên</label>
-                            <input type="text" class="form-control" id="exampleInputPassword11" />
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword12" class="form-label">Số Điện Thoại</label>
-                            <input type="text" class="form-control" id="exampleInputPassword12" />
-
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Giới Tính</label>
+                            <label class="form-label">Giới Tính:</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gioiTinh" id="namRadio" value="NAM"
-                                     />
+                                <input class="form-check-input" type="radio" id="namRadio" th:field="*{gioiTinh}" value="1" checked />
                                 <label class="form-check-label" for="namRadio">Nam</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gioiTinh" id="nuRadio" value="NU"
-                                      />
+                                <input class="form-check-input" type="radio" id="nuRadio" th:field="*{gioiTinh}" value="0" />
                                 <label class="form-check-label" for="nuRadio">Nữ</label>
                             </div>
-
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword13" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="exampleInputPassword13"/>
-
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" onchange="checkEmail()"/>
+                            <div id="emailError" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword14" class="form-label">Mật khẩu</label>
-                            <input type="password" class="form-control" id="exampleInputPassword14" />
-
+                            <label for="sdt" class="form-label">Số điện thoại:</label>
+                            <input type="text" class="form-control" id="sdt" th:field="*{sdt}" onchange="checkSdt()"  />
+                            <div id="sdtError" class="text-danger"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
-                            Thêm Khách Hàng
-                        </button>
+                        <div class="mb-3">
+                            <label for="ngaySinh" class="form-label">Ngày sinh (dd/mm/yyyy):</label>
+                            <input type="text" class="form-control" id="ngaySinh" th:field="*{ngaySinh}" />
+                            <div id="ngaySinhError" class="text-danger"></div>
+                        </div>
+                        <a href="/admin/khach-hang" class="btn btn-success">Quay Lại</a>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
                     </form>
-
                 </div>
-                <!-- Recent Sales End -->
-
-
             </div>
+
+            <script>
+                function validateForm() {
+                    var isValid = true;
+
+                    // Lấy giá trị từ các trường input
+                    var ten = document.getElementById('ten').value;
+                    var email = document.getElementById('email').value;
+                    var sdt = document.getElementById('sdt').value;
+                    var ngaySinh = document.getElementById('ngaySinh').value;
+
+                    // Kiểm tra trường Tên
+                    if (ten.trim() === '') {
+                        document.getElementById('tenError').innerHTML = 'Tên không được để trống';
+                        isValid = false;
+                    } else {
+                        document.getElementById('tenError').innerHTML = '';
+                    }
+
+                    // Kiểm tra trường Email
+                    if (email.trim() === '') {
+                        document.getElementById('emailError').innerHTML = 'Email không được để trống';
+                        isValid = false;
+                    } else {
+                        // Kiểm tra định dạng Email
+                        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(email)) {
+                            document.getElementById('emailError').innerHTML = 'Email không đúng định dạng';
+                            isValid = false;
+                        } else {
+                            document.getElementById('emailError').innerHTML = '';
+                        }
+                    }
+
+                    // Kiểm tra trường Số điện thoại
+                    if (sdt.trim() === '') {
+                        document.getElementById('sdtError').innerHTML = 'Số điện thoại không được để trống';
+                        isValid = false;
+                    } else {
+                        // Kiểm tra định dạng Số điện thoại
+                        var phoneRegex = /^\d{10}$/;
+                        if (!phoneRegex.test(sdt)) {
+                            document.getElementById('sdtError').innerHTML = 'Số điện thoại không đúng định dạng';
+                            isValid = false;
+                        } else {
+                            document.getElementById('sdtError').innerHTML = '';
+                        }
+                    }
+
+                    // Kiểm tra trường Ngày sinh
+                    if (ngaySinh.trim() === '') {
+                        document.getElementById('ngaySinhError').innerHTML = 'Ngày sinh không được để trống';
+                        isValid = false;
+                    } else {
+                        // Kiểm tra định dạng ngày sinh
+                        var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+                        if (!dateRegex.test(ngaySinh)) {
+                            document.getElementById('ngaySinhError').innerHTML = 'Ngày sinh không đúng định dạng (dd/mm/yyyy)';
+                            isValid = false;
+                        } else {
+                            document.getElementById('ngaySinhError').innerHTML = '';
+                        }
+                    }
+
+                    // Trả về kết quả kiểm tra
+                    return isValid;
+                }
+                function checkEmail() {
+                    var email = document.getElementById('email').value;
+                    $.ajax({
+                        url: '/admin/khach-hang/email/' + email,
+                        method: 'GET',
+                        success: function(response) {
+                            if (response) {
+                                document.getElementById('emailError').innerHTML = 'Email đã tồn tại';
+                            } else {
+                                document.getElementById('emailError').innerHTML = '';
+                            }
+                        },
+                        error: function() {
+
+                        }
+                    });
+                }
+
+                function checkSdt() {
+                    var sdt = document.getElementById('sdt').value;
+                    $.ajax({
+                        url: '/admin/khach-hang/sdt/' + sdt,
+                        method: 'GET',
+                        success: function(response) {
+                            if (response) {
+                                document.getElementById('sdtError').innerHTML = 'Số điện thoại đã tồn tại';
+                            } else {
+                                document.getElementById('sdtError').innerHTML = '';
+                            }
+                        },
+                        error: function() {
+                            // Xử lý lỗi nếu có
+                        }
+                    });
+                }
+
+            </script>
+
+
+
             <!-- Content End -->
 
 
