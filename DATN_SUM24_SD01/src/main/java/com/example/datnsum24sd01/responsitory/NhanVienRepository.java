@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVien, Long> {
@@ -22,6 +23,7 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Long> {
     boolean existsNhanVienByEmail(String email);
 
     List<NhanVien> findAllByTenContains(String ten);
+    Optional<NhanVien> findByEmail(String email);
 
 
 }
