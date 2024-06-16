@@ -227,7 +227,7 @@
                         <i class="fa fa-bars"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">Thông Tin Cá Nhân</a>
+                        <a href="/thongtinnhanvien" class="dropdown-item">Thông Tin Cá Nhân</a>
                         <a href="#" class="dropdown-item">Cài Đặt</a>
                         <a href="#" class="dropdown-item">Đăng Xuất</a>
                     </div>
@@ -349,6 +349,34 @@
 
 
                                         <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
+<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
+<!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
+<!--                                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+<!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+
+<!--                                        &lt;!&ndash; Icon indicating the discount coupon is stopped &ndash;&gt;-->
+<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
+<!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+
+<!--                                        &lt;!&ndash; Link to start the discount coupon if it is not active and not upcoming &ndash;&gt;-->
+<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
+<!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
+<!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+<!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+
+<!--                                        &lt;!&ndash; Icon indicating the discount coupon is active &ndash;&gt;-->
+<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
+<!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+
+<!--                                        &lt;!&ndash; Icon indicating the discount coupon is upcoming &ndash;&gt;-->
+<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">-->
+<!--                                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>-->
+<!--                                        </a>-->
+                                        <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
                                         <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
                                            th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"
                                            onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">
@@ -376,6 +404,7 @@
                                         <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">
                                             <i class="fa fa-clock-o" style="font-size: 13px;"></i>
                                         </a>
+
 
                                     </td>
 
