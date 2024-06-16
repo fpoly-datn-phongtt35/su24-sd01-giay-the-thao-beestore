@@ -1,9 +1,11 @@
 package com.example.datnsum24sd01.service.impl;
 
+import com.example.datnsum24sd01.entity.NhanVien;
 import com.example.datnsum24sd01.entity.PhieuGiamGia;
 import com.example.datnsum24sd01.enumation.TrangThaiPhieuKhuyenMai;
 import com.example.datnsum24sd01.request.PhieuGiamGiaRequest;
 import com.example.datnsum24sd01.responsitory.PhieuGiamGiaResponsitory;
+import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.PhieuGiamGiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +25,11 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
     @Autowired
     PhieuGiamGiaResponsitory responsitory;
 
+    ZoneId systemZone = ZoneId.systemDefault();
+    @Autowired
+    private com.example.datnsum24sd01.repository.NhanVienRepository nhanVienRepository;
+    @Autowired
+    private EmailService emailService;
     @Override
     public List<PhieuGiamGia> getAll() {
         return responsitory.findAll().stream()
@@ -55,7 +64,10 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
 
     @Override
     public PhieuGiamGia add(PhieuGiamGiaRequest phieuGiamGiaRequest) {
+        // Lấy thời gian hiện tại theo múi giờ hiện tại của hệ thống
+
         PhieuGiamGia pgg = new PhieuGiamGia();
+        NhanVien nhanVien = new NhanVien();
         LocalDateTime time = LocalDateTime.now();
         //tự gen mã pgg mặc định BEESTORE+NGÀY THÁNG NĂM GIỜ PHÚT
         String ma = "BEESTORE" + String.valueOf( time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() +time.getHour()+time.getMinute()+time.getSecond() ;
@@ -70,6 +82,9 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());
         pgg.setNgayKetThuc(phieuGiamGiaRequest.getNgayKetThuc());
         pgg.setTrangThai(phieuGiamGiaRequest.htTrangThai());
+
+
+       emailService .sendMaPhieuGiamGiaKH(nhanVien.getEmail(), phieuGiamGiaRequest.getMa());
         return responsitory.save(pgg);
     }
 
