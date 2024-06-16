@@ -1,8 +1,11 @@
 package com.example.datnsum24sd01.controller;
 
+import com.example.datnsum24sd01.entity.NhanVien;
 import com.example.datnsum24sd01.entity.PhieuGiamGia;
 import com.example.datnsum24sd01.enumation.TrangThaiPhieuKhuyenMai;
 import com.example.datnsum24sd01.request.PhieuGiamGiaRequest;
+import com.example.datnsum24sd01.sendmail.EmailService;
+import com.example.datnsum24sd01.service.NhanVienService;
 import com.example.datnsum24sd01.service.PhieuGiamGiaService;
 import com.example.datnsum24sd01.service.impl.PhieuGiamGiaServiceImpl;
 import jakarta.validation.Valid;
@@ -28,7 +31,11 @@ import java.util.List;
 public class MaGiamGiaController {
     @Autowired
     private PhieuGiamGiaService service;
+    @Autowired
+    private NhanVienService nhanVienService;
 
+//    @Autowired
+//    private EmailService emailService;
 
     List<TrangThaiPhieuKhuyenMai> list = new ArrayList<>(Arrays.asList(TrangThaiPhieuKhuyenMai.DANG_DIEN_RA, TrangThaiPhieuKhuyenMai.DA_KET_THUC, TrangThaiPhieuKhuyenMai.SAP_DIEN_RA));
 
@@ -50,6 +57,9 @@ public class MaGiamGiaController {
     @GetMapping("/view-add")
     public String viewAdd(@ModelAttribute("phieuGiamGia") PhieuGiamGiaRequest phieuGiamGiaRequest,
                           Model model) {
+        List<NhanVien> nhanVienList = nhanVienService.getAll();
+        model.addAttribute("nhanVien", nhanVienList);
+
         model.addAttribute("phieuGiamGia", new PhieuGiamGia());
         return "admin-template/ma_giam_gia/them_ma_giam_gia";
     }
@@ -71,10 +81,15 @@ public class MaGiamGiaController {
 
                 return "admin-template/ma_giam_gia/them_ma_giam_gia";
             }
+
             service.add(phieuGiamGiaRequest);
+            model.addAttribute("successMessage", "Thêm thành công Phiếu giảm giá.");
             return "redirect:/admin/ma-giam-gia";
         }
     }
+
+
+
     @GetMapping("/trang-thai/{trangThai}")
     public String getByTrangThai(Model model,
                                  @PathVariable("trangThai") TrangThaiPhieuKhuyenMai trangThaiKhuyenMai) {
