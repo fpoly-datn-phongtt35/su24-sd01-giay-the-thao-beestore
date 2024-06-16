@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0">Phạm Văn Dương</h6>
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
                 </div>
             </div>
@@ -206,79 +206,60 @@
         <div class="container-fluid pt-4">
             <div class="row g-2">
                 <div style="width: 80%">
-                    <h6 class="mb-4" style="font-size: 40px;text-align: center">Quản Lý Nhân viên</h6>
-                    <div th:if="${deleteMessage}" class="alert alert-info" role="alert">
-                        <p th:text="${deleteMessage}"></p>
-                    </div>
+                    <h6 class="mb-4" style="font-size: 40px;text-align: center">Thông Tin Nhân viên</h6>
+
                 </div>
 
             </div>
 
-            <div style="width: 20%;">
-                <button class="btn btn-outline-primary">
-                    <a class="them" th:href="@{/admin/nhan-vien/view-add}" style="color: darkgreen;">Thêm Nhân Viên</a>
-                </button>
-            </div>
+
         </div>
 
 
-        <div class="container-fluid pt-4">
-            <form action="#" th:action="@{/admin/nhan-vien/search}"
-                  method="get">
-                <input type="text" name="query" th:value="${param.tSearch}" placeholder="Nhập từ khóa..." required
-                       th:name="tSearch"/>
-                <button type="submit">Tìm kiếm</button>
-            </form>
-            <div class="bg-light text-center rounded p-4">
+        <div class="">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="">
+                    <h6  for="id" class="form-label"> <a id="id"  th:text="${id}"></a></h6>
 
-                <div>
-                    <div class="bg-light rounded h-100 p-4">
-                        <table id="example" class="table table-striped" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>Mã</th>
-                                <th>Tên</th>
-                                <th>SĐT</th>
-                                <th>Giới tính</th>
-                                <th>Email</th>
-                                                                <th>Địa Chỉ</th>
-                                <th>Trạng Thái</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="nhanVien : ${nhanVien}">
-                                <td th:text="${nhanVien.ma}">Ma</td>
-                                <td th:text="${nhanVien.ten}">Ten</td>
-                                <td th:text="${nhanVien.sdt}">Sdt</td>
-                                <td th:text="${nhanVien.gioiTinh ? 'Nam' : 'Nữ'}">Gioi Tinh</td>
-                                <!--                                <td th:text="${#temporals.format(nhanVien.ngayTao, 'yyyy-MM-dd')}"></td>-->
-                                <td th:text="${nhanVien.email}">Email</td>
-                                <td th:text="${nhanVien.diachi}">Địa Chỉ</td>
-                                <!--                                <td th:text="${nhanVien.ngayTao}"></td>-->
-                                <td th:text="${nhanVien.trangThai == 0 ? 'Đang làm' : 'Nghỉ việc'}">Trang Thai</td>
-                                <td>
-                                    <a th:href="@{'/admin/nhan-vien/view-update/' + ${nhanVien.id}}">
-                                        <img src="/../../img/pen_v2.png" style="width: 25px; padding-right: 5px;">
-                                    </a>
-                                    <a th:href="@{'/admin/nhan-vien/delete/' + ${nhanVien.id}}"
-                                       onclick="return confirm('Nhân viên chỉ có thể được xoá khi chưa thực hiện giao dịch nào, xác nhận xoá?')">
-                                        <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;">
-                                    </a>
-                                    <a th:href="@{'/admin/nhan-vien/thay-doi-trang/' + ${nhanVien.id}}"
-                                       onclick="return confirm('Xác nhận thay đổi trạng thái nhân viên?')">
-                                        <img src="/../../img/refresh.png" style="width: 25px; padding-right: 5px;">
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Tên Nhân Viên </span>
+
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Số Điện Thoại</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Giới Tính</span>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="namRadio" name="gioiTinh" value="1"
+                               th:field="*{gioiTinh}" th:checked="${gioiTinh == 1}"/>
+                        <label class="form-check-label" for="namRadio">Nam</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="nuRadio" name="gioiTinh" value="0"
+                               th:field="*{gioiTinh}" th:checked="${gioiTinh == 0}"/>
+                        <label class="form-check-label" for="nuRadio">Nữ</label>
                     </div>
                 </div>
-            </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Tên Nhân Viên</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                           aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Recipient's username"
+                           aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <span class="input-group-text" id="basic-addon2">@example.com</span>
+                </div>
+
 
         </div>
     </div>
+</div>
+<!-- Form End -->
 
     <!--thư viện js tích tìm kiếm-->
     <script>

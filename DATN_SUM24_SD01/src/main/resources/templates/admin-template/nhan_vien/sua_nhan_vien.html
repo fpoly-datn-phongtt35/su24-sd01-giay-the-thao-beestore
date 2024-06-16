@@ -37,7 +37,7 @@
         <nav class="navbar bg-light navbar-light">
             <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
 
-                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <h6 class="mb-0">Phạm Văn Dương</h6>
 
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
                     Hàng</a>
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
                     <div class="dropdown-menu bg-transparent border-0">
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
@@ -72,11 +72,11 @@
                 <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
 
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
-                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
 
 
                     </div>
@@ -101,7 +101,7 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -116,93 +116,131 @@
 
         <div class="container-fluid pt-4">
 
-            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết  Nhân Viên</h6>
+            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Nhân Viên</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form>
-
+                <form action="#" th:action="@{/admin/nhan-vien/update}" th:object="${nhanVienForUpdating}" onsubmit="return validateForm(event)"
+                      method="post">
+                    <input type="text" class="form-control" th:field="*{id}" hidden readonly th:name="idUpdate"/>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Mã Nhân Viên</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1"
-                               aria-describedby="emailHelp"  readonly />
-
+                        <label for="ma" class="form-label">Mã Nhân Viên</label>
+                        <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly/>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Họ Và Tên</label>
-                        <input type="text" class="form-control" />
-
+                        <label for="ten" class="form-label">Họ Và Tên</label>
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"/>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Số Điện Thoại</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" />
-
+                        <label for="sdt" class="form-label">Số Điện Thoại</label>
+                        <input type="text" class="form-control" id="sdt" name="sdt" th:field="*{sdt}"/>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Giới Tính</label>
+                        <label class="form-label">Giới Tính</label>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gioiTinh" id="namRadio" value="NAM"
-                                 />
+                            <input class="form-check-input" type="radio" id="namRadio" name="gioiTinh" value="1"
+                                   th:field="*{gioiTinh}" th:checked="${nhanVienForUpdating.gioiTinh == 1}"/>
                             <label class="form-check-label" for="namRadio">Nam</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gioiTinh" id="nuRadio" value="NU"
-                                  />
+                            <input class="form-check-input" type="radio" id="nuRadio" name="gioiTinh" value="0"
+                                   th:field="*{gioiTinh}" th:checked="${nhanVienForUpdating.gioiTinh == 0}"/>
                             <label class="form-check-label" for="nuRadio">Nữ</label>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1"  readonly/>
-
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" th:field="*{email}" required/>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Mật Khẩu</label>
-                        <div class="input-group">
-                            <input type="text" hidden />
-                            <input type="text"readonly class="form-control" id="" value="••••••••••" />
-                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#myModal">
-                                Đổi Mật Khẩu
-                            </button>
-                        </div>
-
-                    </div>                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Trạng Thái</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="trangThai" id="hoatDongRadio"
-                                   value="DANG_HOAT_DONG" />
-                            <label class="form-check-label" for="hoatDongRadio">Đang Hoạt Động</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="trangThai" id="ngungHoatDongRadio"
-                                   value="DUNG_HOAT_DONG" />
-                            <label class="form-check-label" for="ngungHoatDongRadio">Dừng Hoạt Động</label>
-                        </div>
+                        <label for="cccd" class="form-label">CCCD</label>
+                        <input type="number" class="form-control" id="cccd" name="cccd" th:field="*{canCuocCongDan}"
+                               required/>
                     </div>
-                    <button type="submit" class="btn btn-primary " style="margin-left: 30%; margin-top: 15px;">
-                        Sửa Nhân Viên
-                    </button>
+                    <div class="mb-3">
+                        <label for="matKhau" class="form-label">Mật khẩu</label>
+                        <input type="text" class="form-control" id="matKhau" name="matKhau" th:field="*{matKhau}"
+                               required/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cập Nhật Nhân Viên</button>
                 </form>
             </div>
 
         </div>
-         </div>
+    </div>
 </div>
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/../../lib/chart/chart.min.js"></script>
-    <script src="/../../lib/easing/easing.min.js"></script>
-    <script src="/../../lib/waypoints/waypoints.min.js"></script>
-    <script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="/../../lib/tempusdominus/js/moment.min.js"></script>
-    <script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script>
+    async function checkDuplicate(url, value) {
+        const response = await fetch(url + encodeURIComponent(value));
+        const exists = await response.json();
+        return exists;
+    }
+
+    async function validateForm(event) {
+        // Ngăn chặn form gửi đi mặc định
+        event.preventDefault();
+
+        // Lấy các giá trị từ các trường
+        var ten = document.getElementById("ten").value;
+        var sdt = document.getElementById("sdt").value;
+        var email = document.getElementById("email").value;
+        var cccd = document.getElementById("cccd").value;
+        var matKhau = document.getElementById("matKhau").value;
+
+        // Kiểm tra họ và tên chỉ chứa chữ cái
+        const namePattern = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểẾỄỆỈỊỌỎỐỉịỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỳỵỷỹ ]+$/;
+        if (!namePattern.test(ten.trim())) {
+            alert("Họ và tên chỉ được chứa chữ cái.");
+            return false;
+        }
+
+
+        // Kiểm tra số điện thoại Việt Nam
+        var phonePattern = /^(0[3|5|7|8|9])+([0-9]{8})$/;
+        if (!phonePattern.test(sdt.trim())) {
+            alert("Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam hợp lệ.");
+            return false;
+        }
+
+        // Kiểm tra email hợp lệ
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.trim())) {
+            alert("Email không hợp lệ.");
+            return false;
+        }
+
+        // Kiểm tra CCCD chỉ chứa số và có độ dài chính xác (nếu có yêu cầu cụ thể)
+        var cccdPattern = /^[0-9]{12}$/; // Giả sử CCCD phải có 12 chữ số
+        if (!cccdPattern.test(cccd.trim())) {
+            alert("CCCD phải có 12 chữ số.");
+            return false;
+        }
+
+        // Kiểm tra mật khẩu không rỗng
+        if (matKhau.trim() === "") {
+            alert("Mật khẩu không được để trống.");
+            return false;
+        }
+
+        // Nếu tất cả kiểm tra đều hợp lệ, form sẽ được gửi
+        event.target.submit();
+    }
+</script>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/../../lib/chart/chart.min.js"></script>
+<script src="/../../lib/easing/easing.min.js"></script>
+<script src="/../../lib/waypoints/waypoints.min.js"></script>
+<script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="/../../js/admin/main.js"></script>
+<!-- Template Javascript -->
+<script src="/../../js/admin/main.js"></script>
 </body>
 
 </html>
