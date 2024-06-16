@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -120,61 +120,65 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Sản Phẩm</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form >
+                <form action="#" th:action="@{/admin/san-pham/themSanPham}" th:object="${sanPhamRequest}"
+                      method="post">
                     <!--                    <input type="hidden" th:field="*{currentMainImage}" th:value="${sanPham.anhChinh}"/>-->
 
                     <div class="mb-3">
-                        <div class="mb-3">
-                            <label class="form-label">Mã Sản Phẩm</label>
-                            <input type="text" class="form-control" id="ten" name="ten"
-                                   aria-describedby="emailHelp"/>
-
-                        </div>
-
+                        <label class="form-label">Mã Sản Phẩm</label>
+                        <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly
+                               placeholder="Mã sản phẩm tự tăng!" maxlength="50"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tên Sản Phẩm</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
-                               aria-describedby="emailHelp"/>
-
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
+                        />
                     </div>
-                    <div class="mb-3 row g-2">
-                        <div style="width: 80%;">
-                            <label class="form-label">Nhà Cung Cấp</label>
-                            <input type="text" class="form-control" id="ten" name="ten"
-                                   aria-describedby="emailHelp"/>
-                        </div>
+<!--                    <div class="mb-3 row g-2">-->
+<!--                        <div style="width: 80%;">-->
+<!--                            <label class="form-label">Nhà Cung Cấp</label>-->
+<!--                            <input type="text" class="form-control" id="nhaCungCap" name="nhaCungCap"-->
+<!--                                   aria-describedby="emailHelp"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="mb-3 row g-2">-->
+<!--                        <div style="width: 80%;">-->
+<!--                            <label class="form-label">Thương Hiệu</label>-->
+<!--                            <input type="text" class="form-control" id="thuongHieu" name="thuongHieu"-->
+<!--                                   aria-describedby="emailHelp"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="mb-3">
+                        <label class="form-label">Ngày sửa:</label>
+                        <input type="datetime-local"
+                               id="ngaySua">
                     </div>
-                    <div class="mb-3 row g-2">
-                        <div style="width: 80%;">
-                            <label class="form-label">Thương Hiệu</label>
-                            <input type="text" class="form-control" id="ten" name="ten"
-                                   aria-describedby="emailHelp"/>
-                        </div>
-
+                    <div class="mb-3">
+                        <label class="form-label">Ngày tạo:</label>
+                        <input type="datetime-local"
+                               id="ngayTao">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mô Tả</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
+                        <input type="text" class="form-control" id="moTa" name="moTa"
                                aria-describedby="emailHelp"/>
-
                     </div>
                     <!--ADD IMG-->
-                    <div class="tab-pane" id="images" role="tabpanel">
-                        <div class="row">
-                            <div class="col border m-3 p-2">
-                                <div>
-                                    <label>
-                                        Ảnh sản phẩm
-                                        <ul id="imageList"
-                                            style="list-style-type: none; display: flex; gap: 10px;"></ul>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="file" multiple id="fileImage" name="fileImage" onchange="previewImage(event)"
-                               accept="image/png,image/jpeg,img/jpg,img/jfif"/>
-                    </div>
+<!--                    <div class="tab-pane" id="images" role="tabpanel">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col border m-3 p-2">-->
+<!--                                <div>-->
+<!--                                    <label>-->
+<!--                                        Ảnh sản phẩm-->
+<!--                                        <ul id="imageList"-->
+<!--                                            style="list-style-type: none; display: flex; gap: 10px;"></ul>-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <input type="file" multiple id="fileImage" name="fileImage" onchange="previewImage(event)"-->
+<!--                               accept="image/png,image/jpeg,img/jpg,img/jfif"/>-->
+<!--                    </div>-->
                     <!--                            validate-->
 <hr>
 

@@ -91,19 +91,22 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Nhà Cung Cấp</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form  method="post">
-
+                <form action="#" th:action="@{/admin/nha-cung-cap/suaNhaCungCap}" th:object="${nhaCungCapUpdate}" onsubmit="return validateForm(event)" method="post">
                     <div class="mb-3">
-                        <label class="form-label">Mã Nhà Cung Cấp</label>
-                        <input type="text" class="form-control" id="ma"
-                               aria-describedby="emailHelp" readonly/>
-
+                        <label for="ma" class="form-label">Mã Nhà Cung Cấp</label>
+                        <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly/>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Tên Nhà Cung Cấp</label>
-                        <input type="text" class="form-control" id="ten" name="ten" />
-
-
+                        <label for="ten" class="form-label">Tên Nhà Cung Cấp</label>
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ngayTao" class="form-label">Ngày tạo</label>
+                        <input type="text" class="form-control" id="ngayTao" name="ngayTao" th:field="*{ngayTao}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày sửa:</label>
+                        <input type="text" class="form-control" id="ngaySua" name="ngaySua" th:field="*{ngaySua}"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Trạng Thái</label>

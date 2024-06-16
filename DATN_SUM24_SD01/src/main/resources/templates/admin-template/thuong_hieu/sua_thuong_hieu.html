@@ -60,7 +60,7 @@
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
-                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -117,34 +117,37 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết  Thương Hiệu</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form  method="post">
-
+                <form action="#" th:action="@{/admin/thuong-hieu/suaThuongHieu}" th:object="${thuongHieuUpdate}" onsubmit="return validateForm(event)" method="post">
                     <div class="mb-3">
-                        <label class="form-label">Mã Thương Hiệu</label>
-                        <input type="text" class="form-control" id="ma"
-                               aria-describedby="emailHelp" readonly/>
+                        <label for="ma" class="form-label">Mã Thương Hiệu</label>
+                        <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly/>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Tên Thương Hiệu</label>
-
-                        <input type="text" class="form-control" id="ten" name="ten" />
-
+                        <label for="ten" class="form-label">Tên Thương Hiệu</label>
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ngayTao" class="form-label">Ngày tạo</label>
+                        <input type="text" class="form-control" id="ngayTao" name="ngayTao" th:field="*{ngayTao}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày sửa:</label>
+                        <input type="text" class="form-control" id="ngaySua" name="ngaySua" th:field="*{ngaySua}"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Trạng Thái</label>
                         <div class="form-check form-check-inline">
                             <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
-
-                                  />
+                            />
                             <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input id="trangThaiKhongHoatDong" name="trangThai" type="radio" class="form-check-input"
-                                />
+                            />
                             <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary " style="margin-left: 30%; margin-top: 15px;">
+                    <button type="submit" class="btn btn-primary" style="margin-left: 40%; margin-top: 15px;">
                         Sửa Thương Hiệu
                     </button>
                 </form>

@@ -59,7 +59,7 @@
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
-                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -116,20 +116,38 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Thương Hiệu</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form >
+                <form action="#" th:action="@{/admin/thuong-hieu/themThuongHieu}" th:object="${thuongHieuRequest}"
+                      method="post">
+
+
                     <div class="mb-3">
                         <label class="form-label">Mã Thương Hiệu</label>
-                        <input type="text" class="form-control" id="ma" name="ma"
-                               aria-describedby="emailHelp" />
-
+                        <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly
+                               placeholder="Mã thương hiệu tự tăng!" maxlength="50"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tên Thương Hiệu</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày tạo:</label>
+                        <input type="datetime-local"
+                               id="ngayTao">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày sửa:</label>
+                        <input type="datetime-local"
+                               id="ngaySua">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <input type="text" class="form-control" id="trangThai" name="trangThai"
                                aria-describedby="emailHelp"/>
 
                     </div>
-                    <button type="submit" class="btn btn-primary " style="margin-left: 30%;">
+
+                    <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
                         Thêm Thương Hiệu
                     </button>
                 </form>
