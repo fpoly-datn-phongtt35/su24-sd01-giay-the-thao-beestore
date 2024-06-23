@@ -13,11 +13,9 @@ public interface KhachHangService {
 
     boolean checkSdtDuplicate(String sdt);
 
-    boolean checkSdtDuplicate(String sdt, Integer id);
 
     boolean checkEmailDuplicate(String email);
 
-    boolean checkEmailDuplicate(String email, Integer id);
 
     KhachHang getOne(Integer id);
 

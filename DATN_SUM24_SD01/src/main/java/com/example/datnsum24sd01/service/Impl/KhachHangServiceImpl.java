@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.example.datnsum24sd01.entity.KhachHang;
 import com.example.datnsum24sd01.request.KhachHangRequest;
-import com.example.datnsum24sd01.responsitory.KhachHangResponsitory;
+import com.example.datnsum24sd01.responsitory.KhachHangRepository;
 
 @Service
 public class KhachHangServiceImpl implements KhachHangService {
     @Autowired
-    private KhachHangResponsitory khachHangRepository;
+    private KhachHangRepository khachHangRepository;
 
     @Override
     public List<KhachHang> getAll() {
@@ -69,20 +69,14 @@ public class KhachHangServiceImpl implements KhachHangService {
         return khachHangRepository.existsKhachHangBySdt(sdt);
     }
 
-    @Override
-    public boolean checkSdtDuplicate(String sdt, Integer id) {
-        return khachHangRepository.existsKhachHangBySdtAndIdNot(sdt, id);
-    }
+
 
     @Override
     public boolean checkEmailDuplicate(String email) {
         return khachHangRepository.existsKhachHangByEmail(email);
     }
 
-    @Override
-    public boolean checkEmailDuplicate(String email, Integer id) {
-        return khachHangRepository.existsKhachHangByEmailAndIdNot(email, id);
-    }
+
 
     @Override
     public KhachHang getOne(Integer id) {

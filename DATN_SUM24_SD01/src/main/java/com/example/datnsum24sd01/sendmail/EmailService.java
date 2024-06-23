@@ -3,11 +3,13 @@ package com.example.datnsum24sd01.sendmail;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmailService {
     private final JavaMailSender javaMailSender;
 
-    @Value("duongpvph20350@fpt.edu.vn")
+    @Value("${spring.mail.username}")
     private String senderEmail;
 
     public EmailService(JavaMailSender javaMailSender) {
@@ -29,6 +31,7 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+
     public void sendNewAccountKHEmail(String recipientEmail, String email ,String matkhau) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(senderEmail);
@@ -44,6 +47,4 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
-
-
 }

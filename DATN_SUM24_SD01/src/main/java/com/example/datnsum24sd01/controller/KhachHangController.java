@@ -2,8 +2,11 @@ package com.example.datnsum24sd01.controller;
 
 import com.example.datnsum24sd01.entity.KhachHang;
 import com.example.datnsum24sd01.request.KhachHangRequest;
+import com.example.datnsum24sd01.responsitory.KhachHangRepository;
+import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.KhachHangService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin/khach-hang")
@@ -21,12 +25,40 @@ public class KhachHangController {
     @Autowired
     private KhachHangService khachHangService;
 
+    @Autowired
+    private KhachHangRepository khachHangRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+
     @GetMapping()
-    public String getAll(Model model) {
-        List<KhachHang> khachHangList = khachHangService.getAll();
-        model.addAttribute("list", khachHangList);
+    public String getAll(Model model,
+                         @RequestParam(name = "keyWord", required = false) String keyWord,
+                         @RequestParam(name = "status", required = false) String status) {
+        List<KhachHang> kh;
+
+        if (keyWord == null || keyWord.isEmpty()) {
+            if (status == null || status.isEmpty()) {
+                kh = khachHangService.getAll();
+            } else {
+                kh = khachHangRepository.findByStatus(Integer.valueOf(status));
+            }
+        } else {
+            String k = "%" + keyWord + "%";
+            if (status == null || status.isEmpty()) {
+                kh = khachHangRepository.findByStr(k);
+            } else {
+                kh = khachHangRepository.findByStrAndStatus(k, Integer.valueOf(status));
+            }
+        }
+
+        model.addAttribute("list", kh);
+        model.addAttribute("keyWord", keyWord);
+        model.addAttribute("selectedStatus", status);
         return "admin-template/khach_hang/khach_hang";
     }
+
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(Model model, @PathVariable Integer id) {
@@ -50,6 +82,8 @@ public class KhachHangController {
             return "admin-template/khach_hang/them_khach_hang";
         }
         khachHangService.add(khachHangRequest);
+        emailService.sendNewAccountKHEmail(khachHangRequest.getEmail(), khachHangRequest.getEmail(), khachHangRequest.getMatKhau());
+
         return "redirect:/admin/khach-hang";
     }
 

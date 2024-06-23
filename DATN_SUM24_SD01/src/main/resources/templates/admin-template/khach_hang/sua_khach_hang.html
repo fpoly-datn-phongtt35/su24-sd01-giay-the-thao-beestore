@@ -117,8 +117,7 @@
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Khách Hàng</h6>
             <div class="bg-light rounded p-4 row" style="width: 98%; margin-right: 1%; margin-left: 1%;">
                 <div class="col-md-6" style="width:55%; margin-bottom: 20px;">
-                    <form th:action="@{'/admin/khach-hang/update/' + ${khachHang.id}}" th:object="${khachHang}" method="post"
-                          onsubmit="return validateForm()">
+                    <form id="customerForm" th:action="@{'/admin/khach-hang/update/' + ${khachHang.id}}" th:object="${khachHang}" method="post" onsubmit="return validateForm()">
                         <input type="hidden" name="id" th:value="${khachHang.id}" />
 
                         <div class="mb-3">
@@ -135,111 +134,139 @@
                         <div class="mb-3">
                             <label class="form-label">Giới Tính:</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="namRadio" th:field="*{gioiTinh}" value="1"
-                                       th:checked="${khachHang.gioiTinh == 1}" />
+                                <input class="form-check-input" type="radio" id="namRadio" th:field="*{gioiTinh}" value="1" th:checked="${khachHang.gioiTinh == 1}" />
                                 <label class="form-check-label" for="namRadio">Nam</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="nuRadio" th:field="*{gioiTinh}" value="0"
-                                       th:checked="${khachHang.gioiTinh == 0}" />
+                                <input class="form-check-input" type="radio" id="nuRadio" th:field="*{gioiTinh}" value="0" th:checked="${khachHang.gioiTinh == 0}" />
                                 <label class="form-check-label" for="nuRadio">Nữ</label>
                             </div>
+                            <div id="gioiTinhError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="sdt" class="form-label">Số Điện Thoại</label>
-                            <input type="text" class="form-control" id="sdt" name="sdt" th:value="${khachHang.sdt}" onchange="checkSdt()"/>
+                            <input type="text" class="form-control" id="sdt" name="sdt" th:value="${khachHang.sdt}" onchange="checkSdt()" />
                             <div id="sdtError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="ngaySinh" class="form-label">Ngày sinh</label>
-                            <input type="text" class="form-control" id="ngaySinh" name="ngaySinh"
-                                   th:value="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}" />
+                            <input type="text" class="form-control" id="ngaySinh" name="ngaySinh" th:value="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}" />
                             <div id="ngaySinhError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email" th:value="${khachHang.email}"  onchange="checkEmail()"/>
+                            <input type="text" class="form-control" id="email" name="email" th:value="${khachHang.email}" onchange="checkEmail()" />
                             <div id="emailError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="matKhau" class="form-label">Mật khẩu</label>
                             <input type="text" class="form-control" id="matKhau" name="matKhau" th:value="${khachHang.matKhau}" />
+                            <div id="matKhauError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="ngayTao" class="form-label">Ngày tạo</label>
-                            <input type="text" class="form-control" id="ngayTao" name="ngayTao"
-                                   th:value="${#dates.format(khachHang.ngayTao, 'dd/MM/yyyy')}" disabled />
+                            <input type="text" class="form-control" id="ngayTao" name="ngayTao" th:value="${#dates.format(khachHang.ngayTao, 'dd/MM/yyyy')}" disabled />
                         </div>
 
                         <div class="mb-3">
                             <label for="ngaySua" class="form-label">Ngày Sửa Gần Nhất</label>
-                            <input type="text" class="form-control" id="ngaySua" name="ngaySua"
-                                   th:value="${#dates.format(khachHang.ngaySua, 'dd/MM/yyyy')}" disabled />
+                            <input type="text" class="form-control" id="ngaySua" name="ngaySua" th:value="${#dates.format(khachHang.ngaySua, 'dd/MM/yyyy')}" disabled />
                         </div>
 
                         <div class="mb-3">
                             <label for="tichDiem" class="form-label">Tích điểm</label>
                             <input type="text" class="form-control" id="tichDiem" name="tichDiem" th:value="${khachHang.tichDiem}" />
+                            <div id="tichDiemError" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Trạng Thái:</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="hoatDongRadio" th:field="*{trangThai}" value="1"
-                                       th:checked="*{trangThai == 1}" />
+                                <input class="form-check-input" type="radio" id="hoatDongRadio" th:field="*{trangThai}" value="1" th:checked="*{trangThai == 1}" />
                                 <label class="form-check-label" for="hoatDongRadio">Hoạt Động</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="khongHoatDongRadio" th:field="*{trangThai}"
-                                       value="0" th:checked="*{trangThai == 0}" />
+                                <input class="form-check-input" type="radio" id="khongHoatDongRadio" th:field="*{trangThai}" value="0" th:checked="*{trangThai == 0}" />
                                 <label class="form-check-label" for="khongHoatDongRadio">Không Hoạt Động</label>
                             </div>
+                            <div id="trangThaiError" class="text-danger"></div>
                         </div>
 
                         <a href="/admin/khach-hang" class="btn btn-success">Quay Lại</a>
 
-                        <button type="submit" class="btn btn-primary"
-                                onclick="return confirm('bạn xác nhận muốn sửa thông tin khách hàng chứ?')">
-                            Lưu
-                        </button>
-
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('bạn xác nhận muốn sửa thông tin khách hàng chứ?')">Lưu</button>
                     </form>
                 </div>
             </div>
         </div>
 
         <script>
+            var emailValid = false;
+            var sdtValid = false;
 
+            // Lưu giá trị ban đầu của email và sdt
+            var originalEmail = '';
+            var originalSdt = '';
 
-            function validateForm() {
-                var ten = document.getElementById("ten").value;
-                var sdt = document.getElementById("sdt").value;
-                var ngaySinh = document.getElementById("ngaySinh").value;
-                var email = document.getElementById("email").value;
+            window.onload = function() {
+                originalEmail = document.getElementById('email').value;
+                originalSdt = document.getElementById('sdt').value;
+            };
 
-                var tenError = document.getElementById("tenError");
-                var sdtError = document.getElementById("sdtError");
-                var ngaySinhError = document.getElementById("ngaySinhError");
-                var emailError = document.getElementById("emailError");
-
-                tenError.textContent = "";
-                sdtError.textContent = "";
-                ngaySinhError.textContent= "";
-                emailError.textContent = "";
-
+            async function validateForm() {
                 var isValid = true;
 
-                if (ten.trim() === "") {
+                // Lấy giá trị từ các trường input
+                var ten = document.getElementById('ten').value.trim();
+                var email = document.getElementById('email').value.trim();
+                var sdt = document.getElementById('sdt').value.trim();
+                var ngaySinh = document.getElementById('ngaySinh').value.trim();
+                var matKhau = document.getElementById('matKhau').value.trim();
+                var tichDiem = document.getElementById('tichDiem').value.trim();
+                var gioiTinhNam = document.getElementById('namRadio').checked;
+                var gioiTinhNu = document.getElementById('nuRadio').checked;
+                var hoatDong = document.getElementById('hoatDongRadio').checked;
+                var khongHoatDong = document.getElementById('khongHoatDongRadio').checked;
+
+                // Lấy phần tử hiển thị lỗi
+                var tenError = document.getElementById('tenError');
+                var sdtError = document.getElementById('sdtError');
+                var ngaySinhError = document.getElementById('ngaySinhError');
+                var emailError = document.getElementById('emailError');
+                var matKhauError = document.getElementById('matKhauError');
+                var tichDiemError = document.getElementById('tichDiemError');
+                var gioiTinhError = document.getElementById('gioiTinhError');
+                var trangThaiError = document.getElementById('trangThaiError');
+
+                // Reset nội dung hiển thị lỗi
+                tenError.textContent = "";
+                sdtError.textContent = "";
+                ngaySinhError.textContent = "";
+                emailError.textContent = "";
+                matKhauError.textContent = "";
+                tichDiemError.textContent = "";
+                gioiTinhError.textContent = "";
+                trangThaiError.textContent = "";
+
+                // Kiểm tra trường Tên
+                if (ten === "") {
                     tenError.textContent = "Họ và tên không được để trống";
                     isValid = false;
                 }
 
-                if (sdt.trim() === "") {
+                // Kiểm tra trường Giới Tính
+                if (!gioiTinhNam && !gioiTinhNu) {
+                    gioiTinhError.textContent = "Giới tính không được để trống";
+                    isValid = false;
+                }
+
+                // Kiểm tra trường Số điện thoại
+                if (sdt === "") {
                     sdtError.textContent = "Số điện thoại không được để trống";
                     isValid = false;
                 } else if (!isValidPhoneNumber(sdt)) {
@@ -247,15 +274,17 @@
                     isValid = false;
                 }
 
-                if (ngaySinh.trim() === "") {
+                // Kiểm tra trường Ngày sinh
+                if (ngaySinh === "") {
                     ngaySinhError.textContent = "Ngày sinh không được để trống";
                     isValid = false;
                 } else if (!isValidDate(ngaySinh)) {
-                    ngaySinhError.textContent = "Ngày sinh không hợp lệ";
+                    ngaySinhError.textContent = "Ngày sinh không hợp lệ. VD: 01/01/2001";
                     isValid = false;
                 }
 
-                if (email.trim() === "") {
+                // Kiểm tra trường Email
+                if (email === "") {
                     emailError.textContent = "Email không được để trống";
                     isValid = false;
                 } else if (!isValidEmail(email)) {
@@ -263,6 +292,50 @@
                     isValid = false;
                 }
 
+                // Kiểm tra trường Mật khẩu
+                if (matKhau === "") {
+                    matKhauError.textContent = "Mật khẩu không được để trống";
+                    isValid = false;
+                }
+
+                // Kiểm tra trường Tích điểm
+                if (tichDiem === "") {
+                    tichDiemError.textContent = "Tích điểm không được để trống";
+                    isValid = false;
+                } else if (isNaN(tichDiem) || tichDiem < 0) {
+                    tichDiemError.textContent = "Tích điểm phải là số dương";
+                    isValid = false;
+                }
+
+                // Kiểm tra trường Trạng thái
+                if (!hoatDong && !khongHoatDong) {
+                    trangThaiError.textContent = "Trạng thái không được để trống";
+                    isValid = false;
+                }
+
+                // Kiểm tra email và số điện thoại với server
+                if (email !== originalEmail) {
+                    await checkEmail(email);
+                } else {
+                    emailValid = true;
+                }
+
+                if (sdt !== originalSdt) {
+                    await checkSdt(sdt);
+                } else {
+                    sdtValid = true;
+                }
+
+                // Kiểm tra email và số điện thoại có hợp lệ không
+                if (!emailValid) {
+                    isValid = false;
+                }
+
+                if (!sdtValid) {
+                    isValid = false;
+                }
+
+                // Trả về kết quả kiểm tra
                 return isValid;
             }
 
@@ -283,6 +356,76 @@
                 var datePattern = /^(0?[1-9]|[12]\d|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
                 return datePattern.test(dateString);
             }
+
+            async function checkEmail(email) {
+                // Kiểm tra nếu email rỗng
+                if (email === '') {
+                    document.getElementById('emailError').textContent = 'Email không được để trống';
+                    emailValid = false;
+                    return;
+                }
+
+                // Kiểm tra định dạng email
+                if (!isValidEmail(email)) {
+                    document.getElementById('emailError').textContent = 'Email không hợp lệ';
+                    emailValid = false;
+                    return;
+                }
+
+                // Kiểm tra email tồn tại
+                try {
+                    const response = await fetch(`/admin/khach-hang/email/${email}`);
+                    const exists = await response.json();
+                    emailValid = !exists;
+                    if (exists) {
+                        document.getElementById('emailError').textContent = 'Email đã tồn tại';
+                    } else {
+                        document.getElementById('emailError').textContent = '';
+                    }
+                } catch (error) {
+                    document.getElementById('emailError').textContent = 'Có lỗi xảy ra, vui lòng thử lại';
+                    emailValid = false;
+                }
+            }
+
+            async function checkSdt(sdt) {
+                // Kiểm tra nếu số điện thoại rỗng
+                if (sdt === '') {
+                    document.getElementById('sdtError').textContent = 'Số điện thoại không được để trống';
+                    sdtValid = false;
+                    return;
+                }
+
+                // Kiểm tra định dạng số điện thoại
+                if (!isValidPhoneNumber(sdt)) {
+                    document.getElementById('sdtError').textContent = 'Số điện thoại không hợp lệ';
+                    sdtValid = false;
+                    return;
+                }
+
+                // Kiểm tra số điện thoại tồn tại
+                try {
+                    const response = await fetch(`/admin/khach-hang/sdt/${sdt}`);
+                    const exists = await response.json();
+                    sdtValid = !exists;
+                    if (exists) {
+                        document.getElementById('sdtError').textContent = 'Số điện thoại đã tồn tại';
+                    } else {
+                        document.getElementById('sdtError').textContent = '';
+                    }
+                } catch (error) {
+                    document.getElementById('sdtError').textContent = 'Có lỗi xảy ra, vui lòng thử lại';
+                    sdtValid = false;
+                }
+            }
+
+            document.getElementById('customerForm').onsubmit = async function(event) {
+                event.preventDefault(); // Ngăn không cho gửi form đi ngay lập tức
+                const isValid = await validateForm();
+                if (isValid) {
+                    this.submit(); // Gửi form đi nếu hợp lệ
+                }
+            };
         </script>
 
                 <!-- Recent Sales End -->
