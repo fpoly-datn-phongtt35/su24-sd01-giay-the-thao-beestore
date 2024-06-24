@@ -179,6 +179,7 @@
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
+
                     <div class="dropdown-menu bg-transparent border-0">
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
@@ -245,181 +246,245 @@
                 <div/>
 
 
-            </div>
 
-            <div class="container-fluid pt-4" style="text-align: center">
 
-                <div style="width: 20%;">
-                    <button class="btn btn-outline-info">
-                        <a class="them" th:href="@{/admin/ma-giam-gia/view-add}" style="color: black;">Thêm Phiếu
-                            Giảm Giá</a>
-                    </button>
-                </div>
 
-<p></p>
-                    <ul style=" margin-left: 600px" class="nav tabs">
 
-                            <li  th:each="tt : ${listTrangThai}">
-                                <button  th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
-                                        data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">
-                                    <a th:href="@{/admin/ma-giam-gia/trang-thai/{status}(status=${tt})}"
-                                       th:text="${tt.getDisplayName()}"></a>
-                                </button>
+                      <div>
+                        <h5 class="card-title">Default Tabs</h5>
+
+                        <!-- Default Tabs -->
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Thêm Phiếu giảm giá</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Tìm Kiếm Nâng Cao</button>
                             </li>
 
+                        </ul>
+                          <div class="tab-content pt-2" id="myTabContent">
+                              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                  <p></p>
+                                  <div style="width: 20%;">
+                                      <button class="btn btn-outline-info">
+                                          <a class="them" th:href="@{/admin/ma-giam-gia/view-add}" style="color: black;">Thêm Phiếu
+                                              Giảm Giá</a>
+                                      </button>
+                                  </div>
 
-                    </ul>
-                </div>
-            </div>
+                              </div>
+                              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                  <div class="row g-2">
+                                      <form th:action="@{/admin/ma-giam-gia/filter}" method="get" onsubmit="return validateDate()">
+                                          <div class="container-fluid pt-3">
+                                              <input type="hidden" id="hiddenTrangThai" name="trangThai" th:value="${trangThai}"/>
+                                              <div class="row g-2">
+                                                  <div class="col-md-4">
+                                                      <!-- Ngày bắt đầu -->
+                                                      <label class="sr-only" for="start7">Ngày bắt đầu</label>
+                                                      <div class="input-group mb-2">
+                                                          <div class="input-group-prepend">
+                                                              <div class="input-group-text">Ngày bắt đầu</div>
+                                                          </div>
+                                                          <input type="date" class="form-control" name="startDate" id="start7"
+                                                                 th:value="${startDate}">
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-md-4">
+                                                      <!-- Ngày kết thúc -->
+                                                      <label class="sr-only" for="end7">Ngày kết thúc</label>
+                                                      <div class="input-group mb-2">
+                                                          <div class="input-group-prepend">
+                                                              <div class="input-group-text">Ngày kết thúc</div>
+                                                          </div>
+                                                          <input type="date" class="form-control" name="endDate" id="end7"
+                                                                 th:value="${endDate}">
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <!-- Button thứ nhất -->
+                                                      <button type="submit" class="btn btn-primary" style="width: 100%"><i class="bi bi-search"></i>Tìm Kiếm</button>
+                                                  </div>
 
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <p></p>
+                                  <div   class="nav tabs">
 
-            <div class="container-fluid pt-4">
-                <div class="bg-light text-center rounded p-4">
-                    <div>
-                        <div class="bg-light rounded h-100 p-4">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th >STT</th>
-<!--                                    <th style="width: 25px">Id</th>-->
-                                    <th>Mã</th>
-                                    <th>Tên</th>
-                                    <th style="width: 25px">Mức giảm</th>
-                                    <th>Mức giảm tối đa</th>
-                                    <th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>
-                                    <th>Áp dụng từ</th>
-                                    <th style="width: 25px">Số lượng</th>
-                                    <th>Trạng thái</th>
-                                    <th style="width: 50px">Thao Tác</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="pgg, state : ${listMaGiam}">
-                                    <td th:text="${state.index+1}"></td>
-<!--                                    <td style="width: 25px" th:text="${pgg.id}"></td>-->
-                                    <td th:text="${pgg.ma}"></td>
-                                    <td th:text="${pgg.ten}"></td>
-                                    <td style="width: 25px" th:text="${pgg.mucGiamGia + '%'}"></td>
-                                    <td>
-
-                                        <span th:if="${pgg.mucGiamToiDa == null}">không giới hạn</span>
-                                        <span th:if="${pgg.mucGiamToiDa != null}"
-                                              th:text="${#numbers.formatDecimal(pgg.mucGiamToiDa, 0, 'POINT', 0, 'COMMA') + ' VND'}"></span>
-                                    </td>
-                                    <td th:text="${pgg.ngayBatDau}"></td>
-                                    <td th:text="${pgg.ngayKetThuc}"></td>
-                                    <td th:text="${#numbers.formatDecimal(pgg.giaTriDonHang, 0, 'POINT', 0, 'COMMA') + ' VND'}"></td>
-                                    <td style="width: 25px" th:text="${pgg.soLuong}"></td>
-                                    <td th:text="${pgg.trangThai.getDisplayName()}"></td>
-                                    <td style="width: 50px">
-
-                                        <a th:href="@{'/admin/ma-giam-gia/view-update/' + ${pgg.id}}">
-                                            <i class="fa fa-fa fa-eye" style="font-size: 13px"></i>
-                                        </a>
-                                        <a th:href="@{'/admin/ma-giam-gia/deletepgg/' + ${pgg.id}}"
-                                           onclick="return confirm(' Bạn Chắc Chắn Muốn Xóa Mã Giảm Giá  Này Chứ ?')">
-                                            <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;">
-                                        </a>
-<!--                                        <label class="switch">-->
-<!--                                            <input type="checkbox"-->
-<!--                                                   th:checked="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
-<!--                                                   th:onchange="return confirmToggle(this.checked)"-->
-<!--                                                   th:onclick="window.location.href='@{${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') ? '/admin/ma-giam-gia/bat/' + pgg.id : '/admin/ma-giam-gia/huy/' + pgg.id}}'">-->
-<!--                                            <span class="slider"></span>-->
-<!--                                        </label>-->
-<!--                                        </test thử tắt bật bằng 1 nút>-->
-
-<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}"-->
-<!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
-<!--                                           onclick="return confirm('Bạn  Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
-<!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
-<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
-<!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
-<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
-<!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
-<!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
-<!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
-<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
-<!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
+                                      <li style="margin-left: 50px" th:each="tt : ${listTrangThai}">
+                                          <button th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
+                                                  data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">
+                                              <a th:href="@{/admin/ma-giam-gia/trang-thai/{status}(status=${tt})}"
+                                                 th:text="${tt.getDisplayName()}"></a>
+                                          </button>
+                                      </li>
 
 
-                                        <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
-<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
-<!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
-<!--                                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
-<!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
+                                  </div>
+                              </div>
 
-<!--                                        &lt;!&ndash; Icon indicating the discount coupon is stopped &ndash;&gt;-->
-<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
-<!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
+                          </div><!-- End Default Tabs -->
 
-<!--                                        &lt;!&ndash; Link to start the discount coupon if it is not active and not upcoming &ndash;&gt;-->
-<!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
-<!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
-<!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
-<!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
-
-<!--                                        &lt;!&ndash; Icon indicating the discount coupon is active &ndash;&gt;-->
-<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
-<!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
-
-<!--                                        &lt;!&ndash; Icon indicating the discount coupon is upcoming &ndash;&gt;-->
-<!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">-->
-<!--                                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>-->
-<!--                                        </a>-->
-                                        <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
-                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
-                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"
-                                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">
-                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
-                                        </a>
-
-                                        <!-- Icon indicating the discount coupon is stopped -->
-                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">
-                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
-                                        </a>
-
-                                        <!-- Link to start the discount coupon if it is not active and not upcoming -->
-                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
-                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"
-                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">
-                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
-                                        </a>
-
-                                        <!-- Icon indicating the discount coupon is active -->
-                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">
-                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
-                                        </a>
-
-                                        <!-- Icon indicating the discount coupon is upcoming -->
-                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">
-                                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>
-                                        </a>
-
-
-                                    </td>
-
-                                </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
                     </div>
                 </div>
-
-                <!-- Table End -->
             </div>
+
+
+
+
+        </div>
+
+
+        <div class="container-fluid pt-4">
+            <div class="bg-light text-center rounded p-4">
+                <div>
+                    <div class="bg-light rounded h-100 p-4">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <!--                                    <th style="width: 25px">Id</th>-->
+                                <th>Mã</th>
+                                <th>Tên</th>
+                                <th style="width: 25px">Mức giảm</th>
+                                <th>Mức giảm tối đa</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Áp dụng từ</th>
+                                <th style="width: 25px">Số lượng</th>
+                                <th>Trạng thái</th>
+                                <th style="width: 50px">Thao Tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="pgg, state : ${listMaGiam}">
+                                <td th:text="${state.index+1}"></td>
+                                <!--                                    <td style="width: 25px" th:text="${pgg.id}"></td>-->
+                                <td th:text="${pgg.ma}"></td>
+                                <td th:text="${pgg.ten}"></td>
+                                <td style="width: 25px" th:text="${pgg.mucGiamGia + '%'}"></td>
+                                <td>
+
+                                    <span th:if="${pgg.mucGiamToiDa == null}">không giới hạn</span>
+                                    <span th:if="${pgg.mucGiamToiDa != null}"
+                                          th:text="${#numbers.formatDecimal(pgg.mucGiamToiDa, 0, 'POINT', 0, 'COMMA') + ' VND'}"></span>
+                                </td>
+                                <td th:text="${pgg.ngayBatDau}"></td>
+                                <td th:text="${pgg.ngayKetThuc}"></td>
+                                <td th:text="${#numbers.formatDecimal(pgg.giaTriDonHang, 0, 'POINT', 0, 'COMMA') + ' VND'}"></td>
+                                <td style="width: 25px" th:text="${pgg.soLuong}"></td>
+                                <td th:text="${pgg.trangThai.getDisplayName()}"></td>
+                                <td style="width: 50px">
+
+                                    <a th:href="@{'/admin/ma-giam-gia/view-update/' + ${pgg.id}}">
+                                        <i class="fa fa-fa fa-eye" style="font-size: 13px"></i>
+                                    </a>
+                                    <a th:href="@{'/admin/ma-giam-gia/deletepgg/' + ${pgg.id}}"
+                                       onclick="return confirm(' Bạn Chắc Chắn Muốn Xóa Mã Giảm Giá  Này Chứ ?')">
+                                        <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;">
+                                    </a>
+                                    <!--                                        <label class="switch">-->
+                                    <!--                                            <input type="checkbox"-->
+                                    <!--                                                   th:checked="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
+                                    <!--                                                   th:onchange="return confirmToggle(this.checked)"-->
+                                    <!--                                                   th:onclick="window.location.href='@{${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') ? '/admin/ma-giam-gia/bat/' + pgg.id : '/admin/ma-giam-gia/huy/' + pgg.id}}'">-->
+                                    <!--                                            <span class="slider"></span>-->
+                                    <!--                                        </label>-->
+                                    <!--                                        </test thử tắt bật bằng 1 nút>-->
+
+                                    <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}"-->
+                                    <!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
+                                    <!--                                           onclick="return confirm('Bạn  Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                                    <!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+                                    <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
+                                    <!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+                                    <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
+                                    <!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
+                                    <!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                                    <!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+                                    <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
+                                    <!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+
+
+                                    <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
+                                    <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
+                                    <!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
+                                    <!--                                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                                    <!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+
+                                    <!--                                        &lt;!&ndash; Icon indicating the discount coupon is stopped &ndash;&gt;-->
+                                    <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
+                                    <!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+
+                                    <!--                                        &lt;!&ndash; Link to start the discount coupon if it is not active and not upcoming &ndash;&gt;-->
+                                    <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
+                                    <!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
+                                    <!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                                    <!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+
+                                    <!--                                        &lt;!&ndash; Icon indicating the discount coupon is active &ndash;&gt;-->
+                                    <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
+                                    <!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+
+                                    <!--                                        &lt;!&ndash; Icon indicating the discount coupon is upcoming &ndash;&gt;-->
+                                    <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">-->
+                                    <!--                                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>-->
+                                    <!--                                        </a>-->
+                                    <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
+                                    <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
+                                       th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"
+                                       onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">
+                                        <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
+                                    </a>
+
+                                    <!-- Icon indicating the discount coupon is stopped -->
+                                    <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">
+                                        <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
+                                    </a>
+
+                                    <!-- Link to start the discount coupon if it is not active and not upcoming -->
+                                    <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
+                                       th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"
+                                       onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">
+                                        <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
+                                    </a>
+
+                                    <!-- Icon indicating the discount coupon is active -->
+                                    <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">
+                                        <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
+                                    </a>
+
+                                    <!-- Icon indicating the discount coupon is upcoming -->
+                                    <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">
+                                        <i class="fa fa-clock-o" style="font-size: 13px;"></i>
+                                    </a>
+
+
+                                </td>
+
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table End -->
         </div>
     </div>
+</div>
 
 </div>
 </div>

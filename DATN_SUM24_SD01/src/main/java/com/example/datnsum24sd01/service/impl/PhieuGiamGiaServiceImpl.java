@@ -69,9 +69,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         PhieuGiamGia pgg = new PhieuGiamGia();
         NhanVien nhanVien = new NhanVien();
         LocalDateTime time = LocalDateTime.now();
-        //tự gen mã pgg mặc định BEESTORE+NGÀY THÁNG NĂM GIỜ PHÚT
-        String ma = "BEESTORE" + String.valueOf( time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() +time.getHour()+time.getMinute()+time.getSecond() ;
-        pgg.setMa(ma);
+        pgg.setMa(phieuGiamGiaRequest.getMa());
         pgg.setTen(phieuGiamGiaRequest.getTen());
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
@@ -84,7 +82,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         pgg.setTrangThai(phieuGiamGiaRequest.htTrangThai());
 
 
-       emailService .sendMaPhieuGiamGiaKH(nhanVien.getEmail(), phieuGiamGiaRequest.getMa());
+//       emailService .sendMaPhieuGiamGiaKH(nhanVien.getEmail(), phieuGiamGiaRequest.getMa());
         return responsitory.save(pgg);
     }
 
@@ -154,5 +152,10 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
     @Override
     public List<PhieuGiamGia> layList(Long tongGiaTri) {
         return responsitory.getAllByGiaTriDonHang(tongGiaTri);
+    }
+
+    @Override
+    public List<PhieuGiamGia> findMaGiamGia(LocalDate start, LocalDate end, TrangThaiPhieuKhuyenMai trangThaiKhuyenMai) {
+        return responsitory.findMaGiamGiasByByNgayBatDauAndNgayKetThuc(start, end);
     }
 }
