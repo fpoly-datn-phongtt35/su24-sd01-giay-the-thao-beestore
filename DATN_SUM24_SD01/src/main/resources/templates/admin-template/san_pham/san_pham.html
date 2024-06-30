@@ -147,7 +147,7 @@
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
-                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -244,8 +244,8 @@
                                     <td th:text="${sanPham.id}"></td>
                                     <td th:text="${sanPham.ma}"></td>
                                     <td th:text="${sanPham.ten}"></td>
-                                    <td th:text="${sanPham.nhaCungCap.id}"></td>
-                                    <td th:text="${sanPham.thuongHieu.id}"></td>
+                                    <td th:text="${sanPham.nhaCungCap.ten}"></td>
+                                    <td th:text="${sanPham.thuongHieu.ten}"></td>
                                     <td th:text="${sanPham.ngaySua}"></td>
                                     <td th:text="${sanPham.ngayTao}"></td>
                                     <td th:text="${sanPham.moTa}"></td>
@@ -255,6 +255,8 @@
                                            class="btn btn-primary">Update</a>
                                         <a th:href="@{'/admin/san-pham/xoaSanPham/'+${sanPham.id}}"
                                            class="btn btn-danger">Delete</a>
+                                        <a th:href="@{'/admin/san-pham/thay-doi-trang-thai/' + ${sanPham.id}}"
+                                           class="btn btn-success">Refresh</a>
                                     </td>
                                 </tr>
                                 </tbody>

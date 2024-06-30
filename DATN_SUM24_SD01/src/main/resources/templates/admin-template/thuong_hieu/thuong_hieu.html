@@ -220,17 +220,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="thuongHieu: ${thuongHieu}">
+                                <tr th:each="thuongHieu: ${listThuongHieu}">
                                     <td th:text="${thuongHieu.id}"></td>
                                     <td th:text="${thuongHieu.ma}"></td>
                                     <td th:text="${thuongHieu.ten}"></td>
                                     <td th:text="${thuongHieu.ngayTao}"></td>
                                     <td th:text="${thuongHieu.ngaySua}"></td>
                                     <td th:text="${thuongHieu.trangThai == 0 ? 'Đang hoạt động' : 'Dừng hoạt động' }"></td>
-                                    <td><a th:href="@{'/admin/thuong-hieu/view-update/'+${thuongHieu.id}}"
+                                    <td>
+                                        <a th:href="@{'/admin/thuong-hieu/view-update/'+${thuongHieu.id}}"
                                            class="btn btn-primary">Update</a>
                                         <a th:href="@{'/admin/thuong-hieu/xoaThuongHieu/'+${thuongHieu.id}}"
                                            class="btn btn-danger">Delete</a>
+                                        <a th:href="@{'/admin/thuong-hieu/thay-doi-trang-thai/' + ${thuongHieu.id}}"
+                                           class="btn btn-success">Refresh</a>
                                     </td>
                                 </tr>
                                 </tbody>

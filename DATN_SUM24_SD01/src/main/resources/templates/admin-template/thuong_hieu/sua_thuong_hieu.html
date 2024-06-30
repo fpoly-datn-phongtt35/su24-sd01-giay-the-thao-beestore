@@ -118,6 +118,7 @@
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết  Thương Hiệu</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
                 <form action="#" th:action="@{/admin/thuong-hieu/suaThuongHieu}" th:object="${thuongHieuUpdate}" onsubmit="return validateForm(event)" method="post">
+                    <input type="text" class="form-control" th:field="*{id}" hidden readonly th:name="idUpdate"/>
                     <div class="mb-3">
                         <label for="ma" class="form-label">Mã Thương Hiệu</label>
                         <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly/>
@@ -131,21 +132,8 @@
                         <input type="text" class="form-control" id="ngayTao" name="ngayTao" th:field="*{ngayTao}"/>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Ngày sửa:</label>
+                        <label for="ngaySua" fclass="form-label">Ngày sửa:</label>
                         <input type="text" class="form-control" id="ngaySua" name="ngaySua" th:field="*{ngaySua}"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Trạng Thái</label>
-                        <div class="form-check form-check-inline">
-                            <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
-                            />
-                            <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input id="trangThaiKhongHoatDong" name="trangThai" type="radio" class="form-check-input"
-                            />
-                            <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
-                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin-left: 40%; margin-top: 15px;">
                         Sửa Thương Hiệu

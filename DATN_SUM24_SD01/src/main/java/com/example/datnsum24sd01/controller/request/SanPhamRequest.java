@@ -14,18 +14,24 @@ import java.time.LocalDateTime;
 public class SanPhamRequest {
 
     private Long id;
+
     private String anhChinh;
 
     @NotBlank(message = "Mã không được để trống!")
     private String ma;
+
     private String moTa;
+
     private LocalDateTime ngaySua;
+
     private LocalDateTime ngayTao;
 
     @NotBlank(message = "Tên không được để trống!")
     private String ten;
 
     private int trangThai;
+
     private Long nhaCungCap;
+
     private Long thuongHieu;
 }

@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/san-pham")
-@RequiredArgsConstructor
 public class SanPhamController {
 
     @Autowired
@@ -54,7 +53,7 @@ public class SanPhamController {
         return "redirect:/admin/san-pham";
     }
 
-    @GetMapping("/thay-doi-trang/{id}")
+    @GetMapping("/thay-doi-trang-thai/{id}")
     public String thaytt(@PathVariable("id") Long id) {
         sanPhamService.thayDoiTrangThai(id);
         return "redirect:/admin/san-pham";

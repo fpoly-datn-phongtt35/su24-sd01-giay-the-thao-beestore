@@ -65,6 +65,7 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
         thuongHieu.setNgayTao(this.thuongHieuRepository.findById(thuongHieu.getId()).get().getNgayTao());
         LocalDateTime currentDateTime = LocalDateTime.now();
         thuongHieu.setNgaySua(currentDateTime);
+
         return this.thuongHieuRepository.save(thuongHieu);
     }
 

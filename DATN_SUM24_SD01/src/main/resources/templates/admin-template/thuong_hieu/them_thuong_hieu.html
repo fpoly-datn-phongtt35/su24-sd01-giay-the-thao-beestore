@@ -35,7 +35,7 @@
         <nav class="navbar bg-light navbar-light">
             <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
 
-                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <h6 class="mb-0">Phạm Văn Dương</h6>
 
                 </div>
             </div>
@@ -53,13 +53,13 @@
                 <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
                     Hàng</a>
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
                     <div class="dropdown-menu bg-transparent border-0">
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
-                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Nhà Cung Cấp</a>
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -70,11 +70,11 @@
                 <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
 
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
-                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
 
 
                     </div>
@@ -99,7 +99,7 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -118,8 +118,6 @@
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
                 <form action="#" th:action="@{/admin/thuong-hieu/themThuongHieu}" th:object="${thuongHieuRequest}"
                       method="post">
-
-
                     <div class="mb-3">
                         <label class="form-label">Mã Thương Hiệu</label>
                         <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly
@@ -131,22 +129,10 @@
                         />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Ngày tạo:</label>
-                        <input type="datetime-local"
-                               id="ngayTao">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Ngày sửa:</label>
-                        <input type="datetime-local"
-                               id="ngaySua">
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label">Trạng thái</label>
                         <input type="text" class="form-control" id="trangThai" name="trangThai"
                                aria-describedby="emailHelp"/>
-
                     </div>
-
                     <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
                         Thêm Thương Hiệu
                     </button>
@@ -159,7 +145,6 @@
 
         </div>
         <!-- Content End -->
-
 
 
     </div>

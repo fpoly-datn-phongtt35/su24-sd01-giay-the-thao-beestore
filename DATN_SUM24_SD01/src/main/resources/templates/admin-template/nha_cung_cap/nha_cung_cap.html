@@ -229,7 +229,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="nhaCungCap: ${nhaCungCap}">
+                                <tr th:each="nhaCungCap: ${listNhaCungCap}">
                                     <td th:text="${nhaCungCap.id}"></td>
                                     <td th:text="${nhaCungCap.ma}"></td>
                                     <td th:text="${nhaCungCap.ten}"></td>
@@ -240,6 +240,8 @@
                                            class="btn btn-primary">Update</a>
                                         <a th:href="@{'/admin/nha-cung-cap/xoaNhaCungCap/'+${nhaCungCap.id}}"
                                            class="btn btn-danger">Delete</a>
+                                        <a th:href="@{'/admin/nha-cung-cap/thay-doi-trang-thai/' + ${nhaCungCap.id}}"
+                                            class="btn btn-success">Refresh</a>
                                     </td>
                                 </tr>
                                 </tbody>

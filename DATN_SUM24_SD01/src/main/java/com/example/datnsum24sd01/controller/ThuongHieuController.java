@@ -24,7 +24,7 @@ public class ThuongHieuController {
 
     @GetMapping()
     public String getAll(Model model) {
-        model.addAttribute("thuongHieu", thuongHieuService.getAllThuongHieu());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
         return "admin-template/thuong_hieu/thuong_hieu";
     }
 
@@ -53,7 +53,7 @@ public class ThuongHieuController {
         return "redirect:/admin/thuong-hieu";
     }
 
-    @GetMapping("/thay-doi-trang/{id}")
+    @GetMapping("/thay-doi-trang-thai/{id}")
     public String thaytt(@PathVariable("id") Long id) {
         thuongHieuService.thayDoiTrangThai(id);
         return "redirect:/admin/thuong-hieu";

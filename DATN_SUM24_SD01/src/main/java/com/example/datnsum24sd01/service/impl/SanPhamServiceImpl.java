@@ -2,10 +2,12 @@ package com.example.datnsum24sd01.service.impl;
 
 
 import com.example.datnsum24sd01.controller.request.SanPhamRequest;
+import com.example.datnsum24sd01.entity.NhaCungCap;
 import com.example.datnsum24sd01.entity.SanPham;
-import com.example.datnsum24sd01.entity.SanPham;
+import com.example.datnsum24sd01.entity.ThuongHieu;
+import com.example.datnsum24sd01.repository.NhaCungCapRepository;
 import com.example.datnsum24sd01.repository.SanPhamRepository;
-import com.example.datnsum24sd01.repository.SanPhamRepository;
+import com.example.datnsum24sd01.repository.ThuongHieuRepository;
 import com.example.datnsum24sd01.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,8 +20,18 @@ import java.util.Optional;
 @Service
 public class SanPhamServiceImpl implements SanPhamService {
 
+    private final SanPhamRepository repository;
+    private final NhaCungCapRepository nhaCungCapRepository;
+    private final ThuongHieuRepository thuongHieuRepository;
+
     @Autowired
     private SanPhamRepository sanPhamRepository;
+
+    public SanPhamServiceImpl(SanPhamRepository repository, NhaCungCapRepository nhaCungCapRepository, ThuongHieuRepository thuongHieuRepository) {
+        this.repository = repository;
+        this.nhaCungCapRepository = nhaCungCapRepository;
+        this.thuongHieuRepository = thuongHieuRepository;
+    }
 
 
     @Override
@@ -32,20 +44,21 @@ public class SanPhamServiceImpl implements SanPhamService {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         SanPham sanPham = new SanPham();
-//        sanPham.setAnhChinh(sanPhamRequest.getAnhChinh());
+        sanPham.setAnhChinh(sanPhamRequest.getAnhChinh());
         sanPham.setMa(sanPhamRequest.getMa());
         sanPham.setMoTa(sanPhamRequest.getMoTa());
         sanPham.setNgaySua(currentDateTime);
         sanPham.setNgayTao(currentDateTime);
         sanPham.setTen(sanPhamRequest.getTen());
         sanPham.setTrangThai(sanPhamRequest.getTrangThai());
-//        sanPham.setNhaCungCap(sanPhamRequest.getNhaCungCap());
-//        sanPham.setThuongHieu(sanPhamRequest.getThuongHieu());
-
+        NhaCungCap nhaCungCap = nhaCungCapRepository.findById(sanPhamRequest.getNhaCungCap()).orElse(null);
+        sanPham.setNhaCungCap(nhaCungCap);
+        ThuongHieu thuongHieu = thuongHieuRepository.findById(sanPhamRequest.getThuongHieu()).orElse(null);
+        sanPham.setThuongHieu(thuongHieu);
         SanPham sanPhamAddLater = sanPhamRepository.save(sanPham);
         String maSP = "SP" + sanPhamAddLater.getId().toString();
         sanPhamAddLater.setMa(maSP);
-        return sanPhamRepository.save(sanPhamAddLater);
+        return repository.save(sanPhamAddLater);
     }
 
     @Override

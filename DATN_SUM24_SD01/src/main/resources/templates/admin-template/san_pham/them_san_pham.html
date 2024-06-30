@@ -134,29 +134,25 @@
                         <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
                         />
                     </div>
-<!--                    <div class="mb-3 row g-2">-->
-<!--                        <div style="width: 80%;">-->
-<!--                            <label class="form-label">Nhà Cung Cấp</label>-->
-<!--                            <input type="text" class="form-control" id="nhaCungCap" name="nhaCungCap"-->
-<!--                                   aria-describedby="emailHelp"/>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3 row g-2">-->
-<!--                        <div style="width: 80%;">-->
-<!--                            <label class="form-label">Thương Hiệu</label>-->
-<!--                            <input type="text" class="form-control" id="thuongHieu" name="thuongHieu"-->
-<!--                                   aria-describedby="emailHelp"/>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                    <div class="mb-3">
-                        <label class="form-label">Ngày sửa:</label>
-                        <input type="datetime-local"
-                               id="ngaySua">
+                    <div class="mb-3 row g-2">
+                        <div style="width: 80%;">
+                            <label class="form-label">Nhà Cung Cấp</label>
+                            <select th:field="*{nhaCungCap}" class="form-select mb-3"
+                                    aria-label="Default select example">
+                                <option th:each="nhaCungCap : ${listNhaCungCap}" th:value="${nhaCungCap.id}"
+                                        th:text="${nhaCungCap.ten}"></option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Ngày tạo:</label>
-                        <input type="datetime-local"
-                               id="ngayTao">
+                    <div class="mb-3 row g-2">
+                        <div style="width: 80%;">
+                            <label class="form-label">Thương Hiệu</label>
+                            <select th:field="*{thuongHieu}" class="form-select mb-3"
+                                    aria-label="Default select example">
+                                <option th:each="thuongHieu : ${listThuongHieu}" th:value="${thuongHieu.id}"
+                                        th:text="${thuongHieu.ten}"></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mô Tả</label>

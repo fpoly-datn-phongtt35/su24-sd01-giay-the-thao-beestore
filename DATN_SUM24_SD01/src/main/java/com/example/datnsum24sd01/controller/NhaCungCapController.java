@@ -23,7 +23,7 @@ public class NhaCungCapController {
 
     @GetMapping()
     public String getAll(Model model) {
-        model.addAttribute("nhaCungCap", nhaCungCapService.getAllNhaCungCap());
+        model.addAttribute("listNhaCungCap", nhaCungCapService.getAllNhaCungCap());
         return "admin-template/nha_cung_cap/nha_cung_cap";
     }
 
@@ -34,7 +34,7 @@ public class NhaCungCapController {
     }
 
     @GetMapping("/view-update/{id}")
-    public String viewUpdate(@PathVariable("id") long id, Model model) {
+    public String viewUpdate(Model model,@PathVariable   long id) {
         NhaCungCap nhaCungCap = this.nhaCungCapService.getOne(id);
         model.addAttribute("nhaCungCapUpdate", nhaCungCap);
         return "admin-template/nha_cung_cap/sua_nha_cung_cap";
@@ -52,7 +52,7 @@ public class NhaCungCapController {
         return "redirect:/admin/nha-cung-cap";
     }
 
-    @GetMapping("/thay-doi-trang/{id}")
+    @GetMapping("/thay-doi-trang-thai/{id}")
     public String thaytt(@PathVariable("id") Long id) {
         nhaCungCapService.thayDoiTrangThai(id);
         return "redirect:/admin/nha-cung-cap";

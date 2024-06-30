@@ -33,13 +33,12 @@
 <div class="container-xxl position-relative bg-white d-flex p-0">
 
 
-
     <!-- Sidebar Start -->
     <div class="sidebar pe-4 pb-3">
         <nav class="navbar bg-light navbar-light">
             <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
 
-                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
@@ -49,7 +48,7 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <h6 class="mb-0">Phạm Văn Dương</h6>
 
                 </div>
             </div>
@@ -57,7 +56,7 @@
                 <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
                     Hàng</a>
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
                     <div class="dropdown-menu bg-transparent border-0">
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
@@ -74,11 +73,11 @@
                 <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
 
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
-                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
 
 
                     </div>
@@ -103,15 +102,14 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
-
 
 
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
 
-                        <a  class="dropdown-item">Đăng xuất</a>
+                        <a class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
@@ -121,7 +119,9 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Sản Phẩm</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form>
+                <form action="#" th:action="@{/admin/san-pham/suaSanPham}" th:object="${sanPhamUpdate}"
+                      onsubmit="return validateForm(event)" method="post">
+                    <input type="text" class="form-control" th:field="*{id}" hidden readonly th:name="idUpdate"/>
 
                     <div class="mb-3">
                         <div class="mb-3">
@@ -139,32 +139,20 @@
                     <div class="mb-3 row g-2">
                         <div style="width: 80%;">
                             <label class="form-label">Nhà Cung Cấp</label>
-                            <select  class="form-select mb-3"
+                            <select th:field="*{nhaCungCap}" class="form-select mb-3"
                                     aria-label="Default select example">
-                                <option ></option>
+                                <option th:each="nhaCungCap : ${listNhaCungCap}" th:value="${nhaCungCap.id}"
+                                        th:text="${nhaCungCap.ten}"></option>
                             </select>
                         </div>
                         <div class="mb-3 row g-2">
                             <div style="width: 80%;">
                                 <label class="form-label">Thương Hiệu</label>
-                                <select  class="form-select mb-3"
+                                <select th:field="*{thuongHieu}" class="form-select mb-3"
                                         aria-label="Default select example">
-                                    <option ></option>
+                                    <option th:each="thuongHieu : ${lisThuongHieu}" th:value="${thuongHieu.id}"
+                                            th:text="${thuongHieu.ten}"></option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Trạng Thái</label>
-                            <div class="form-check form-check-inline">
-                                <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
-                                      />
-                                <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input id="trangThaiKhongHoatDong" name="trangThai" type="radio"
-                                       class="form-check-input"
-                                       />
-                                <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
                             </div>
                         </div>
                     </div>
@@ -172,8 +160,6 @@
                         <label class="form-label">Mô Tả</label>
                         <input type="text" class="form-control" id="moTa" name="moTa"
                                aria-describedby="emailHelp"/>
-
-
                     </div>
                     <!--ADD IMG-->
                     <div class="tab-pane" id="images" role="tabpanel">
@@ -219,22 +205,22 @@
                                 <input type="file" multiple="multiple" id="fileImages" name="fileImages"
                                        onchange="previewImages(event)" accept="image/png,image/jpeg,img/jpg"/>
 
-                                </div>
                             </div>
                         </div>
-
                     </div>
 
-                    <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
-                        Sửa Sản Phẩm
-                    </button>
-                </form>
-
             </div>
-            <!-- Recent Sales End -->
-        </div>
 
+            <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
+                Sửa Sản Phẩm
+            </button>
+            </form>
+
+        </div>
+        <!-- Recent Sales End -->
     </div>
+
+</div>
 </div>
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -246,7 +232,6 @@
 <script src="/../../lib/tempusdominus/js/moment.min.js"></script>
 <script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
 
 
 <!-- Template Javascript -->
