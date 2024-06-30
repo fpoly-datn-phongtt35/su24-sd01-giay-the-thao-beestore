@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,13 +69,15 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
 
         PhieuGiamGia pgg = new PhieuGiamGia();
         NhanVien nhanVien = new NhanVien();
-        LocalDateTime time = LocalDateTime.now();
+
         pgg.setMa(phieuGiamGiaRequest.getMa());
         pgg.setTen(phieuGiamGiaRequest.getTen());
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
         pgg.setMucGiamToiDa(phieuGiamGiaRequest.getMucGiamToiDa());
-        pgg.setNgayTao(LocalDateTime.now());
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date currentDate = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        pgg.setNgayTao(currentDateTime);
         pgg.setSoLuong(phieuGiamGiaRequest.getSoLuong());
         pgg.setGiaTriDonHang(phieuGiamGiaRequest.getGiaTriDonHang());
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());
@@ -104,7 +107,9 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
         pgg.setMucGiamToiDa(phieuGiamGiaRequest.getMucGiamToiDa());
-        pgg.setNgaySua(LocalDateTime.now());
+        LocalDateTime currentTime = LocalDateTime.now();
+        Date currentDate = Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant());
+        pgg.setNgaySua(currentDate);
         pgg.setSoLuong(phieuGiamGiaRequest.getSoLuong());
         pgg.setGiaTriDonHang(phieuGiamGiaRequest.getGiaTriDonHang());
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());
