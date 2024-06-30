@@ -22,6 +22,9 @@ public interface PhieuGiamGiaResponsitory extends JpaRepository<PhieuGiamGia,Lon
             @Param("trangThai") TrangThaiPhieuKhuyenMai trangThaiKhuyenMai
     );
 
+    @Query(value = "select * from phieu_giam_gia mgg where (mgg.ngay_bat_dau between :start and :end) or (mgg.ngay_ket_thuc between :start and :end)", nativeQuery = true)
+    List<PhieuGiamGia> findMaGiamGiasByByNgayBatDauAndNgayKetThuc(@Param("start") LocalDate start, @Param("end") LocalDate end);
+
     @Transactional
     @Modifying
     @Query(value = "update phieu_giam_gia pgg set pgg.trang_thai = 0\n" +
