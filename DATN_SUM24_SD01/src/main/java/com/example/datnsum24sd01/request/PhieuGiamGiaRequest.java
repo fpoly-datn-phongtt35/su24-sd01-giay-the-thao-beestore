@@ -12,12 +12,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 public class PhieuGiamGiaRequest {
     private Long id;
-
+    @NotBlank(message = "Mã Phiếu Không Được Để Trống !")
     private String ma;
 
     @NotBlank(message = "Tên Phiếu Không Được Để Trống !")
@@ -89,5 +90,8 @@ public class PhieuGiamGiaRequest {
 //            return  TrangThaiPhieuKhuyenMai.DANG_DIEN_RA;
 //        }
 //    }
+
+
+
 }
 

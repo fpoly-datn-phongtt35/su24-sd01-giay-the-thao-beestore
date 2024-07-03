@@ -1,4 +1,4 @@
-package com.example.datnsum24sd01.repository;
+package com.example.datnsum24sd01.responsitory;
 
 import com.example.datnsum24sd01.entity.NhanVien;
 import org.springframework.data.jpa.repository.JpaRepository;

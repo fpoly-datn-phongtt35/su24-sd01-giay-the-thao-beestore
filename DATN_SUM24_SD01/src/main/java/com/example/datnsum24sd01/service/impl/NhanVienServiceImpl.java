@@ -1,8 +1,8 @@
 package com.example.datnsum24sd01.service.impl;
 
 import com.example.datnsum24sd01.entity.NhanVien;
-import com.example.datnsum24sd01.repository.NhanVienRepository;
 import com.example.datnsum24sd01.request.NhanVienRequest;
+import com.example.datnsum24sd01.responsitory.NhanVienRepository;
 import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -27,5 +27,16 @@ public enum TrangThaiPhieuKhuyenMai {
                 return this.name();
         }
     }
-
+    public String getColor() {
+        switch (this) {
+            case DANG_DIEN_RA:
+                return "#86e27f";// light green background
+            case DA_KET_THUC:
+                return "#ff8c82"; // light red background
+            case SAP_DIEN_RA:
+                return "#ffe97f"; // light yellow background
+            default:
+                return "#ffffff"; // default background
+        }
+    }
 }
