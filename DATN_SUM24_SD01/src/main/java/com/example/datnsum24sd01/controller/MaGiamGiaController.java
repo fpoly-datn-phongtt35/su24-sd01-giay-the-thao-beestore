@@ -80,6 +80,7 @@ public class MaGiamGiaController {
                 model.addAttribute("errorTen", "Tên Phiếu giảm giá đã tồn tại");
 
                 return "admin-template/ma_giam_gia/them_ma_giam_gia";
+
             }
 
             service.add(phieuGiamGiaRequest);
@@ -98,6 +99,7 @@ public class MaGiamGiaController {
         model.addAttribute("listTrangThai", list);
         return "admin-template/ma_giam_gia/ma_giam_gia";
     }
+
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(
@@ -144,6 +146,25 @@ public class MaGiamGiaController {
         return "redirect:/admin/ma-giam-gia";
     }
 
+    @GetMapping("/filter")
+    public String filterNgay(Model model,
+                             @Param("trangThai") TrangThaiPhieuKhuyenMai trangThaiKhuyenMai,
+                             @Param("startDate") LocalDate startDate,
+                             @Param("endDate") LocalDate endDate) {
+
+        if (startDate.isAfter(endDate)) {
+            model.addAttribute("listTrangThai", list);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            return "redirect/admin/ma-giam-gia";
+        }
+        model.addAttribute("listTrangThai", list);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("listMaGiam", service.findMaGiamGia(startDate, endDate, trangThaiKhuyenMai));
+
+        return "admin-template/ma_giam_gia/ma_giam_gia";
+    }
 
 
 }

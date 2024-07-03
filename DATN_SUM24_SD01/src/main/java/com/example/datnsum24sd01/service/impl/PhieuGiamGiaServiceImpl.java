@@ -4,6 +4,7 @@ import com.example.datnsum24sd01.entity.NhanVien;
 import com.example.datnsum24sd01.entity.PhieuGiamGia;
 import com.example.datnsum24sd01.enumation.TrangThaiPhieuKhuyenMai;
 import com.example.datnsum24sd01.request.PhieuGiamGiaRequest;
+import com.example.datnsum24sd01.responsitory.NhanVienRepository;
 import com.example.datnsum24sd01.responsitory.PhieuGiamGiaResponsitory;
 import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.PhieuGiamGiaService;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +29,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
 
     ZoneId systemZone = ZoneId.systemDefault();
     @Autowired
-    private com.example.datnsum24sd01.repository.NhanVienRepository nhanVienRepository;
+    private NhanVienRepository nhanVienRepository;
     @Autowired
     private EmailService emailService;
     @Override
@@ -68,15 +70,15 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
 
         PhieuGiamGia pgg = new PhieuGiamGia();
         NhanVien nhanVien = new NhanVien();
-        LocalDateTime time = LocalDateTime.now();
-        //tự gen mã pgg mặc định BEESTORE+NGÀY THÁNG NĂM GIỜ PHÚT
-        String ma = "BEESTORE" + String.valueOf( time.getYear()).substring(2) + time.getMonthValue() + time.getDayOfMonth() +time.getHour()+time.getMinute()+time.getSecond() ;
-        pgg.setMa(ma);
+
+        pgg.setMa(phieuGiamGiaRequest.getMa());
         pgg.setTen(phieuGiamGiaRequest.getTen());
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
         pgg.setMucGiamToiDa(phieuGiamGiaRequest.getMucGiamToiDa());
-        pgg.setNgayTao(LocalDateTime.now());
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Date currentDate = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        pgg.setNgayTao(currentDateTime);
         pgg.setSoLuong(phieuGiamGiaRequest.getSoLuong());
         pgg.setGiaTriDonHang(phieuGiamGiaRequest.getGiaTriDonHang());
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());
@@ -84,7 +86,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         pgg.setTrangThai(phieuGiamGiaRequest.htTrangThai());
 
 
-       emailService .sendMaPhieuGiamGiaKH(nhanVien.getEmail(), phieuGiamGiaRequest.getMa());
+//       emailService .sendMaPhieuGiamGiaKH(nhanVien.getEmail(), phieuGiamGiaRequest.getMa());
         return responsitory.save(pgg);
     }
 
@@ -106,7 +108,9 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
         pgg.setMoTa(phieuGiamGiaRequest.getMoTa());
         pgg.setMucGiamGia(phieuGiamGiaRequest.getMucGiamGia());
         pgg.setMucGiamToiDa(phieuGiamGiaRequest.getMucGiamToiDa());
-        pgg.setNgaySua(LocalDateTime.now());
+        LocalDateTime currentTime = LocalDateTime.now();
+        Date currentDate = Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant());
+        pgg.setNgaySua(currentDate);
         pgg.setSoLuong(phieuGiamGiaRequest.getSoLuong());
         pgg.setGiaTriDonHang(phieuGiamGiaRequest.getGiaTriDonHang());
         pgg.setNgayBatDau(phieuGiamGiaRequest.getNgayBatDau());
@@ -154,5 +158,10 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
     @Override
     public List<PhieuGiamGia> layList(Long tongGiaTri) {
         return responsitory.getAllByGiaTriDonHang(tongGiaTri);
+    }
+
+    @Override
+    public List<PhieuGiamGia> findMaGiamGia(LocalDate start, LocalDate end, TrangThaiPhieuKhuyenMai trangThaiKhuyenMai) {
+        return responsitory.findMaGiamGiasByByNgayBatDauAndNgayKetThuc(start, end);
     }
 }

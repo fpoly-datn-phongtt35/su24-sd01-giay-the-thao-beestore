@@ -118,7 +118,15 @@
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Phiếu Giảm Giá</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
                 <form th:action="@{/admin/ma-giam-gia/add}" method="post" th:object="${phieuGiamGia}"
-                      onsubmit="return validateDate()">
+                     >
+<!--                    onsubmit="return validateDate()"-->
+                    <div class="mb-3">
+                        <label for="inputTen" class="form-label">Mã Phiếu Giảm Giá(Viết hoa ,viết liền ,không dấu)</label>
+
+                        <input type="text" class="form-control" id="inputMa" th:field="*{ma}"/>
+                        <div th:if="${#fields.hasErrors('ma')}" th:errors="*{ma}" style="color: red"></div>
+                        <div th:if="${errorMa}" th:text="${errorMa}" style="color: red"></div>
+                    </div>
                     <div class="mb-3">
                         <label for="inputTen" class="form-label">Tên Phiếu Giảm Giá</label>
                         <input type="text" class="form-control" id="inputTen" th:field="*{ten}"/>

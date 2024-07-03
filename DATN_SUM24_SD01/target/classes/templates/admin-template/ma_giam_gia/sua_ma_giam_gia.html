@@ -119,7 +119,17 @@
                 <form th:action="@{/admin/ma-giam-gia/update}" method="post" th:object="${phieuGiamGia}"
                       onsubmit="return validateDate()">
                     <input type="hidden" th:field="*{id}">
-                    <div class="mb-3">
+
+                    <div class="">
+                        <label  for="ngayTao" class="form-label">Ngày Tạo :  <a id="ngayTao" th:text="*{ngayTao}"></a></label>
+
+                    </div>
+
+                    <div class=""  th:if="*{ngaySua}">
+                        <label   class="form-label">Ngày Sửa: <span id="ngaySua" th:text="*{ngaySua}"></span></label>
+                    </div>
+<hr>
+            <div class="mb-3">
                         <label for="inputMa" class="form-label">Mã</label>
                         <input type="text" class="form-control" id="inputMa" th:field="*{ma}" readonly/>
                     </div>

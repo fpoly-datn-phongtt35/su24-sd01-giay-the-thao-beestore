@@ -31,4 +31,5 @@ public interface PhieuGiamGiaService {
     boolean existsByTenAndIdNot(String ten, Long id);
 
     List<PhieuGiamGia> layList(Long tongGiaTri);
+    List<PhieuGiamGia> findMaGiamGia(LocalDate start, LocalDate end, TrangThaiPhieuKhuyenMai trangThaiKhuyenMai);
 }
