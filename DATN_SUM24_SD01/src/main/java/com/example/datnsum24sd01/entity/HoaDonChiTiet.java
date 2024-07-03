@@ -36,9 +36,6 @@ public class HoaDonChiTiet {
     @Column(name = "id", nullable = false)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "id_chi_tiet_san_pham", referencedColumnName = "id")
-//    private ChiTietSanPham chiTietSanPham;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_hoa_don", referencedColumnName = "id")
@@ -73,5 +70,5 @@ public class HoaDonChiTiet {
 
     @Column(name = "trang_thai")
     @Enumerated(ORDINAL)
-    private TrangThaiDonHang trangThai;
+
 }

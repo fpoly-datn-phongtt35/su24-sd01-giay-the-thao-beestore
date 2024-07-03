@@ -1,8 +1,8 @@
 package com.example.datnsum24sd01.controller;
 
 import com.example.datnsum24sd01.entity.NhanVien;
-import com.example.datnsum24sd01.repository.NhanVienRepository;
 import com.example.datnsum24sd01.request.NhanVienRequest;
+import com.example.datnsum24sd01.responsitory.NhanVienRepository;
 import com.example.datnsum24sd01.service.NhanVienService;
 import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class NhanVienController {
     private NhanVienService nhanVienService;
 
     @Autowired
-    private  NhanVienRepository nhanVienRepository;
+    private NhanVienRepository nhanVienRepository;
 
 
     @GetMapping()

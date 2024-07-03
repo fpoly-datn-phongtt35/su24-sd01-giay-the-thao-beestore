@@ -95,6 +95,4 @@ public class HoaDon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_phieu_giam_gia", referencedColumnName = "id", nullable = true)
-    private PhieuGiamGia phieuGiamGia;
 
-}

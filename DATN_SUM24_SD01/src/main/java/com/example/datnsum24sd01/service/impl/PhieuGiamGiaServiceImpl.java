@@ -4,6 +4,7 @@ import com.example.datnsum24sd01.entity.NhanVien;
 import com.example.datnsum24sd01.entity.PhieuGiamGia;
 import com.example.datnsum24sd01.enumation.TrangThaiPhieuKhuyenMai;
 import com.example.datnsum24sd01.request.PhieuGiamGiaRequest;
+import com.example.datnsum24sd01.responsitory.NhanVienRepository;
 import com.example.datnsum24sd01.responsitory.PhieuGiamGiaResponsitory;
 import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.PhieuGiamGiaService;
@@ -28,7 +29,7 @@ public class PhieuGiamGiaServiceImpl implements PhieuGiamGiaService {
 
     ZoneId systemZone = ZoneId.systemDefault();
     @Autowired
-    private com.example.datnsum24sd01.repository.NhanVienRepository nhanVienRepository;
+    private NhanVienRepository nhanVienRepository;
     @Autowired
     private EmailService emailService;
     @Override

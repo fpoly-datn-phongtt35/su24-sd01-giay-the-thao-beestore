@@ -11,6 +11,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
+
 @Getter
 @Setter
 public class RegisterRequest {
@@ -34,10 +36,10 @@ public class RegisterRequest {
         khachHang.setSdt(request.getSdt());
         khachHang.setTen(request.getTen());
         khachHang.setEmail(request.getEmail());
-        khachHang.setNgayTao(LocalDate.now());
+        khachHang.setNgayTao(new Date());
         khachHang.setTrangThai(khachHang.getTrangThai());
         khachHang.setGioiTinh(khachHang.getGioiTinh());
-        khachHang.setNgaySua(LocalDate.now());
+        khachHang.setNgaySua(new Date());
         khachHang.setTichDiem(BigDecimal.valueOf(0));
         return khachHang;
     }
