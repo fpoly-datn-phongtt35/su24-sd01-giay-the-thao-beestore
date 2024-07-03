@@ -126,15 +126,12 @@
                     <div class="mb-3">
                         <div class="mb-3">
                             <label class="form-label">Mã Sản Phẩm</label>
-                            <input type="text" class="form-control" id="ma" name="ma"
-                                   aria-describedby="emailHelp" readonly/>
+                            <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly/>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tên Sản Phẩm</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
-                               aria-describedby="emailHelp"/>
-
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"/>
                     </div>
                     <div class="mb-3 row g-2">
                         <div style="width: 80%;">
@@ -150,16 +147,23 @@
                                 <label class="form-label">Thương Hiệu</label>
                                 <select th:field="*{thuongHieu}" class="form-select mb-3"
                                         aria-label="Default select example">
-                                    <option th:each="thuongHieu : ${lisThuongHieu}" th:value="${thuongHieu.id}"
+                                    <option th:each="thuongHieu : ${listThuongHieu}" th:value="${thuongHieu.id}"
                                             th:text="${thuongHieu.ten}"></option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label for="ngayTao" class="form-label">Ngày tạo</label>
+                        <input type="text" class="form-control" id="ngayTao" name="ngayTao" th:field="*{ngayTao}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ngày sửa:</label>
+                        <input type="text" class="form-control" id="ngaySua" name="ngaySua" th:field="*{ngaySua}"/>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Mô Tả</label>
-                        <input type="text" class="form-control" id="moTa" name="moTa"
-                               aria-describedby="emailHelp"/>
+                        <input type="text" class="form-control" id="moTa" name="moTa" th:field="*{moTa}"/>
                     </div>
                     <!--ADD IMG-->
                     <div class="tab-pane" id="images" role="tabpanel">
@@ -209,18 +213,16 @@
                         </div>
                     </div>
 
+                    <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
+                        Sửa Sản Phẩm
+                    </button>
+                </form>
+
             </div>
-
-            <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
-                Sửa Sản Phẩm
-            </button>
-            </form>
-
+            <!-- Recent Sales End -->
         </div>
-        <!-- Recent Sales End -->
-    </div>
 
-</div>
+    </div>
 </div>
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

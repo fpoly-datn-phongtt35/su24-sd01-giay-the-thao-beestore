@@ -15,6 +15,8 @@ public interface NhaCungCapService {
 
     NhaCungCap getOne(Long id);
 
+    NhaCungCap findById(Long id);
+
     NhaCungCap update(NhaCungCap nhaCungCap);
 
     void thayDoiTrangThai(Long id);

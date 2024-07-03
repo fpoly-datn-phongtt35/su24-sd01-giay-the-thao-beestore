@@ -62,6 +62,15 @@ public class NhaCungCapServiceImpl implements NhaCungCapService {
     }
 
     @Override
+    public NhaCungCap findById(Long id) {
+        Optional<NhaCungCap> nhaCungCap = nhaCungCapRepository.findById(id);
+        if (nhaCungCap.isPresent()) {
+            return nhaCungCap.get();
+        }
+        return null;
+    }
+
+    @Override
     public NhaCungCap update(NhaCungCap nhaCungCap) {
         nhaCungCap.setNgayTao(this.nhaCungCapRepository.findById(nhaCungCap.getId()).get().getNgayTao());
         LocalDateTime currentDateTime = LocalDateTime.now();

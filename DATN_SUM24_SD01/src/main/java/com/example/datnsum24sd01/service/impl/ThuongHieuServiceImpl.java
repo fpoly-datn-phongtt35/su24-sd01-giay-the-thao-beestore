@@ -84,4 +84,13 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
 
     }
 
+    @Override
+    public ThuongHieu findById(Long id) {
+        Optional<ThuongHieu> thuongHieu = thuongHieuRepository.findById(id);
+        if (thuongHieu.isPresent()) {
+            return thuongHieu.get();
+        }
+        return null;
+    }
+
 }
