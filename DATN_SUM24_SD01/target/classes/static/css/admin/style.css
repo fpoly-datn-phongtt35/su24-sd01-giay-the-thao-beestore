@@ -311,5 +311,14 @@
     max-height: 100px; /* Kích thước tối đa của ảnh */
     object-fit: cover; /* Điều chỉnh việc hiển thị hình ảnh */
 }
+.status-dang-dien-ra {
+    color: green;
+}
+.status-da-ket-thuc {
+    color: red;
+}
+.status-sap-dien-ra {
+    color: orange;
+}
 
 
