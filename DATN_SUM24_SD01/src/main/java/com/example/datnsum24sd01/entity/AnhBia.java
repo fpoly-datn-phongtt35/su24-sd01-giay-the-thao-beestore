@@ -36,10 +36,10 @@ public class AnhBia {
     @Column(name = "ngay_sua")
     private String ngaysua;
 
-    @ManyToOne
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JoinColumn(name = "id_san_pham")
-    private SanPham sanPham;
+//    @ManyToOne
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    @JoinColumn(name = "id_san_pham")
+//    private SanPham sanPham;
 
 }
