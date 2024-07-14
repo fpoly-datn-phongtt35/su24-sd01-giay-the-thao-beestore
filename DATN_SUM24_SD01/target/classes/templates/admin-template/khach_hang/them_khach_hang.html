@@ -61,6 +61,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -123,17 +125,19 @@
                         <div id="tenError" class="text-danger"></div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Giới Tính:</label>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gioiTinh" id="namRadio" th:field="*{gioiTinh}" value="1" />
+                            <input class="form-check-input" type="radio" name="gioiTinh" id="namRadio" value="NAM"
+                                   th:field="*{gioiTinh}"/>
                             <label class="form-check-label" for="namRadio">Nam</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gioiTinh" id="nuRadio" th:field="*{gioiTinh}" value="0" />
+                            <input class="form-check-input" type="radio" name="gioiTinh" id="nuRadio" value="NU"
+                                   th:field="*{gioiTinh}"/>
                             <label class="form-check-label" for="nuRadio">Nữ</label>
                         </div>
-                        <div id="gioiTinhError" class="text-danger"></div>
+                        <div th:if="${#fields.hasErrors('gioiTinh')}" th:errors="*{gioiTinh}" style=" color: red"></div>
                     </div>
+
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" id="email" th:field="*{email}" onchange="checkEmail()" />
@@ -289,14 +293,6 @@
                 }
             };
         </script>
-
-
-
-
-
-        <!-- Content End -->
-
-
     </div>
 </div>
 <!-- JavaScript Libraries -->
