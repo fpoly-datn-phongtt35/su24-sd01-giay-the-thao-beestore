@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -31,15 +30,12 @@ public class AnhBia {
 
     @Column(name = "url")
     private String url;
-    @Column(name = "ngay_tao")
-    private String ngaytao;
-    @Column(name = "ngay_sua")
-    private String ngaysua;
 
-//    @ManyToOne
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @JoinColumn(name = "id_san_pham")
-//    private SanPham sanPham;
+    @ManyToOne
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JoinColumn(name = "id_san_pham")
+    private SanPham sanPham;
 
 }
+
