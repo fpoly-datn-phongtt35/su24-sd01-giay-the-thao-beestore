@@ -144,6 +144,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -212,9 +214,9 @@
 
             </div>
             <div class="container-fluid pt-2">
-                <div class="bg-light text-center rounded p-4">
+                <div class="bg-light text-center ">
                     <div>
-                        <div class="bg-light rounded h-100 p-4">
+                        <div class="bg-light rounded ">
                             <div class="row mb-3">
                                 <!-- Phần tìm kiếm và lọc -->
                                 <div class="col-md-10 d-flex justify-content-center align-items-center">
@@ -244,7 +246,10 @@
                             </div>
 
 
-                            <table id="example" class="table table-striped" style="width:100%">
+                            <div class="bg-light text-center rounded ">
+                                <div>
+                                    <div class="bg-light rounded h-100 p-4">
+                                        <table id="example" class="table table-striped" >
                                 <thead>
                                 <tr>
                                     <th>STT</th>
@@ -253,31 +258,31 @@
                                     <th>Giới tính</th>
                                     <th>Ngày sinh</th>
                                     <th>SĐT</th>
-                                    <th>Email</th>
                                     <th>Trạng Thái</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
-
-
                                 <tbody>
                                 <tr th:each="khachHang, stat : ${list}">
                                     <td th:text="${stat.index + 1}"></td>
                                     <td th:text="${khachHang.ma}">Mã</td>
                                     <td th:text="${khachHang.ten}">Tên</td>
-                                    <td th:text="${khachHang.gioiTinh == 1 ? 'Nam' : 'Nữ'}">Giới tính</td>
+                                    <td th:text="${khachHang.gioiTinh }">Giới tính</td>
                                     <td th:text="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}"></td>
                                     <td th:text="${khachHang.sdt}">SĐT</td>
-                                    <td th:text="${khachHang.email}">Email</td>
-                                    <td th:text="${khachHang.trangThai == 1 ? 'Hoạt động' : 'Không hoạt động'}">Trạng
+                                    <td th:text="${khachHang.trangThai == 1 ? 'Hoạt Động' : 'KHông Hoạt Động'}">Trạng
                                         Thái
                                     </td>
                                     <td>
                                         <a th:href="@{'/admin/khach-hang/view-update/' + ${khachHang.id}}"
-                                           class="btn btn-primary btn-sm">Sửa</a>
+                                         >
+                                            <img src="/../../img/pen_v2.png" style="width: 25px; padding-right: 5px;">
+                                        </a>
+
+
                                         <a th:href="@{'/admin/khach-hang/delete/' + ${khachHang.id}}"
-                                           class="btn btn-danger btn-sm"
-                                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;"></a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -291,7 +296,7 @@
         </div>
     </div>
 </div>
-<!--thư viện js tích tìm kiếm-->
+
 <script>
     new DataTable('#example');
 </script>
@@ -303,9 +308,7 @@
         $('#example').DataTable();
     })
 </script>
-<!--thư viện js tích tìm kiếm end-->
-<!-- JavaScript Libraries -->
-<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/../../lib/chart/chart.min.js"></script>
 <script src="/../../lib/easing/easing.min.js"></script>

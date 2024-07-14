@@ -1,6 +1,7 @@
 package com.example.datnsum24sd01.responsitory;
 
 import com.example.datnsum24sd01.entity.KhachHang;
+import com.example.datnsum24sd01.enumation.TrangThai;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface KhachHangResponsitory extends JpaRepository<KhachHang,Long> {
+    @Query("""
+                SELECT kh FROM KhachHang kh
+                WHERE 
+                   kh.trangThai = :trangThai and kh.id not in (1)
+            """)
+    List<KhachHang> getAllByTrangThai(
+            @Param("trangThai") TrangThai trangThai
+    );
+
     Optional<KhachHang> findByEmail(String email);
     Optional<KhachHang> findByEmailAndIdNot(String email,Long id);
     boolean existsBySdt(String sdt);

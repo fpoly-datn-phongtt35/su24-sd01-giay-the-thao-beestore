@@ -1,5 +1,7 @@
 package com.example.datnsum24sd01.entity;
 
+import com.example.datnsum24sd01.enumation.GioiTinh;
+import com.example.datnsum24sd01.enumation.TrangThai;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,20 +40,20 @@ public class KhachHang {
     @Column(name = "email", nullable = true)
     private String email;
 
-    @Column(name = "gioi_tinh", nullable = true)
-    private Byte gioiTinh;
+    @Column(name = "gioi_tinh")
+    @Enumerated(ORDINAL)
+    private GioiTinh gioiTinh;
 
     @Column(name = "ma", nullable = true, unique = true)
     private String ma;
 
     @Column(name = "mat_khau", nullable = true)
     private String matKhau;
+    @Column(name = "ngay_tao")
+    private LocalDate ngayTao;
 
-    @Column(name = "ngay_sua", nullable = true)
-    private Date ngaySua;
-
-    @Column(name = "ngay_tao", nullable = true)
-    private Date ngayTao;
+    @Column(name = "ngay_sua")
+    private LocalDate ngaySua;
 
     @Column(name = "sdt", nullable = true, unique = true)
     private String sdt;
@@ -67,5 +69,15 @@ public class KhachHang {
 
     @Column(name = "ngay_sinh", nullable = true)
     private Date ngaySinh;
+
+
+    @OneToMany(mappedBy = "khachHang", cascade = CascadeType.ALL)
+    private List<DiaChi> listDiaChi;
+
+    public String getMainDiaChi(){
+
+        return this.listDiaChi.get(0).getDiaChi();
+    }
+
 
 }
