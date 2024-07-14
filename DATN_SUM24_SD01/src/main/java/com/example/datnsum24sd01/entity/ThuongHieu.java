@@ -1,5 +1,6 @@
 package com.example.datnsum24sd01.entity;
 
+import com.example.datnsum24sd01.enumation.TrangThai;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -31,22 +32,22 @@ public class ThuongHieu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Mã Thương Hiệu không được để trống!")
-    @Column(name = "ma")
+    @NotBlank(message = "Mã không được để trống!")
+    @Column(name = "ma", nullable = false, unique = true)
     private String ma;
 
-    @NotBlank(message = "Tên Thương Hiệu Không được để trống!")
-    @Column(name = "ten")
+    @NotBlank(message = "Tên Không được để trống!")
+    @Column(name = "ten", nullable = false, unique = true)
     private String ten;
 
     @Column(name = "ngay_tao")
-    private LocalDate ngaytao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_sua")
-    private LocalDate ngaysua;
+    private LocalDate ngaySua;
 
     @Column(name = "trang_thai")
-
-    private Integer trangThai;
+    @Enumerated(ORDINAL)
+    private TrangThai trangThai;
 
 }
