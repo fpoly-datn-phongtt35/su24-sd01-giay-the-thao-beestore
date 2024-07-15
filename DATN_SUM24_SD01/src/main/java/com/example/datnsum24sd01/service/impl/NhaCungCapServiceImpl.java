@@ -90,6 +90,20 @@ public class NhaCungCapServiceImpl implements NhaCungCapService {
         }
         this.nhaCungCapRepository.save(nhaCungCap);
 
-
     }
+    @Override
+    public boolean existByMa(String ma) {
+        return nhaCungCapRepository.existsByMa(ma);
+    }
+
+    @Override
+    public boolean existsByTen(String ten) {
+        return nhaCungCapRepository.existsByTen(ten);
+    }
+
+    @Override
+    public boolean existsByTenAndIdNot(String ten, Long id) {
+        return nhaCungCapRepository.existsByTenAndIdNot(ten,id);
+    }
+
 }

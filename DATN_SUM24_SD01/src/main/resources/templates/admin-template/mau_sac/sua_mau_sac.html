@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -118,18 +118,25 @@
             <div class="container-fluid pt-4">
                 <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Màu Sắc</h6>
                 <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                    <form >
+                    <form action="#" th:action="@{/admin/mau-sac/suaMauSac}" th:object="${mauSacUpdate}"
+                          onsubmit="return validateForm(event)" method="post">
+                        <input type="text" class="form-control" th:field="*{id}" hidden readonly th:name="idUpdate"/>
 
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Mã </label>
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"  readonly/>
-
+                            <label for="ma" class="form-label">Mã Màu Sắc</label>
+                            <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly/>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1"  />
-
+                            <label for="ten" class="form-label">Tên Màu Sắc</label>
+                            <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ngayTao" class="form-label">Ngày tạo</label>
+                            <input type="text" class="form-control" id="ngayTao" name="ngayTao" th:field="*{ngayTao}"/>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ngày sửa:</label>
+                            <input type="text" class="form-control" id="ngaySua" name="ngaySua" th:field="*{ngaySua}"/>
                         </div>
                         <button type="submit" class="btn btn-primary " style="margin-left: 30%;">
                             Sửa Màu Sắc

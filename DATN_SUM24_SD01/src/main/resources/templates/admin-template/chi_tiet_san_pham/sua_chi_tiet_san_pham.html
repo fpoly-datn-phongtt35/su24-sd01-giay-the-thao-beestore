@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -98,54 +98,56 @@
     <div class="container-fluid pt-4">
         <h6 class="mb-4" style="font-size: 40px; text-align: center;">Sửa Chi Tiết Sản Phẩm</h6>
         <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-            <form th:action="@{/admin/chi-tiet-san-pham/add}" method="post" th:object="${chiTietSanPham}">
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Sản phẩm</label>
-                    <input type="text" class="form-control" id="ten" name="ten"
-                           aria-describedby="emailHelp"/>
+            <form action="#" th:action="@{/admin/chi-tiet-san-pham/suaChiTietSanPham}" th:object="${chiTietSanPhamUpdate}"
+                  onsubmit="return validateForm(event)" method="post">
+                <input type="text" class="form-control" th:field="*{id}" hidden readonly th:name="idUpdate"/>
+                <div style="width: 80%;">
+                    <label class="form-label">Sản Phẩm</label>
+                    <select th:field="*{sanPham}" class="form-select mb-3"
+                            aria-label="Default select example">
+                        <option th:each="sanPham : ${listSanPham}" th:value="${sanPham.id}"
+                                th:text="${sanPham.ten}"></option>
+                    </select>
                 </div>
-
-                <div class="row mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Đế giày</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="ten" name="ten"
-                               aria-describedby="emailHelp"/>
-                    </div>
-
+                <div style="width: 80%;">
+                    <label class="form-label">Màu sắc</label>
+                    <select th:field="*{mauSac}" class="form-select mb-3"
+                            aria-label="Default select example">
+                        <option th:each="mauSac : ${listMauSac}" th:value="${mauSac.id}"
+                                th:text="${mauSac.ten}"></option>
+                    </select>
                 </div>
-
-                <div class="row mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Màu sắc</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="ten" name="ten"
-                               aria-describedby="emailHelp"/>
-
-                    </div>
-
+                <div style="width: 80%;">
+                    <label class="form-label">Kích thước</label>
+                    <select th:field="*{kichThuoc}" class="form-select mb-3"
+                            aria-label="Default select example">
+                        <option th:each="kichThuoc : ${listKichThuoc}" th:value="${kichThuoc.id}"
+                                th:text="${kichThuoc.ten}"></option>
+                    </select>
                 </div>
-
-                <div class="row mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Kích thước</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="ten" name="ten"
-                               aria-describedby="emailHelp"/>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Số lượng tồn </label>
-                    <input type="number" class="form-control" id="exampleInputEmail1"
-                           aria-describedby="emailHelp" />
+                <div style="width: 80%;">
+                    <label class="form-label">Đế giày</label>
+                    <select th:field="*{deGiay}" class="form-select mb-3"
+                            aria-label="Default select example">
+                        <option th:each="deGiay : ${listDeGiay}" th:value="${deGiay.id}"
+                                th:text="${deGiay.ten}"></option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Giá bán</label>
-                    <input type="number" class="form-control" id="exampleInputPassword1" />
+                    <label class="form-label">Số lượng tồn</label>
+                    <input type="text" class="form-control" id="soLuongTon" name="soLuongTon" th:field="*{soLuongTon}"/>
                 </div>
-        </div>
+                <div class="mb-3">
+                    <label class="form-label">Giá bán</label>
+                    <input type="text" class="form-control" id="giaBan" name="giaBan" th:field="*{giaBan}"/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Giá mặc định</label>
+                    <input type="text" class="form-control" id="giaMacDinh" name="giaMacDinh" th:field="*{giaMacDinh}"/>
+                </div>
+
+
+
         <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
             Sửa Sản Phẩm
         </button>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -216,6 +216,20 @@
                                 <th>Chức Năng</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <tr th:each="mauSac: ${listMauSac}">
+                                <td th:text="${mauSac.id}"></td>
+                                <td th:text="${mauSac.ma}"></td>
+                                <td th:text="${mauSac.ten}"></td>
+                                <td th:text="${mauSac.ngayTao}"></td>
+                                <td th:text="${mauSac.ngaySua}"></td>
+                                <td><a th:href="@{'/admin/mau-sac/view-update/'+${mauSac.id}}"
+                                       class='fas fa-wrench' style='font-size:24px;color: green'></a>
+                                    <a th:href="@{'/admin/mau-sac/xoaMauSac/'+${mauSac.id}}"
+                                       class='far fa-trash-alt' style='font-size:24px;color:red'></a>
+                                </td>
+                            </tr>
+                            </tbody>
 
                         </table>
                     </div>

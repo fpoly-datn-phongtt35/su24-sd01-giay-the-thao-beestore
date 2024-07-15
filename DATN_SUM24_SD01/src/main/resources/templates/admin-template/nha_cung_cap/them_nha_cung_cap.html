@@ -97,8 +97,6 @@
 
             <form action="#" th:action="@{/admin/nha-cung-cap/themNhaCungCap}" th:object="${nhaCungCapRequest}"
                   method="post">
-
-
                 <div class="mb-3">
                     <label class="form-label">Mã Nhà Cung Cấp</label>
                     <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly
@@ -109,23 +107,6 @@
                     <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
                     />
                 </div>
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">Ngày tạo:</label>-->
-<!--                    <input type="datetime-local"-->
-<!--                           id="ngayTao">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label class="form-label">Ngày sửa:</label>-->
-<!--                    <input type="datetime-local"-->
-<!--                           id="ngaySua">-->
-<!--                </div>-->
-                <div class="mb-3">
-                    <label class="form-label">Trạng thái</label>
-                    <input type="text" class="form-control" id="trangThai" name="trangThai"
-                           aria-describedby="emailHelp"/>
-
-                </div>
-
                 <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
                     Thêm Nhà Cung Cấp
                 </button>

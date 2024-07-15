@@ -20,4 +20,10 @@ public interface NhaCungCapService {
     NhaCungCap update(NhaCungCap nhaCungCap);
 
     void thayDoiTrangThai(Long id);
+
+    boolean existByMa(String ma);
+
+    boolean existsByTen(String ten);
+
+    boolean existsByTenAndIdNot(String ten, Long id);
 }

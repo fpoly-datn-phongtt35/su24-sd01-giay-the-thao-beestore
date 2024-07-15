@@ -12,6 +12,7 @@
     <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
     <!--thư viện css tích tìm kiếm-->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
     <style>
         /* Đổi màu nền và màu chữ của các nút phân trang */
@@ -237,11 +238,11 @@
                                     <td th:text="${nhaCungCap.ngaySua}"></td>
                                     <td th:text="${nhaCungCap.trangThai == 0 ? 'Đang hoạt động' : 'Dừng hoạt động' }"></td>
                                     <td><a th:href="@{'/admin/nha-cung-cap/view-update/'+${nhaCungCap.id}}"
-                                           class="btn btn-primary">Update</a>
+                                           class='fas fa-wrench' style='font-size:24px;color: green'></a>
                                         <a th:href="@{'/admin/nha-cung-cap/xoaNhaCungCap/'+${nhaCungCap.id}}"
-                                           class="btn btn-danger">Delete</a>
+                                           class='far fa-trash-alt' style='font-size:24px;color:red'></a>
                                         <a th:href="@{'/admin/nha-cung-cap/thay-doi-trang-thai/' + ${nhaCungCap.id}}"
-                                            class="btn btn-success">Refresh</a>
+                                           class="fa fa-refresh" style="font-size:24px"></a>
                                     </td>
                                 </tr>
                                 </tbody>

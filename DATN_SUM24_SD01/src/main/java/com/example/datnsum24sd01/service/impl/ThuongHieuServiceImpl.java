@@ -85,12 +85,20 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
     }
 
     @Override
-    public ThuongHieu findById(Long id) {
-        Optional<ThuongHieu> thuongHieu = thuongHieuRepository.findById(id);
-        if (thuongHieu.isPresent()) {
-            return thuongHieu.get();
-        }
-        return null;
+    public boolean existByMa(String ma) {
+        return thuongHieuRepository.existsByMa(ma);
     }
+
+    @Override
+    public boolean existsByTen(String ten) {
+        return thuongHieuRepository.existsByTen(ten);
+    }
+
+    @Override
+    public boolean existsByTenAndIdNot(String ten, Long id) {
+        return thuongHieuRepository.existsByTenAndIdNot(ten,id);
+    }
+
+
 
 }

@@ -20,5 +20,9 @@ public interface ThuongHieuService {
 
     void thayDoiTrangThai(Long id);
 
-    ThuongHieu findById(Long id);
+    boolean existByMa(String ma);
+
+    boolean existsByTen(String ten);
+
+    boolean existsByTenAndIdNot(String ten, Long id);
 }

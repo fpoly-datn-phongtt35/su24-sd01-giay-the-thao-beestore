@@ -1,28 +1,34 @@
 package com.example.datnsum24sd01.controller.request;
 
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-
-public class NhaCungCapRequest {
+public class ChiTietSanPhamRequest {
 
     private Long id;
 
+    private BigDecimal giaBan;
 
-    private String ma;
+    private BigDecimal giaMacDinh;
 
     private LocalDateTime ngaySua;
+
     private LocalDateTime ngayTao;
 
-    @NotEmpty(message = "Tên không được để trống!")
-    private String ten;
+    private int soLuongTon;
 
     private int trangThai;
+
+    private Long deGiay;
+
+    private Long kichThuoc;
+
+    private Long mauSac;
+
+    private Long sanPham;
 }

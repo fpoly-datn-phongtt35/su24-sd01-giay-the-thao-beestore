@@ -7,5 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NhaCungCapRepository extends JpaRepository<NhaCungCap, Long> {
 
+    boolean existsByMa(String ma);
+
+    boolean existsByTen(String ten);
+
+    boolean existsByTenAndIdNot(String ten, Long id);
 
 }

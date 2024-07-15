@@ -3,9 +3,11 @@ package com.example.datnsum24sd01.controller;
 import com.example.datnsum24sd01.controller.request.NhaCungCapRequest;
 import com.example.datnsum24sd01.entity.NhaCungCap;
 import com.example.datnsum24sd01.service.NhaCungCapService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,8 +43,13 @@ public class NhaCungCapController {
     }
 
     @PostMapping("/themNhaCungCap")
-    public String addNhaCungCap(@ModelAttribute("nhaCungCapRequest") NhaCungCapRequest nhaCungCapRequest) {
+    public String addNhaCungCap(@Valid @ModelAttribute("nhaCungCapRequest") NhaCungCapRequest nhaCungCapRequest,
+                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "admin-template/nha_cung_cap/them_nha_cung_cap";
+        }
         nhaCungCapService.add(nhaCungCapRequest);
+
         return "redirect:/admin/nha-cung-cap";
     }
 
@@ -58,12 +65,12 @@ public class NhaCungCapController {
         return "redirect:/admin/nha-cung-cap";
     }
 
+
     @GetMapping("/xoaNhaCungCap/{id}")
     public String deleteNhaCungCap(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         String note = nhaCungCapService.delete(id);
         redirectAttributes.addFlashAttribute("deleteMessage", note);
         return "redirect:/admin/nha-cung-cap";
     }
-
 }
 

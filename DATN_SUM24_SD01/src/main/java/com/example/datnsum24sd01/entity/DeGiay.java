@@ -14,15 +14,15 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-@Table(name = "nha_cung_cap")
-public class NhaCungCap {
+@Table(name = "de_giay")
+public class DeGiay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -31,15 +31,16 @@ public class NhaCungCap {
     @Column(name = "ma")
     private String ma;
 
+    @Column(name = "ten")
+    private String ten;
+
     @Column(name = "ngay_sua")
     private LocalDateTime ngaySua;
 
     @Column(name = "ngay_tao")
     private LocalDateTime ngayTao;
 
-    @Column(name = "ten")
-    private String ten;
 
-    @Column(name = "trang_thai")
-    private int trangThai;
+
+
 }
