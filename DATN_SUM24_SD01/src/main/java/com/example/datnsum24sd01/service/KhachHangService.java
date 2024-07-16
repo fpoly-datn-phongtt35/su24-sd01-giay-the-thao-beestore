@@ -9,7 +9,7 @@ public interface KhachHangService {
 
     KhachHang add(KhachHangRequest khachHangRequest);
 
-    String delete(Integer id);
+    String delete(Long id);
 
     boolean checkSdtDuplicate(String sdt);
 
@@ -17,7 +17,7 @@ public interface KhachHangService {
     boolean checkEmailDuplicate(String email);
 
 
-    KhachHang getOne(Integer id);
+    KhachHang getOne(Long id);
 
     KhachHang update(KhachHang khachHang);
 }
