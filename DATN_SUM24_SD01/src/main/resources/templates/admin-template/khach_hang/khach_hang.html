@@ -239,7 +239,7 @@
 
                                 <!-- Phần nút quay về -->
                                 <div class="col-md-2 d-flex justify-content-end align-items-center">
-                                    <a href="/admin/khach-hang" class="btn btn-outline-success">Quay về</a>
+                                    <a href="/admin/khach-hang" class="btn btn-outline-success"><i class="bi bi-arrow-clockwise"></i></a>
                                 </div>
                             </div>
 
@@ -273,12 +273,16 @@
                                         Thái
                                     </td>
                                     <td>
-                                        <a th:href="@{'/admin/khach-hang/view-update/' + ${khachHang.id}}"
-                                           class="btn btn-primary btn-sm">Sửa</a>
-                                        <a th:href="@{'/admin/khach-hang/delete/' + ${khachHang.id}}"
-                                           class="btn btn-danger btn-sm"
-                                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+                                        <div class="btn-group">
+                                            <a th:href="@{'/admin/khach-hang/view-update/' + ${khachHang.id}}" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-pencil-square"></i> Sửa
+                                            </a>
+                                            <a th:href="@{'/admin/khach-hang/delete/' + ${khachHang.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                                <i class="bi bi-trash"></i> Xóa
+                                            </a>
+                                        </div>
                                     </td>
+
                                 </tr>
                                 </tbody>
 

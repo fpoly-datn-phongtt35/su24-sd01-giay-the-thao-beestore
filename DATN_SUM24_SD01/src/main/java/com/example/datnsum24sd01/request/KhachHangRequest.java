@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KhachHangRequest {
-    private Integer id;
+    private Long id;
     private String email;
     private Byte gioiTinh;
     private String ma;

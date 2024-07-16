@@ -20,7 +20,7 @@ public class KhachHang {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "email", nullable = true)
     private String email;

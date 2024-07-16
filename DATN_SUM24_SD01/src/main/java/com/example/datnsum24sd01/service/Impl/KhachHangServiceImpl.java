@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.datnsum24sd01.entity.KhachHang;
 import com.example.datnsum24sd01.request.KhachHangRequest;
-import com.example.datnsum24sd01.responsitory.KhachHangRepository;
+import com.example.datnsum24sd01.repository.KhachHangRepository;
 
 @Service
 public class KhachHangServiceImpl implements KhachHangService {
@@ -54,7 +54,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public String delete(Integer id) {
+    public String delete(Long id) {
         Optional<KhachHang> khachHangOptional = khachHangRepository.findById(id);
         if (khachHangOptional.isPresent()) {
             khachHangRepository.deleteById(id);
@@ -79,7 +79,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
 
     @Override
-    public KhachHang getOne(Integer id) {
+    public KhachHang getOne(Long id) {
         Optional<KhachHang> khachHang = khachHangRepository.findById(id);
         return khachHang.orElse(null);
     }
