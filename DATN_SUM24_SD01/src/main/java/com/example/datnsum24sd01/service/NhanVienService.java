@@ -5,6 +5,7 @@ import com.example.datnsum24sd01.request.NhanVienRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface NhanVienService {
     List<NhanVien> getAll();
@@ -22,9 +23,12 @@ public interface NhanVienService {
     boolean checkEmailDuplicate(String mail);
     boolean checkEmailDuplicate(String mail, long id);
 
+
     NhanVien getOne(long id);
 
     NhanVien update(NhanVien nhanVien);
+
+
 
     void thayDoiTrangThai(long id);
 

@@ -117,6 +117,9 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Nhân Viên</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
+                <a type="button" class="btn btn-primary" id="toggleCamera" data-toggle="modal"
+                   data-target="#exampleModal"><i class="bi bi-upc-scan"
+                ></i></a>
 
                 <form action="#" th:action="@{/admin/nhan-vien/add}" th:object="${nhanVienRequest}" method="post" onsubmit="return validateForm(event)">
                     <div class="mb-3">
@@ -261,6 +264,64 @@
 </div>
 <!-- Template Javascript -->
 <script src="../../js/admin/main.js"></script>
+<script>
+    let video = document.getElementById("preview");
+    let scanner;
+
+    let isCameraOn = false;
+    document.getElementById('toggleCamera').addEventListener('click', function () {
+        if (isCameraOn) {
+            stopCamera();
+        } else {
+            startCamera();
+        }
+    });
+    // document
+    //     .getElementById("toggleCamera")
+    //     .addEventListener("click", function () {
+    //         if (isCameraOn) {
+    //             stopCamera();
+    //         } else {
+    //             startCamera();
+    //         }
+    //     });
+
+    function startCamera() {
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner = new Instascan.Scanner({video: video});
+                scanner.addListener('scan', function (content) {
+                    // Xử lý dữ liệu sau khi quét xong
+                    handleScanResult(content);
+
+                    // Tắt camera sau khi quét xong
+                    stopCamera();
+                });
+
+                scanner.start(cameras[0]);
+                isCameraOn = true;
+            } else {
+                console.error('Không tìm thấy camera.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+        });
+    }
+
+    function stopCamera() {
+        if (scanner) {
+            scanner.stop();
+            isCameraOn = false;
+        }
+        function handleScanResult(content) {
+            let fields = content.split("||");
+            document.getElementById("canCuocCongDan").value = fields[0] || "";
+            let otherFields = fields[1].split("|");
+            document.getElementById("Ten").value = otherFields[0] || "";
+            document.getElementById("Ten").value = otherFields[1] || "";
+            // document.getElementById("gender").value = otherFields[2] || "";
+            // document.getElementById("address").value = otherFields[3] || "";
+    }
 
 <script th:src="@{/js/nhanvien.js}"></script>
 </body>
