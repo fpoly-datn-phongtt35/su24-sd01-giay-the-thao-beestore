@@ -3,10 +3,12 @@ package com.example.datnsum24sd01.service.impl;
 import com.example.datnsum24sd01.entity.NhanVien;
 import com.example.datnsum24sd01.repository.NhanVienRepository;
 import com.example.datnsum24sd01.request.NhanVienRequest;
+import com.example.datnsum24sd01.sendMail.EmailService;
 import com.example.datnsum24sd01.service.NhanVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +18,14 @@ import java.util.Optional;
 public class NhanVienServiceImpl implements NhanVienService {
     @Autowired
     private NhanVienRepository nhanVienRepository;
+    String generatedPassword = generateRandomPassword(10);
+    @Autowired
+    private EmailService emailService;
+
+    private String generateRandomPassword(int length) {
+        return RandomStringUtils.random(length, true, true);
+    }
+
 
     @Override
     public List<NhanVien> getAll() {
@@ -42,6 +52,7 @@ public class NhanVienServiceImpl implements NhanVienService {
         NhanVien nhanVienAddLater = nhanVienRepository.save(nhanVien);
         String maNV = "NV" + nhanVienAddLater.getId().toString();
         nhanVienAddLater.setMa(maNV);
+        emailService.sendNewAccountNVEmail(nhanVien.getEmail(), nhanVien.getEmail(),generatedPassword);
 
         return nhanVienRepository.save(nhanVienAddLater);
     }
