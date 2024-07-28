@@ -1,6 +1,8 @@
 package com.example.datnsum24sd01.service.impl;
 
 import com.example.datnsum24sd01.entity.DongSanPham;
+import com.example.datnsum24sd01.entity.KichThuoc;
+import com.example.datnsum24sd01.entity.MauSac;
 import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.request.DongSanPhamRequest;
 import com.example.datnsum24sd01.responsitory.DongSanPhamResponsitory;
@@ -39,6 +41,9 @@ public class DongSanPhamServiceImpl implements DongSanPhamService {
         dongSanPham.setNgayTao(LocalDate.now());
         dongSanPham.setNgaySua(LocalDate.now());
         dongSanPham.setTrangThai(TrangThai.DANG_HOAT_DONG);
+         DongSanPham dongspauto = repository.save(dongSanPham);
+        String maKT = "DSP" + dongspauto.getId().toString();
+       dongspauto.setMa(maKT);
         return repository.save(dongSanPham);
     }
 

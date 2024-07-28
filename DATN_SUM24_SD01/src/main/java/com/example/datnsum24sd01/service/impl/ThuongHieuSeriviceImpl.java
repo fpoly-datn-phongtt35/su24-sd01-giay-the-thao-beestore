@@ -1,5 +1,6 @@
 package com.example.datnsum24sd01.service.impl;
 
+import com.example.datnsum24sd01.entity.MauSac;
 import com.example.datnsum24sd01.entity.ThuongHieu;
 import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.request.ThuongHieuRequest;
@@ -42,7 +43,10 @@ public class ThuongHieuSeriviceImpl implements ThuongHieuSerivice {
         thuongHieu.setNgayTao(LocalDate.now());
         thuongHieu.setNgaySua(LocalDate.now());
         thuongHieu.setTrangThai(TrangThai.DANG_HOAT_DONG);
-        return repository.save(thuongHieu);
+       ThuongHieu mauSacAddLater = repository.save(thuongHieu);
+        String maMS = "TH" + mauSacAddLater.getId().toString();
+        mauSacAddLater.setMa(maMS);
+        return repository.save(mauSacAddLater);
     }
 
 
