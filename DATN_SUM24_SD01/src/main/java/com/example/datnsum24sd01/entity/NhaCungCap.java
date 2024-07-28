@@ -1,6 +1,8 @@
 package com.example.datnsum24sd01.entity;
+import com.example.datnsum24sd01.enumation.TrangThai;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,6 +13,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
+
+import static jakarta.persistence.EnumType.ORDINAL;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,19 +30,20 @@ public class NhaCungCap {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ma")
-    @NotBlank(message = "Mã Nhà Cung Cap không được để trống")
+    @Column(name = "ma", nullable = false, unique = true)
     private String ma;
 
-    @Column(name = "ten")
-    @NotBlank(message = "Tên Nhà Cung Cấp không được để trống")
+    @Column(name = "ten", nullable = false, unique = true)
     private String ten;
 
     @Column(name = "ngay_tao")
-    private String ngaytao;
+    private LocalDate ngayTao;
+
     @Column(name = "ngay_sua")
-    private String ngaysua;
+    private LocalDate ngaySua;
+
     @Column(name = "trang_thai")
-    private Integer trangThai;
+    @Enumerated(ORDINAL)
+    private TrangThai trangThai;
 
 }

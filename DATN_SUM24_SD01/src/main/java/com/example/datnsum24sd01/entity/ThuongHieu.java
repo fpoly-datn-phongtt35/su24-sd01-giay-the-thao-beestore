@@ -32,7 +32,7 @@ public class ThuongHieu {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Mã không được để trống!")
+
     @Column(name = "ma", nullable = false, unique = true)
     private String ma;
 

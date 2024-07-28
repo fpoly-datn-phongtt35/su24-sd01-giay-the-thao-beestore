@@ -69,11 +69,7 @@ public class ThuongHieuController {
         if (bindingResult.hasErrors()) {
             return "admin-template/thuong_hieu/them_thuong_hieu";
         }
-        if (thuongHieuService.existByMa(ma) && thuongHieuService.existsByTen(ten)) {
-            model.addAttribute("errorMa", "Mã  đã tồn tại");
-            model.addAttribute("errorTen", "Tên  đã tồn tại");
-            return "admin-template/thuong_hieu/them_thuong_hieu";
-        }
+
         if (thuongHieuService.existByMa(ma)) {
             model.addAttribute("errorMa", "Mã  đã tồn tại");
             return "admin-template/thuong_hieu/them_thuong_hieu";

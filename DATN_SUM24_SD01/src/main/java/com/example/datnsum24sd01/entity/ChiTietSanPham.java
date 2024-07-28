@@ -1,5 +1,6 @@
 package com.example.datnsum24sd01.entity;
 
+import com.example.datnsum24sd01.enumation.TrangThai;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
@@ -21,9 +22,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static jakarta.persistence.EnumType.ORDINAL;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -57,9 +58,6 @@ public class ChiTietSanPham {
     @JoinColumn(name = "id_kich_thuoc", referencedColumnName = "id")
     @JsonManagedReference
     private KichThuoc kichThuoc;
-
-
-
     @Column(name = "so_luong_ton")
     private Integer soLuongTon;
 
@@ -69,16 +67,21 @@ public class ChiTietSanPham {
     @Column(name = "gia_ban", precision = 19, scale = 2)
     private BigDecimal giaBan;
 
-    @Column(name = "ngay_tao")
-    private LocalDate ngayTao;
 
     @Column(name = "ngay_sua")
-    private LocalDate ngaySua;
+    private LocalDateTime ngaySua;
 
+    @Column(name = "ngay_tao")
+    private LocalDateTime ngayTao;
+    @Column(name = "anh_chinh")
+    private String anhChinh;
 
+    @Column(name = "qr")
+    private String qr;
     @Column(name = "trang_thai")
+    @Enumerated(ORDINAL)
+    private TrangThai trangThai;
 
-    private Integer trangThai;
 
 
 }

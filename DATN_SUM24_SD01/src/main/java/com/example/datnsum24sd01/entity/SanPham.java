@@ -1,5 +1,6 @@
 package com.example.datnsum24sd01.entity;
 
+import com.example.datnsum24sd01.enumation.TrangThai;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static jakarta.persistence.EnumType.ORDINAL;
@@ -57,9 +59,11 @@ public class SanPham {
     private String anhChinh;
 
     @Column(name = "trang_thai")
+    @Enumerated(ORDINAL)
+    private TrangThai trangThai;
 
-    private Integer trangThai;
-
+    @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+    private List<AnhBia> listAnhSanPham;
 
     @OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
     private List<ChiTietSanPham> listChiTietSanPham;
@@ -74,7 +78,17 @@ public class SanPham {
     @JsonIgnore
     private NhaCungCap nhaCungCap;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_dong_san_pham", referencedColumnName = "id")
+    @JsonIgnore
+    private DongSanPham dongSanPham;
 
+
+    @Transient
+    public String getMainImagePath() {
+        if (id == null || id == null) return "/assets/images/image-thumbnail.png";
+        return "/assets/images/" + this.listAnhSanPham.get(0).getUrl();
+    }
 
 
 }

@@ -70,17 +70,7 @@ public class DongSanPhamController {
         if (bindingResult.hasErrors()) {
             return "admin-template/dong_san_pham/them_dong_san_pham";
         }
-        if (dongSanPhamService.existByMa(ma) && dongSanPhamService.existsByTen(ten)) {
-            model.addAttribute("errorMa", "Mã  đã tồn tại");
-            model.addAttribute("errorTen", "Tên  đã tồn tại");
 
-            return "admin-template/dong_san_pham/them_dong_san_pham";
-        }
-        if (dongSanPhamService.existByMa(ma)) {
-            model.addAttribute("errorMa", "Mã  đã tồn tại");
-
-            return "admin-template/dong_san_pham/them_dong_san_pham";
-        }
         if (dongSanPhamService.existsByTen(ten)) {
             model.addAttribute("errorTen", "Tên  đã tồn tại");
 

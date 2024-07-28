@@ -65,21 +65,13 @@ public class NhaCungCapController {
     public String addNew(@Valid @ModelAttribute("nhacc") NhaCungCapRequest nhaCungCap,
                          BindingResult bindingResult, Model model) {
 
-        String ma = nhaCungCap.getMa();
+
         String ten = nhaCungCap.getTen();
         if (bindingResult.hasErrors()) {
             return "admin-template/nha_cung_cap/them_nha_cung_cap";
         }
-        if (nhaCungCapServiec.existByMa(ma) && nhaCungCapServiec.existsByTen(ten)) {
-            model.addAttribute("errorMa", "Mã  đã tồn tại");
-            model.addAttribute("errorTen", "Tên  đã tồn tại");
-            return "admin-template/nha_cung_cap/them_nha_cung_cap";
-        }
-        if (nhaCungCapServiec.existByMa(ma)) {
-            model.addAttribute("errorMa", "Mã  đã tồn tại");
-            return "admin-template/nha_cung_cap/them_nha_cung_cap";
-        }
         if (nhaCungCapServiec.existsByTen(ten)) {
+
             model.addAttribute("errorTen", "Tên  đã tồn tại");
             return "admin-template/nha_cung_cap/them_nha_cung_cap";
         }
