@@ -59,6 +59,7 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -87,45 +88,47 @@
             </div>
         </nav>
     </div>
-    <!-- Sidebar End -->
-        <div class="container-fluid pt-4">
-            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Nhà Cung Cấp</h6>
-            <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form  method="post">
+    <div class="container-fluid pt-4">
+        <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Nhà Cung Cấp</h6>
+        <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
+            <form th:object="${nhacc}" th:action="@{/admin/nhacungcap/update}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="mb-3">
+                    <label class="form-label">Mã Nhà Cung Cấp</label>
+                    <input type="text" class="form-control" id="ma" th:field="*{ma}"
+                           aria-describedby="emailHelp" readonly/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên Nhà Cung Cấp</label>
 
-                    <div class="mb-3">
-                        <label class="form-label">Mã Nhà Cung Cấp</label>
-                        <input type="text" class="form-control" id="ma"
-                               aria-describedby="emailHelp" readonly/>
-
+                    <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"/>
+                    <div th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></div>
+                    <div th:if="${errorTen}" th:text="${errorTen}" style="color: red"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Trạng Thái</label>
+                    <div class="form-check form-check-inline">
+                        <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
+                               th:value="DANG_HOAT_DONG"
+                               th:field="*{trangThai}"/>
+                        <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tên Nhà Cung Cấp</label>
-                        <input type="text" class="form-control" id="ten" name="ten" />
-
-
+                    <div class="form-check form-check-inline">
+                        <input id="trangThaiKhongHoatDong" name="trangThai" type="radio" class="form-check-input"
+                               th:value="DUNG_HOAT_DONG"
+                               th:field="*{trangThai}"/>
+                        <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Trạng Thái</label>
-                        <div class="form-check form-check-inline">
-                            <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
-                                   />
-                            <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input id="trangThaiKhongHoatDong" name="trangThai" type="radio" class="form-check-input"
-                                  />
-                            <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="margin-left: 40%; margin-top: 15px;">
-                        Sửa Nhà Cung Cấp
-                    </button>
-                </form>
-            </div>
-            <!-- Recent Sales End -->
+                </div>
+                <button type="submit" class="btn btn-outline-primary " style="margin-left: 140px">
+                    Sửa Nhà Cung Cấp
+                </button>
+            </form>
         </div>
-     </div>
+
+    </div>
+</div>
+</div>
 </div>
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

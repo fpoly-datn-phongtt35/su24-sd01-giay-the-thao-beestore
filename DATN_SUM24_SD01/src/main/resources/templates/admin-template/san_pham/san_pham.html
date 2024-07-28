@@ -148,6 +148,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -200,55 +202,90 @@
                 </div>
             </div>
         </nav>
-        <!-- Navbar End -->
-        <div th:if="${param.success}">
-            <div class="alert alert-info" id="success-alert">Success!</div>
-        </div>
+
         <!-- Recent Sales Start -->
-        <div class="container-fluid pt-4">
+        <div class="container">
             <div class="row g-2">
-                <div style="width: 90%;">
-                    <h3 class="mb-4" style=" text-align :center ;font-size: 40px;">Quản Lý Sản Phẩm</h3>
+                <div style="width: 90%;text-align: center">
+                    <h6 class="mb-4" style="font-size: 40px;">Quản Lý Sản Phẩm</h6>
                 </div>
 
                 <div/>
                 <div class="container-fluid pt-4">
+                    <div class="create" style="width: 10%;">
+                        <button class="btn btn-outline-primary" style="margin-right: -200px;">
+                            <a class="them" href="/admin/san-pham/view-add-san-pham"  style="color: black">Thêm Sản Phẩm</a>
+                        </button>
+                    </div>
+                    <ul class="nav nav-tabs">
 
-                    <button class="btn btn-outline-success" style="margin-right: -200px;">
-                        <a class="them" href="/admin/san-pham/view-add-san-pham" style="color: darkgreen;">Thêm Sản Phẩm</a>
-                    </button>
+                        <li class="nav-item" th:each="tt : ${trangThais}">
+                            <button th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
+                                    data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">
+                                <a th:href="@{/admin/san-pham/trang-thai/{status}(status=${tt})}"
+                                   th:text="${tt.getDisplayName()}"></a>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
+
             <!-- Recent Sales End -->
-            <div class="container-fluid pt-4">
-                <div class="bg-light text-center rounded p-4">
+            <div class="container ">
+                <div class="bg-light text-center ">
                     <div>
-                        <div class="bg-light rounded h-100 p-4">
+                        <div class="bg-light rounded ">
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>STT</th>
                                     <th>Mã</th>
-                                    <th>Tên</th>
+                                    <th>Tên Giày</th>
+                                    <th>Dòng Sản Phẩm</th>
                                     <th>Nhà Cung Cấp</th>
                                     <th>Thương Hiệu</th>
-                                    <th>Mô tả</th>
                                     <th>Trạng Thái</th>
                                     <th>Ảnh</th>
                                     <th>Thao tác</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                <tr th:each="sp : ${listSanPham}">
+                                    <td>
+                                        <b th:text="${sp.getId()}"></b>
+                                    </td>
+                                    <td>[[${sp.getMa()}]]</td>
+                                    <td>[[${sp.getTen()}]]</td>
+                                    <td th:text="${sp.dongSanPham.ten}"></td>
+                                    <td th:text="${sp.nhaCungCap.ten}"></td>
+                                    <td th:text="${sp.thuongHieu.ten}"></td>
 
+                                    <td th:text="${sp.getTrangThai() == 0 ? 'Đang Hoạt Động' :
+                                 (sp.getTrangThai() == 1 ? 'Dừng Hoạt Động' : 'Unknown')}"></td>
+                                    <td>
+                                        <div class="image-container">
+                                            <img th:src="@{'../../images/' + ${sp.getAnhChinh()}}"
+                                                 class="product-image">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/admin/san-pham/edit/' + ${sp.id}}">
+                                            <img src="/../../img/pen_v2.png" style="width: 25px; padding-right: 5px;">
+                                        </a>
+<!--                                    </td>-->
+<!--                                    <td> <a th:href="@{'/admin/san-pham/xoaSanPham/'+${sp.id}}"-->
+<!--                                            class="btn btn-danger">Delete</a></td>-->
+
+                                </tr>
+                                </tbody>
 
                             </table>
                         </div>
                     </div>
                 </div>
+                <!-- Recent Sales End -->
 
-
-
-            </div>
-
-    </div>
     <!--thư viện js tích tìm kiếm-->
     <script>
         new DataTable('#example');

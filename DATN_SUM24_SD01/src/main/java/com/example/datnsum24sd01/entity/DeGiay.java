@@ -11,6 +11,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -19,19 +22,21 @@ import lombok.Setter;
 @Entity
 @Table(name = "de_giay")
 public class DeGiay {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ma")
-    @NotBlank(message = "Mã không được để trống")
+    @Column(name = "ma", nullable = false, unique = true)
+
     private String ma;
 
-    @Column(name = "ten")
+    @Column(name = "ten", nullable = false, unique = true)
     @NotBlank(message = "Tên không được để trống")
     private String ten;
-    @Column(name = "ngay_tao")
-    private String ngaytao;
     @Column(name = "ngay_sua")
-    private String ngaysua;
+    private LocalDateTime ngaySua;
+
+    @Column(name = "ngay_tao")
+    private LocalDateTime ngayTao;
 }

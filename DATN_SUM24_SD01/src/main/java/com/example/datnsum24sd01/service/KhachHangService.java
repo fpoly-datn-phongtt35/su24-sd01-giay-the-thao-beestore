@@ -1,7 +1,9 @@
 package com.example.datnsum24sd01.service;
 
+import com.example.datnsum24sd01.entity.DiaChi;
 import com.example.datnsum24sd01.entity.KhachHang;
 import com.example.datnsum24sd01.entity.NhanVien;
+import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.request.KhachHangRequest;
 import com.example.datnsum24sd01.request.RegisterRequest;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import java.util.List;
 
 
 public interface KhachHangService {
+//    List<KhachHang> getByTrangThai(TrangThai trangThai);
     List<KhachHang> getList();
     boolean existsBySdt(String sdt);
 
@@ -28,9 +31,13 @@ public interface KhachHangService {
 
 
     boolean checkEmailDuplicate(String email);
-
+    KhachHang getById(Long id);
 
     KhachHang getOne(Long id);
 
-    KhachHang update(KhachHang khachHang);
+    KhachHang update(KhachHangRequest khachHangRequest);
+
+    List<DiaChi> getDiaChiByIdKhachHang(Long idKhachHang);
+
+    DiaChi getByIdDiaChi(Long idDiaChi);
 }

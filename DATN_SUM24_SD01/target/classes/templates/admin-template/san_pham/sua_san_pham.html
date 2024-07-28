@@ -64,6 +64,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -116,123 +118,142 @@
                 </div>
             </div>
         </nav>
-        <!-- Navbar End -->
-        <!-- Recent Sales Start -->
         <div class="container-fluid pt-4">
-            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết Sản Phẩm</h6>
+            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết  Sản Phẩm</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form>
-
+                <form th:action="@{/admin/san-pham/update}" method="post"
+                      enctype="multipart/form-data"
+                      th:object="${sanPham}">
+                    <input type="hidden" th:field="*{id}"/>
                     <div class="mb-3">
                         <div class="mb-3">
                             <label class="form-label">Mã Sản Phẩm</label>
-                            <input type="text" class="form-control" id="ma" name="ma"
+                            <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}"
                                    aria-describedby="emailHelp" readonly/>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tên Sản Phẩm</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
                                aria-describedby="emailHelp"/>
-
+                        <div th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></div>
+                        <div th:if="${errorTen}" th:text="${errorTen}" style="color: red"></div>
                     </div>
-                    <div class="mb-3 row g-2">
-                        <div style="width: 80%;">
-                            <label class="form-label">Nhà Cung Cấp</label>
-                            <select  class="form-select mb-3"
-                                    aria-label="Default select example">
-                                <option ></option>
-                            </select>
-                        </div>
-                        <div class="mb-3 row g-2">
-                            <div style="width: 80%;">
-                                <label class="form-label">Thương Hiệu</label>
-                                <select  class="form-select mb-3"
-                                        aria-label="Default select example">
-                                    <option ></option>
-                                </select>
-                            </div>
-                        </div>
+                            <div class="mb-3 ">
+                                    <div style="width: 100%;">
+                                        <label class="form-label">Dòng Sản Phẩm</label>
+                                        <select th:field="*{dongSanPham}" class="form-select mb-3"
+                                                aria-label="Default select example">
+                                            <option th:each="dongsp : ${listdongsanpham}" th:value="${dongsp.id}"
+                                                    th:text="${dongsp.ten}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 ">
+                                        <div style="width: 100%;">
+                                            <label class="form-label">Nhà Cung Cấp</label>
+                                            <select th:field="*{nhaCungCap}" class="form-select mb-3"
+                                                    aria-label="Default select example">
+                                                <option th:each="nhacc : ${listnhacungcap}" th:value="${nhacc.id}"
+                                                        th:text="${nhacc.ten}"></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3 ">
+                                            <div style="width: 100%;">
+                                                <label class="form-label">Thương Hiệu</label>
+                                                <select th:field="*{thuongHieu}" class="form-select mb-3"
+                                                        aria-label="Default select example">
+                                                    <option th:each="thuongHieu : ${listThuongHieu}" th:value="${thuongHieu.id}"
+                                                            th:text="${thuongHieu.ten}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
                         <div class="mb-3">
                             <label class="form-label">Trạng Thái</label>
                             <div class="form-check form-check-inline">
                                 <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
-                                      />
+                                       th:value="DANG_HOAT_DONG"
+                                       th:field="*{trangThai}"/>
                                 <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input id="trangThaiKhongHoatDong" name="trangThai" type="radio"
                                        class="form-check-input"
-                                       />
+                                       th:value="DUNG_HOAT_DONG"
+                                       th:field="*{trangThai}"/>
                                 <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
                             </div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mô Tả</label>
-                        <input type="text" class="form-control" id="moTa" name="moTa"
+                        <input type="text" class="form-control" id="moTa" name="moTa" th:field="*{moTa}"
                                aria-describedby="emailHelp"/>
-
+                        <div th:if="${#fields.hasErrors('moTa')}" th:errors="*{moTa}" style="color: red"></div>
 
                     </div>
                     <!--ADD IMG-->
-                    <div class="tab-pane" id="images" role="tabpanel">
-                        <style>
-                            #imageList {
-                                list-style: none;
-                                display: flex;
-                            }
+                        <div class="tab-pane" id="images" role="tabpanel">
+                            <style>
+                                #imageList {
+                                    list-style: none;
+                                    display: flex;
+                                }
 
-                            #imageList li {
-                                margin-right: 10px;
-                            }
+                                #imageList li {
+                                    margin-right: 10px;
+                                }
 
-                            #imageList li img {
-                                max-width: 200px;
-                                max-height: auto;
-                                width: 100%;
-                                border: 2px solid #ccc;
-                                border-radius: 5px;
-                                margin: 10px;
-                                /*transition: transform 0.3s; !* Thêm hiệu ứng chuyển đổi *!*/
-                            }
+                                #imageList li img {
+                                    max-width: 200px;
+                                    max-height: auto;
+                                    width: 100%;
+                                    border: 2px solid #ccc;
+                                    border-radius: 5px;
+                                    margin: 10px;
+                                }
 
-                            #imageList li:first-child img {
-                                transform: scale(1.25); /* Phóng to ảnh đầu tiên lên 150% */
-                            }
+                                #imageList li:first-child img {
+                                    border-color: red; /* Highlight the first image with red border */
+                                }
+                            </style>
 
-                            #imageList li:nth-child(2) img {
-                                transform: scale(1); /* Ảnh thứ hai giữ nguyên kích thước */
-                            }
-                        </style>
-
-                        <div class="row">
-                            <div class="col border m-3 p-2">
-                                <div><label>Danh sách ảnh</label></div>
-                            </div>
-                            <div class="m-2">
-                                <ul id="imageList" class="horizontal-list">
-
-                                </ul>
-                            </div>
-                            <div>
-                                <input type="file" multiple="multiple" id="fileImages" name="fileImages"
-                                       onchange="previewImages(event)" accept="image/png,image/jpeg,img/jpg"/>
-
+                            <div class="row">
+                                <div class="col border m-3 p-2">
+                                    <div><label>Danh sách ảnh</label></div>
+                                </div>
+                                <div class="m-2">
+                                    <ul id="imageList" class="horizontal-list">
+                                        <!-- Iterate over existing images -->
+                                        <li th:each="image, iterStat : ${listAnh}">
+                                            <img th:src="@{'/images/' + ${image.url}}" alt="Ảnh sản phẩm" style="max-width: 200px; max-height: auto; width: 100%;" />
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <!-- File input for uploading new images -->
+                                    <input type="file" multiple="multiple" id="fileImages" name="fileImages"
+                                           onchange="previewImages(event)" accept="image/png,image/jpeg,img/jpg"/>
+                                    <!-- Error message display -->
+                                    <div th:if="${errorAnh}" class="alert alert-danger">
+                                        <p th:text="${errorAnh}"></p>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+<p></p>
+                    <button type="submit" class="btn btn-outline-primary " style="margin-left: 160px">
 
-                    </div>
-
-                    <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
                         Sửa Sản Phẩm
                     </button>
                 </form>
 
             </div>
             <!-- Recent Sales End -->
-        </div>
 
     </div>
 </div>
@@ -248,8 +269,43 @@
 <script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 
+    <script>
+        // Function to handle image preview
+        function previewImages(event) {
+            const fileInput = event.target;
+            const selectedFiles = fileInput.files;
+            const imageList = document.getElementById('imageList');
 
-<!-- Template Javascript -->
+            // Display selected images
+            Array.from(selectedFiles).forEach(function (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Create image element
+                    const imageElement = document.createElement('img');
+                    imageElement.src = e.target.result;
+                    imageElement.style.maxWidth = '200px';
+                    imageElement.style.maxHeight = 'auto';
+                    imageElement.style.width = '100%';
+                    imageElement.style.border = '2px solid #ccc';
+                    imageElement.style.borderRadius = '5px';
+                    imageElement.style.margin = '10px';
+
+                    // Append image to the list
+                    const listItem = document.createElement('li');
+                    listItem.appendChild(imageElement);
+                    imageList.appendChild(listItem);
+                };
+
+                // Read the file as a data URL
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+
+
+
+    <!-- Template Javascript -->
 <script src="/../../js/admin/main.js"></script>
 </body>
 

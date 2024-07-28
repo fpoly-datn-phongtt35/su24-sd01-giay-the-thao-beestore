@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -196,7 +196,7 @@
         </nav>
 
         <div th:if="${param.success}">
-            <div class="alert alert-info" id="success-alert">Success!</div>
+            <div class="alert alert-info" id="success-alert">Thành Công!</div>
         </div>
         <!-- Recent Sales Start -->
         <div class="container-fluid pt-4">
@@ -210,29 +210,60 @@
     <div class="container-fluid pt-4">
 
         <button class="btn btn-outline-primary" style="margin-right: -200px;">
-            <a class="them" href="/admin/chi-tiet-san-pham/view-add" style="color: darkgreen;">Thêm Sản Phẩm</a>
+            <a class="them" th:href="@{/admin/chi-tiet-san-pham/view-add}" style="color: darkgreen;">Thêm Sản Phẩm</a>
         </button>
     </div>
                 <!-- Recent Sales End -->
-                <div class="container-fluid pt-4">
-                    <div class="bg-light text-center rounded p-4">
+                <div class="container-fluid ">
+                    <div class="bg-light text-center ">
                         <div>
-                            <div class="bg-light rounded h-100 p-4">
+                            <div class="bg-light rounded ">
                                 <table id="example" class="table table-striped" style="width:100%">
                                     <thead>
                                     <tr>
-                                        <th hidden>STT</th>
                                         <th>ID</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Màu sắc</th>
                                         <th>Kích thước</th>
+                                        <th>Đế giày</th>
                                         <th>Số lượng</th>
                                         <th>Giá bán</th>
-                                        <th>Khuyến mại</th>
                                         <th>Trạng thái</th>
                                         <th>Thao Tác</th>
                                     </tr>
                                     </thead>
+                                    <tbody>
+                                    <tr th:each="chiTietSanPham: ${listChiTietSanPham}">
+                                        <td th:text="${chiTietSanPham.id}"></td>
+                                        <td th:text="${chiTietSanPham.sanPham.ten}"></td>
+<!--                                        <td>-->
+<!--                                            <div class="image-container">-->
+<!--                                                <img th:src="@{'../../images/' + ${chiTietSanPham.sanPham.getAnhChinh()}}"-->
+<!--                                                     class="product-image">-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+                                        <td>
+                                            <div th:style="'background-color:' + ${chiTietSanPham.mauSac.ten} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>
+                                        </td>
+                                        <td th:text="${chiTietSanPham.kichThuoc.ten}"></td>
+                                        <td th:text="${chiTietSanPham.deGiay.ten}"></td>
+
+                                        <td th:text="${chiTietSanPham.soLuongTon}"></td>
+                                        <td th:text="${chiTietSanPham.giaBan}"></td>
+
+                                        <td>
+                                            <span th:if="${chiTietSanPham != null and chiTietSanPham.trangThai != null and chiTietSanPham.trangThai.getTrangThai() == 0}">Đang hoạt động</span>
+                                            <span th:if="${chiTietSanPham != null and chiTietSanPham.trangThai != null and chiTietSanPham.trangThai.getTrangThai() == 1}">Dừng hoạt động</span>
+                                        </td>  <td>
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/view-update/'+${chiTietSanPham.id}}"
+                                               class='fas fa-wrench' style='font-size:24px;color: green'></a>
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/xoaChiTietSanPham/'+${chiTietSanPham.id}}"
+                                               class='far fa-trash-alt' style='font-size:24px;color:red'></a>
+                                            <a th:href="@{'/admin/chi-tiet-san-pham/thay-doi-trang-thai/'+${chiTietSanPham.id}}"
+                                               class="fa fa-refresh" style="font-size:24px"></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
 
 
                                 </table>

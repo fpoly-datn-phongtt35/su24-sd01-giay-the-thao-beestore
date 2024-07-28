@@ -1,7 +1,10 @@
 package com.example.datnsum24sd01.controller.banhang;
 
+import com.example.datnsum24sd01.entity.ChiTietSanPham;
+import com.example.datnsum24sd01.entity.HoaDonChiTiet;
 import com.example.datnsum24sd01.responsitory.HoaDonChiTietRepository;
 import com.example.datnsum24sd01.service.BanHangService;
+import com.example.datnsum24sd01.service.ChiTietSanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +17,12 @@ import java.math.BigDecimal;
 
 @RestController
 public class BanHangRestContrller {
+
     @Autowired
     private BanHangService banHangService;
 
-//    @Autowired
-//    private ChiTietSanPhamService chiTietSanPhamService;
+    @Autowired
+    private ChiTietSanPhamService chiTietSanPhamService;
 
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
@@ -93,32 +97,32 @@ public class BanHangRestContrller {
             return 4;
         }
     }
-//
-//    @RequestMapping(value = "/admin/ban-hang/them-san-pham/check-tang-so-luong/{idHoaDonChiTiet}", method = {RequestMethod.GET, RequestMethod.POST})
-//    public Integer checkTangSoLuong(@RequestParam("soLuong") String soLuong,
-//                                    @PathVariable("idHoaDonChiTiet") Long idHoaDonChiTiet) {
-//        try {
-//            if (soLuong.equals("")) {
-//                return 1;
-//            } else if (Integer.parseInt(soLuong) <= 0) {
-//                return 2;
-//            } else {
-//                HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.findById(idHoaDonChiTiet).get();
-//                ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getById(hoaDonChiTiet.getChiTietSanPham().getId());
-//                if (Integer.parseInt(soLuong) > chiTietSanPham.getSoLuongTon()) {
-//                    return 3;
-//                } else {
-//                    return 0;
-//                }
-//            }
-//        } catch (NumberFormatException numberFormatException) {
-//            return 4;
-//        }
-//    }
+
+    @RequestMapping(value = "/admin/ban-hang/them-san-pham/check-tang-so-luong/{idHoaDonChiTiet}", method = {RequestMethod.GET, RequestMethod.POST})
+    public Integer checkTangSoLuong(@RequestParam("soLuong") String soLuong,
+                                    @PathVariable("idHoaDonChiTiet") Long idHoaDonChiTiet) {
+        try {
+            if (soLuong.equals("")) {
+                return 1;
+            } else if (Integer.parseInt(soLuong) <= 0) {
+                return 2;
+            } else {
+                HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.findById(idHoaDonChiTiet).get();
+                ChiTietSanPham chiTietSanPham = chiTietSanPhamService.getById(hoaDonChiTiet.getChiTietSanPham().getId());
+                if (Integer.parseInt(soLuong) > chiTietSanPham.getSoLuongTon()) {
+                    return 3;
+                } else {
+                    return 0;
+                }
+            }
+        } catch (NumberFormatException numberFormatException) {
+            return 4;
+        }
+    }
 
     @RequestMapping(value = "/admin/ban-hang/check-them-voucher", method = {RequestMethod.GET, RequestMethod.POST})
     public Integer checkVoucher(@RequestParam("idHoaDon") String idHoaDon,
-                                @RequestParam("idPhieuGiamGia") String idMaGiamGia,
+                                @RequestParam("idMaGiamGia") String idMaGiamGia,
                                 @RequestParam("tongTien") String tongTien,
                                 RedirectAttributes redirectAttributes) {
         Integer checkVoucher = banHangService.checkVoucher(Long.valueOf(idHoaDon), Long.valueOf(idMaGiamGia), BigDecimal.valueOf(Double.valueOf(tongTien)));

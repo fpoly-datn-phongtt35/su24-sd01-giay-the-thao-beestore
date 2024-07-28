@@ -60,6 +60,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -116,31 +118,30 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Thương Hiệu</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form >
+                <form th:action="@{add}" method="post" th:object="${thuongHieu}">
                     <div class="mb-3">
                         <label class="form-label">Mã Thương Hiệu</label>
-                        <input type="text" class="form-control" id="ma" name="ma"
-                               aria-describedby="emailHelp" />
+                        <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}"
+                               aria-describedby="emailHelp" placeholder="Mã tự tăng!" READONLY  />
 
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tên Thương Hiệu</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
+                        <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
                                aria-describedby="emailHelp"/>
-
+                        <div th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></div>
+                        <div th:if="${errorTen}" th:text="${errorTen}" style="color: red"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary " style="margin-left: 30%;">
+                    <button type="submit" class="btn btn-outline-primary " style="margin-left: 140px">
                         Thêm Thương Hiệu
                     </button>
                 </form>
 
 
             </div>
-            <!-- Recent Sales End -->
-
 
         </div>
-        <!-- Content End -->
+
 
 
 
