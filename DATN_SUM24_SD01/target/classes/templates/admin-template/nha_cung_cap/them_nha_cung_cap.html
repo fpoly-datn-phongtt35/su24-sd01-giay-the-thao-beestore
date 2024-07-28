@@ -60,6 +60,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -88,35 +90,31 @@
             </div>
         </nav>
     </div>
-    <!-- Sidebar End -->
-        <div class="container-fluid pt-4">
-            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Nhà Cung Cấp </h6>
-            <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form >
-                    <div class="mb-3">
-                        <label class="form-label">Mã Nhà Cung Cấp</label>
-                        <input type="text" class="form-control" id="ma" name="ma"
-                               aria-describedby="emailHelp"/>
 
+    <div class="container-fluid pt-4">
+        <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Nhà Cung Cấp</h6>
+        <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
+            <form th:action="@{add}" method="post" th:object="${nhacc}">
+                <div class="mb-3">
+                    <label class="form-label">Mã Nhà Cung Cấp</label>
+                    <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}"
+                           aria-describedby="emailHelp" placeholder="Mã tự tăng!" READONLY />
 
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tên Nhà Cung Cấp</label>
-                        <input type="text" class="form-control" id="ten" name="ten"
-                               aria-describedby="emailHelp"/>
-
-                    </div>
-                    <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
-                        Thêm Nhà Cung Cấp
-                    </button>
-                </form>
-            </div>
-            <!-- Recent Sales End -->
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên Nhà Cung Cấp</label>
+                    <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
+                           aria-describedby="emailHelp"/>
+                    <div th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></div>
+                    <div th:if="${errorTen}" th:text="${errorTen}" style="color: red"></div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary " style="margin-left: 180px">
+                    Thêm Nhà Cung Cấp
+                </button>
+            </form>
 
 
         </div>
-        <!-- Content End -->
-
 
     </div>
 

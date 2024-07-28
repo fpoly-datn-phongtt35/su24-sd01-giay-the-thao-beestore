@@ -117,17 +117,17 @@
             <div class="container-fluid pt-4">
                 <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Đế Giày </h6>
                 <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                    <form>
+                    <form action="#" th:action="@{/admin/de-giay/themDeGiay}" th:object="${deGiayRequest}"
+                    method="post">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Mã </label>
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                   />
-
+                            <label class="form-label">Mã Đế Giày</label>
+                            <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}" readonly
+                                   placeholder="Mã đế giày tự tăng!" maxlength="50"/>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" />
-
+                            <label class="form-label">Tên Đế Giày</label>
+                            <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
+                            />
                         </div>
                         <button type="submit" class="btn btn-primary " style="margin-left: 40%;">
                             Thêm Đế Giày

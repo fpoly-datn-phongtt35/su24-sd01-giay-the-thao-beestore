@@ -269,11 +269,10 @@
                                         <span th:if="${thuongHieu != null and thuongHieu.trangThai != null and thuongHieu.trangThai.getTrangThai() == 1}">Dừng hoạt động</span>
                                     </td>
                                     <td>
-                                        <a th:href="@{'/admin/thuong-hieu/view-update/' + ${thuongHieu.id}}">
-                                            <img src="/../../img/pen_v2.png" style="width: 25px; padding-right: 5px;">
+                                        <a class='fas fa-wrench' style='font-size:24px;color: green'  th:href="@{'/admin/thuong-hieu/view-update/' + ${thuongHieu.id}}">
                                         </a>
-                                        <a th:href="@{'/admin/thuong-hieu/delete/' + ${thuongHieu.id}}">
-                                            <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;">
+                                        <a class='far fa-trash-alt' style='font-size:24px;color:red' th:href="@{'/admin/thuong-hieu/delete/' + ${thuongHieu.id}}">
+
                                         </a>
                                     </td>
                                 </tr>

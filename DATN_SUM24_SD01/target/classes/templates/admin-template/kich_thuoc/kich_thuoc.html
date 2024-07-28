@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -109,7 +109,7 @@
         <nav class="navbar bg-light navbar-light">
             <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
 
-                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <h6 class="mb-0">Phạm Văn Dương</h6>
 
                 </div>
             </div>
@@ -127,7 +127,7 @@
                 <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
                     Hàng</a>
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
                     <div class="dropdown-menu bg-transparent border-0">
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
@@ -144,11 +144,11 @@
                 <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
 
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
-                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
 
 
                     </div>
@@ -173,7 +173,7 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -197,62 +197,77 @@
                 <div class="create" style="width: 20
                 %;">
                     <button class="btn btn-outline-primary">
-                        <a class="them" th:href="@{../admin/kich-thuoc/view-add}" style="color: darkgreen;">Thêm Kích Thước</a>
+                        <a class="them" th:href="@{../admin/kich-thuoc/view-add}" style="color: darkgreen;">Thêm Kích
+                            Thước</a>
                     </button>
                 </div>
-            <div class="bg-light text-center rounded p-4">
-                <div>
-                    <div class="bg-light rounded h-100 p-4">
-                        <table id="example" class="table table-striped" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Mã</th>
-                                <th>Tên</th>
-                                <th>Ngày Tạo</th>
-                                <th>Ngày Sửa</th>
-                                <th>Thao Tác</th>
-                            </tr>
-                            </thead>
+                <div class="bg-light text-center rounded p-4">
+                    <div>
+                        <div class="bg-light rounded h-100 p-4">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Mã</th>
+                                    <th>Tên</th>
+                                    <th>Ngày Tạo</th>
+                                    <th>Ngày Sửa</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="kichThuoc: ${listKichThuoc}">
+                                    <td th:text="${kichThuoc.id}"></td>
+                                    <td th:text="${kichThuoc.ma}"></td>
+                                    <td th:text="${kichThuoc.ten}"></td>
+                                    <td th:text="${kichThuoc.ngayTao}"></td>
+                                    <td th:text="${kichThuoc.ngaySua}"></td>
+                                    <td><a th:href="@{'/admin/kich-thuoc/view-update/'+${kichThuoc.id}}"
+                                           class='fas fa-wrench' style='font-size:24px;color: green'></a>
+                                        <a th:href="@{'/admin/kich-thuoc/xoaKichThuoc/'+${kichThuoc.id}}"
+                                           class='far fa-trash-alt' style='font-size:24px;color:red'></a>
+                                    </td>
+                                </tr>
+                                </tbody>
 
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- Recent Sales End -->
+
         </div>
-        <!-- Recent Sales End -->
+        <!-- Content End -->
+
 
     </div>
-    <!-- Content End -->
 
+    <!--thư viện js tích tìm kiếm-->
+    <script>
+        new DataTable('#example');
+    </script>
+    <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+    <script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        })
+    </script>
 
-</div>
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../lib/chart/chart.min.js"></script>
+    <script src="../../lib/easing/easing.min.js"></script>
+    <script src="../../lib/waypoints/waypoints.min.js"></script>
+    <script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../../lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-<!--thư viện js tích tìm kiếm-->
-<script>
-    new DataTable('#example');
-</script>
-<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
-<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
-<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    })
-</script>
-
-<!-- JavaScript Libraries -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../../lib/chart/chart.min.js"></script>
-<script src="../../lib/easing/easing.min.js"></script>
-<script src="../../lib/waypoints/waypoints.min.js"></script>
-<script src="../../lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="../../lib/tempusdominus/js/moment.min.js"></script>
-<script src="../../lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-<!-- Template Javascript -->
-<script src="../../js/admin/main.js"></script>
+    <!-- Template Javascript -->
+    <script src="../../js/admin/main.js"></script>
 </body>
 
 </html>
