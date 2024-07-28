@@ -199,18 +199,18 @@
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
-
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/san-pham}" class="dropdown-item"> Sản Phẩm</a>
-                        <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">Chi Tiết Sản
+                        <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
+                        <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
-                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item"> Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
                         <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
 
-                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">Thương Hiệu</a>
-                        <a th:href="@{/admin/mau-sac}" class="dropdown-item"> Màu Sắc</a>
-                        <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> Kích Thước</a>
-                        <a th:href="@{/admin/de-giay}" class="dropdown-item"> Đế Giày</a>
+
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
+                        <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
+                        <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
+                        <a th:href="@{/admin/de-giay}" class="dropdown-item">* Đế Giày</a>
 
                     </div>
                 </div>
@@ -220,8 +220,8 @@
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> Tài Khoản Khách Hàng</a>
-                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item"> Tài Khoản Nhân Viên</a>
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
 
 
                     </div>
@@ -240,7 +240,7 @@
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-light navbar-light px-10 py-0">
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
 
 
             <div class="navbar-nav align-items-center ms-auto">
@@ -250,14 +250,13 @@
                         <i class="fa fa-bars"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="/thongtinnhanvien" class="dropdown-item">Thông Tin Cá Nhân</a>
+                        <a href="#" class="dropdown-item">Thông Tin Cá Nhân</a>
                         <a href="#" class="dropdown-item">Cài Đặt</a>
                         <a href="#" class="dropdown-item">Đăng Xuất</a>
                     </div>
                 </div>
             </div>
         </nav>
-
 
         <div >
             <div class="row -2">
@@ -327,7 +326,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <!-- Button thứ nhất -->
-                                                    <button type="submit" class="btn btn-primary" style="width: 100%"><i
+                                                    <button type="submit" class="btn btn-outline-primary" style="width: 100%"><i
                                                             class="bi bi-search"></i>Tìm Kiếm
                                                     </button>
                                                 </div>
@@ -352,22 +351,20 @@
                                 </div>
                             </div>
 
-                        </div><!-- End Default Tabs -->
+                        </div>
 
                     </div>
                 </div>
             </div>
         </div>
 
-        <!--        <div class="container-fluid pt-4">-->
-        <!--            <div class="bg-light text-center rounded p-4">-->
+
         <div class="table-container">
-            <!--                    <div class="bg-light rounded h-100 p-4">-->
+
             <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                 <tr>
-<!--                                                    <th>STT</th>-->
-                    <!--                                    <th style="width: 25px">Id</th>-->
+
                     <th>Mã</th>
                     <th>Tên</th>
                     <th>Mức giảm</th>
@@ -381,17 +378,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="pgg, state : ${listMaGiam}">
-<!--                                                    <td th:text="${state.index+1}"></td>-->
-                    <!--                                    <td style="width: 25px" th:text="${pgg.id}"></td>-->
+
                     <td style="width: 25px" th:text="${pgg.ma}"></td>
                     <td th:text="${pgg.ten}"></td>
                     <td style="width: 25px" th:text="${pgg.mucGiamGia + '%'}"></td>
-                    <!--                                <td>-->
-
-                    <!--                                    <span th:if="${pgg.mucGiamToiDa == null}">không giới hạn</span>-->
-                    <!--                                    <span th:if="${pgg.mucGiamToiDa != null}"-->
-                    <!--                                          th:text="${#numbers.formatDecimal(pgg.mucGiamToiDa, 0, 'POINT', 0, 'COMMA') + ' VND'}"></span>-->
-                    <!--                                </td>-->
                     <td th:text="${pgg.ngayBatDau}"></td>
                     <td th:text="${pgg.ngayKetThuc}"></td>
                     <td th:text="${#numbers.formatDecimal(pgg.giaTriDonHang, 0, 'POINT', 0, 'COMMA') + ' VND'}"></td>

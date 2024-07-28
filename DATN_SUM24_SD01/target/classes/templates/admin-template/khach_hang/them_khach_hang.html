@@ -91,9 +91,6 @@
             </div>
         </nav>
     </div>
-    <!-- Sidebar End -->
-
-    <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -130,6 +127,7 @@
                                    th:field="*{gioiTinh}"/>
                             <label class="form-check-label" for="namRadio">Nam</label>
                         </div>
+
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="gioiTinh" id="nuRadio" value="NU"
                                    th:field="*{gioiTinh}"/>
@@ -159,140 +157,140 @@
             </div>
         </div>
 
-        <script>
-            var emailValid = false;
-            var sdtValid = false;
+<!--        <script>-->
+<!--            // var emailValid = false;-->
+<!--            // var sdtValid = false;-->
 
-            async function validateForm() {
-                var isValid = true;
+<!--            async function validateForm() {-->
+<!--                var isValid = true;-->
 
-                // Lấy giá trị từ các trường input
-                var ten = document.getElementById('ten').value.trim();
-                var email = document.getElementById('email').value.trim();
-                var sdt = document.getElementById('sdt').value.trim();
-                var ngaySinh = document.getElementById('ngaySinh').value.trim();
-                var gioiTinhNam = document.getElementById('namRadio').checked;
-                var gioiTinhNu = document.getElementById('nuRadio').checked;
+<!--                // Lấy giá trị từ các trường input-->
+<!--                var ten = document.getElementById('ten').value.trim();-->
+<!--                var email = document.getElementById('email').value.trim();-->
+<!--                var sdt = document.getElementById('sdt').value.trim();-->
+<!--                var ngaySinh = document.getElementById('ngaySinh').value.trim();-->
+<!--                var gioiTinhNam = document.getElementById('namRadio').checked;-->
+<!--                var gioiTinhNu = document.getElementById('nuRadio').checked;-->
 
-                // Kiểm tra trường Tên
-                if (ten === '') {
-                    document.getElementById('tenError').innerHTML = 'Tên không được để trống';
-                    isValid = false;
-                } else {
-                    document.getElementById('tenError').innerHTML = '';
-                }
+<!--                // Kiểm tra trường Tên-->
+<!--                if (ten === '') {-->
+<!--                    document.getElementById('tenError').innerHTML = 'Tên không được để trống';-->
+<!--                    isValid = false;-->
+<!--                } else {-->
+<!--                    document.getElementById('tenError').innerHTML = '';-->
+<!--                }-->
 
-                // Kiểm tra trường Giới Tính
-                if (!gioiTinhNam && !gioiTinhNu) {
-                    document.getElementById('gioiTinhError').innerHTML = 'Giới tính không được để trống';
-                    isValid = false;
-                } else {
-                    document.getElementById('gioiTinhError').innerHTML = '';
-                }
+<!--                // Kiểm tra trường Giới Tính-->
+<!--                if (!gioiTinhNam && !gioiTinhNu) {-->
+<!--                    document.getElementById('gioiTinhError').innerHTML = 'Giới tính không được để trống';-->
+<!--                    isValid = false;-->
+<!--                } else {-->
+<!--                    document.getElementById('gioiTinhError').innerHTML = '';-->
+<!--                }-->
 
-                // Kiểm tra trường Ngày sinh
-                if (ngaySinh === '') {
-                    document.getElementById('ngaySinhError').innerHTML = 'Ngày sinh không được để trống';
-                    isValid = false;
-                } else {
-                    var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-                    if (!dateRegex.test(ngaySinh)) {
-                        document.getElementById('ngaySinhError').innerHTML = 'Ngày sinh không đúng định dạng (dd/mm/yyyy)';
-                        isValid = false;
-                    } else {
-                        document.getElementById('ngaySinhError').innerHTML = '';
-                    }
-                }
+<!--                // Kiểm tra trường Ngày sinh-->
+<!--                if (ngaySinh === '') {-->
+<!--                    document.getElementById('ngaySinhError').innerHTML = 'Ngày sinh không được để trống';-->
+<!--                    isValid = false;-->
+<!--                } else {-->
+<!--                    var dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;-->
+<!--                    if (!dateRegex.test(ngaySinh)) {-->
+<!--                        document.getElementById('ngaySinhError').innerHTML = 'Ngày sinh không đúng định dạng (dd/mm/yyyy)';-->
+<!--                        isValid = false;-->
+<!--                    } else {-->
+<!--                        document.getElementById('ngaySinhError').innerHTML = '';-->
+<!--                    }-->
+<!--                }-->
 
-                // Kiểm tra email và số điện thoại với server
-                await checkEmail(email);
-                await checkSdt(sdt);
+<!--                // Kiểm tra email và số điện thoại với server-->
+<!--                await checkEmail(email);-->
+<!--                await checkSdt(sdt);-->
 
-                // Kiểm tra email và số điện thoại có hợp lệ không
-                if (!emailValid) {
-                    isValid = false;
-                }
+<!--                // Kiểm tra email và số điện thoại có hợp lệ không-->
+<!--                if (!emailValid) {-->
+<!--                    isValid = false;-->
+<!--                }-->
 
-                if (!sdtValid) {
-                    isValid = false;
-                }
+<!--                if (!sdtValid) {-->
+<!--                    isValid = false;-->
+<!--                }-->
 
-                // Trả về kết quả kiểm tra
-                return isValid;
-            }
+<!--                // Trả về kết quả kiểm tra-->
+<!--                return isValid;-->
+<!--            }-->
 
-            async function checkEmail(email) {
-                // Kiểm tra nếu email rỗng
-                if (email === '') {
-                    document.getElementById('emailError').innerHTML = 'Email không được để trống';
-                    emailValid = false;
-                    return;
-                }
+<!--            async function checkEmail(email) {-->
+<!--                // Kiểm tra nếu email rỗng-->
+<!--                if (email === '') {-->
+<!--                    document.getElementById('emailError').innerHTML = 'Email không được để trống';-->
+<!--                    emailValid = false;-->
+<!--                    return;-->
+<!--                }-->
 
-                // Kiểm tra định dạng email
-                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    document.getElementById('emailError').innerHTML = 'Email không đúng định dạng';
-                    emailValid = false;
-                    return;
-                }
+<!--                // Kiểm tra định dạng email-->
+<!--                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;-->
+<!--                if (!emailRegex.test(email)) {-->
+<!--                    document.getElementById('emailError').innerHTML = 'Email không đúng định dạng';-->
+<!--                    emailValid = false;-->
+<!--                    return;-->
+<!--                }-->
 
-                // Kiểm tra email tồn tại
-                try {
-                    const response = await fetch(`/admin/khach-hang/email/${email}`);
-                    const exists = await response.json();
-                    emailValid = !exists;
-                    if (exists) {
-                        document.getElementById('emailError').innerHTML = 'Email đã tồn tại';
-                    } else {
-                        document.getElementById('emailError').innerHTML = '';
-                    }
-                } catch (error) {
-                    document.getElementById('emailError').innerHTML = 'Có lỗi xảy ra, vui lòng thử lại';
-                    emailValid = false;
-                }
-            }
+<!--                // Kiểm tra email tồn tại-->
+<!--                try {-->
+<!--                    const response = await fetch(`/admin/khach-hang/email/${email}`);-->
+<!--                    const exists = await response.json();-->
+<!--                    emailValid = !exists;-->
+<!--                    if (exists) {-->
+<!--                        document.getElementById('emailError').innerHTML = 'Email đã tồn tại';-->
+<!--                    } else {-->
+<!--                        document.getElementById('emailError').innerHTML = '';-->
+<!--                    }-->
+<!--                } catch (error) {-->
+<!--                    document.getElementById('emailError').innerHTML = 'Có lỗi xảy ra, vui lòng thử lại';-->
+<!--                    emailValid = false;-->
+<!--                }-->
+<!--            }-->
 
-            async function checkSdt(sdt) {
-                // Kiểm tra nếu số điện thoại rỗng
-                if (sdt === '') {
-                    document.getElementById('sdtError').innerHTML = 'Số điện thoại không được để trống';
-                    sdtValid = false;
-                    return;
-                }
+<!--            async function checkSdt(sdt) {-->
+<!--                // Kiểm tra nếu số điện thoại rỗng-->
+<!--                if (sdt === '') {-->
+<!--                    document.getElementById('sdtError').innerHTML = 'Số điện thoại không được để trống';-->
+<!--                    sdtValid = false;-->
+<!--                    return;-->
+<!--                }-->
 
-                // Kiểm tra định dạng số điện thoại
-                var phoneRegex = /^\d{10}$/;
-                if (!phoneRegex.test(sdt)) {
-                    document.getElementById('sdtError').innerHTML = 'Số điện thoại không đúng định dạng';
-                    sdtValid = false;
-                    return;
-                }
+<!--                // Kiểm tra định dạng số điện thoại-->
+<!--                var phoneRegex = /^\d{10}$/;-->
+<!--                if (!phoneRegex.test(sdt)) {-->
+<!--                    document.getElementById('sdtError').innerHTML = 'Số điện thoại không đúng định dạng';-->
+<!--                    sdtValid = false;-->
+<!--                    return;-->
+<!--                }-->
 
-                // Kiểm tra số điện thoại tồn tại
-                try {
-                    const response = await fetch(`/admin/khach-hang/sdt/${sdt}`);
-                    const exists = await response.json();
-                    sdtValid = !exists;
-                    if (exists) {
-                        document.getElementById('sdtError').innerHTML = 'Số điện thoại đã tồn tại';
-                    } else {
-                        document.getElementById('sdtError').innerHTML = '';
-                    }
-                } catch (error) {
-                    document.getElementById('sdtError').innerHTML = 'Có lỗi xảy ra, vui lòng thử lại';
-                    sdtValid = false;
-                }
-            }
+<!--                // Kiểm tra số điện thoại tồn tại-->
+<!--                try {-->
+<!--                    const response = await fetch(`/admin/khach-hang/sdt/${sdt}`);-->
+<!--                    const exists = await response.json();-->
+<!--                    sdtValid = !exists;-->
+<!--                    if (exists) {-->
+<!--                        document.getElementById('sdtError').innerHTML = 'Số điện thoại đã tồn tại';-->
+<!--                    } else {-->
+<!--                        document.getElementById('sdtError').innerHTML = '';-->
+<!--                    }-->
+<!--                } catch (error) {-->
+<!--                    document.getElementById('sdtError').innerHTML = 'Có lỗi xảy ra, vui lòng thử lại';-->
+<!--                    sdtValid = false;-->
+<!--                }-->
+<!--            }-->
 
-            document.getElementById('customerForm').onsubmit = async function(event) {
-                event.preventDefault(); // Ngăn không cho gửi form đi ngay lập tức
-                const isValid = await validateForm();
-                if (isValid) {
-                    this.submit(); // Gửi form đi nếu hợp lệ
-                }
-            };
-        </script>
+<!--            document.getElementById('customerForm').onsubmit = async function(event) {-->
+<!--                event.preventDefault(); // Ngăn không cho gửi form đi ngay lập tức-->
+<!--                const isValid = await validateForm();-->
+<!--                if (isValid) {-->
+<!--                    this.submit(); // Gửi form đi nếu hợp lệ-->
+<!--                }-->
+<!--            };-->
+<!--        </script>-->
     </div>
 </div>
 <!-- JavaScript Libraries -->
