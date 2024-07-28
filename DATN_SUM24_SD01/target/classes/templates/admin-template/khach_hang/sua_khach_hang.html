@@ -198,12 +198,16 @@
 
                                 <div th:each="diaChi, status  : ${listDC}" class="diaChiRow">
                                    Địa Chỉ :<h6   th:text="${status.index + 1}"></h6>
-                                    <h6 style="margin-top: auto" class="card-subtitle mb-2 text-muted"
-                                        th:text="${diaChi.tenNguoiNhan}" id="nguoiNhan"></h6>
+                                    Họ Và Tên :  <h6 style="margin-top: auto" class="card-subtitle mb-2 text-muted"
+                                             th:text="${diaChi.tenNguoiNhan}" id="nguoiNhan"></h6>
+                                    <p></p>
+                                    Số Điện Thoại :
                                     <a class="card-subtitle mb-2 text-muted" th:text="${diaChi.sdt}"></a>
+                                    <p></p>
+                                    Địa Chỉ:
                                     <div style="display: flex;flex-wrap: wrap;">
                                         <p class="card-text" th:text="${diaChi.diaChi}"></p>
-                                        <p th:id="${diaChi.phuongXa}" class="phuongXaColumn"></p>
+                                    <p th:id="${diaChi.phuongXa}" class="phuongXaColumn"></p>
                                         <p th:id="${diaChi.quanHuyen}" class="quanHuyenColumn"></p>
                                         <p th:id="${diaChi.thanhPho}" class="thanhPhoColumn"></p>
                                     </div>
@@ -308,10 +312,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer" style="margin-left: 200px">
-                                                        <button type="button" class="btn btn-danger"
+                                                        <button type="button" class="btn btn-outline-success"
                                                                 data-bs-dismiss="modal">Đóng
                                                         </button>
-                                                        <button type="submit" class="btn btn-primary">Sửa
+                                                        <button type="submit" class="btn btn-outline-primary">Sửa
                                                         </button>
                                                     </div>
                                                 </div>
@@ -807,18 +811,17 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer" style="margin-left: 200px">
-                                        <button type="button" class="btn btn-danger"
+                                        <button type="button" class="btn btn-outline-danger"
                                                 data-bs-dismiss="modal">Đóng
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Thêm
+                                        <button type="submit" class="btn btn-outline-primary">Thêm
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <!--                    Đóng Modal add địa chỉ-->
-                    <!-- call api địa chỉ cho form add địa chỉ-->
+
                     <script th:inline="javascript">
                         document.addEventListener('DOMContentLoaded', function () {
                             var citySelect = document.getElementById('citySelectAdd');
@@ -919,61 +922,36 @@
                         });
 
                     </script>
-                    <!-- call api địa chỉ cho form add địa chỉ  end-->
+
 
                 </div>
 
 
             </div>
-            <!-- Recent Sales End -->
+
         </div>
 
 
-        <!-- Footer Start -->
-        <div class="container-fluid pt-4" style="margin-top: 5%;">
-            <div class="bg-light rounded-top p-4">
-                <div class="row">
-                    <p style="text-align: center; padding-top: 35px; font-size: 25px;">Giày Thể Thao Wingman</p>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
     </div>
 </div>
 
-<div class="modal fade text-center" id="modalDialog"
-     data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle">Warning</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span id="modalBody"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
     function validateAdd(event) {
         event.preventDefault(); // Prevent the default form submission behavior
         var formElement = document.getElementById('myFormAdd');
 
-        // Check spam submit
+
         var btnThem = event.target.querySelector('button[type="submit"]');
         setTimeout(function () {
             btnThem.disabled = false;
-        }, 2000); // 2000 miligiây = 2 giây
+        }, 2000);
 
 
         var formData = new FormData(formElement);
-        var isValid = true; // Biến để theo dõi trạng thái tổng thể
+        var isValid = true;
 
         var nguoiNhanAddCheck = document.getElementById("tenNguoiNhanAdd");
         var checkLoiNguoiNhanAdd = document.getElementById("checkLoiNguoiNhanAdd");
