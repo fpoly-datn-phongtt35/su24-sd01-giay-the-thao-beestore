@@ -36,10 +36,10 @@ public class RegisterRequest {
         khachHang.setSdt(request.getSdt());
         khachHang.setTen(request.getTen());
         khachHang.setEmail(request.getEmail());
-        khachHang.setNgayTao(new Date());
+//        khachHang.setNgayTao(new LocalDate());
         khachHang.setTrangThai(khachHang.getTrangThai());
         khachHang.setGioiTinh(khachHang.getGioiTinh());
-        khachHang.setNgaySua(new Date());
+//        khachHang.setNgaySua(new Date());
         khachHang.setTichDiem(BigDecimal.valueOf(0));
         return khachHang;
     }

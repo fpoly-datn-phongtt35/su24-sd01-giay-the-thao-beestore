@@ -42,7 +42,7 @@ public enum TrangThaiDonHang {
             case DA_TRA_HANG:
                 return "Đã Hoàn Trả ";
             case XAC_NHAN_TRA_HANG:
-                return "Xác Nhận Hoàn Trả";
+                return " Hoàn Trả";
             case DOI_HANG:
                 return "Đổi Hàng";
             default:
