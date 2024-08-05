@@ -27,20 +27,6 @@ public class BanHangRestContrller {
     @Autowired
     private HoaDonChiTietRepository hoaDonChiTietRepository;
 
-    void thongBao(RedirectAttributes redirectAttributes, String thongBao, int trangThai) {
-        if (trangThai == 0) {
-            redirectAttributes.addFlashAttribute("checkThongBao", "thatBai");
-            redirectAttributes.addFlashAttribute("thongBao", thongBao);
-        } else if (trangThai == 1) {
-            redirectAttributes.addFlashAttribute("checkThongBao", "thanhCong");
-            redirectAttributes.addFlashAttribute("thongBao", thongBao);
-        } else {
-
-            redirectAttributes.addFlashAttribute("checkThongBao", "canhBao");
-            redirectAttributes.addFlashAttribute("thongBao", thongBao);
-        }
-
-    }
 
     @RequestMapping(value = "/admin/ban-hang/check-thanh-toan", method = {RequestMethod.GET, RequestMethod.POST})
     public Integer checkThanhToan(@RequestParam("id") String idHoaDonCho) {
@@ -63,7 +49,7 @@ public class BanHangRestContrller {
     }
 
     @RequestMapping(value = "/admin/ban-hang/them-san-pham/check-so-luong/{soLuongTon}", method = {RequestMethod.GET, RequestMethod.POST})
-    public Integer checkSoLuong(@RequestParam("soLuong") String soLuong,
+    public Integer checkSoLuongsp(@RequestParam("soLuong") String soLuong,
                                 @PathVariable("soLuongTon") Integer soLuongTon) {
         try {
             if (soLuong.equals("")) {
@@ -99,7 +85,7 @@ public class BanHangRestContrller {
     }
 
     @RequestMapping(value = "/admin/ban-hang/them-san-pham/check-tang-so-luong/{idHoaDonChiTiet}", method = {RequestMethod.GET, RequestMethod.POST})
-    public Integer checkTangSoLuong(@RequestParam("soLuong") String soLuong,
+    public Integer checksoluong(@RequestParam("soLuong") String soLuong,
                                     @PathVariable("idHoaDonChiTiet") Long idHoaDonChiTiet) {
         try {
             if (soLuong.equals("")) {
@@ -120,19 +106,6 @@ public class BanHangRestContrller {
         }
     }
 
-    @RequestMapping(value = "/admin/ban-hang/check-them-voucher", method = {RequestMethod.GET, RequestMethod.POST})
-    public Integer checkVoucher(@RequestParam("idHoaDon") String idHoaDon,
-                                @RequestParam("idMaGiamGia") String idMaGiamGia,
-                                @RequestParam("tongTien") String tongTien,
-                                RedirectAttributes redirectAttributes) {
-        Integer checkVoucher = banHangService.checkVoucher(Long.valueOf(idHoaDon), Long.valueOf(idMaGiamGia), BigDecimal.valueOf(Double.valueOf(tongTien)));
-        if (checkVoucher == 1) {
-            return 2;
-        } else if (checkVoucher == 2) {
-            return 3;
-        } else {
-            return 0;
-        }
-    }
+
 
 }
