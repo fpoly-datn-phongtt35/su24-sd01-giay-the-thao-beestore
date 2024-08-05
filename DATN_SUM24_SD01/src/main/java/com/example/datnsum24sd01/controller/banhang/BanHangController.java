@@ -2,8 +2,10 @@ package com.example.datnsum24sd01.controller.banhang;
 
 
 
+import com.example.datnsum24sd01.configure.VNPayConfig;
 import com.example.datnsum24sd01.entity.HoaDon;
 import com.example.datnsum24sd01.entity.HoaDonChiTiet;
+import com.example.datnsum24sd01.entity.SanPham;
 import com.example.datnsum24sd01.service.BanHangService;
 import com.example.datnsum24sd01.service.ChiTietSanPhamService;
 import com.example.datnsum24sd01.service.KhachHangService;
@@ -137,9 +139,9 @@ public class BanHangController {
     @PostMapping("/hoa-don/{idHoaDon}/them-san-pham/{idSanPham}")
     public String themHoaDonChitiet(@PathVariable("idHoaDon") String idHoaDonCho,
                                     @PathVariable("idSanPham") String idSanPham,
-                                    @ModelAttribute("hoaDonChiTiet") HoaDonChiTiet hoaDonChiTiet) {
+                                    @ModelAttribute("hoaDonChiTiet") HoaDonChiTiet hoaDonChiTiet,Model model) {
         Long idNhanVien = spingsecurity.getCurrentNhanVienId();
-        if (idNhanVien == null){
+        if (idNhanVien == null) {
             return "redirect:/login";
         }
         banHangService.taoHoaDonChiTiet(Long.valueOf(idSanPham), Long.valueOf(idHoaDonCho), hoaDonChiTiet);
@@ -163,14 +165,23 @@ public class BanHangController {
 
 
     @PostMapping("/thanh-toan/{idHoaDonCho}")
-    public String thanhToanHoaDon(@PathVariable("idHoaDonCho") String idHoaDon,
+    public String thanhToanHoaDon( Model model,@PathVariable("idHoaDonCho") String idHoaDon,
                                   @RequestParam("tongTien") String tongTien,
                                   @RequestParam("thanhTien") String thanhTien,
-                                  @RequestParam(value = "xuTichDiem", defaultValue = "false") Boolean xuTichDiem) {
+                                  @RequestParam(value = "xuTichDiem", defaultValue = "false"
+                                        ) Boolean xuTichDiem) {
         Long idNhanVien = spingsecurity.getCurrentNhanVienId();
         if (idNhanVien == null){
             return "redirect:/login";
         }
+
+        String uniqueTransactionId = VNPayConfig.getRandomNumber(8);
+        String returnUrl = "https://yourdomain.com/payment-return"; // Replace with your return URL
+
+        model.addAttribute("uniqueTransactionId", uniqueTransactionId);
+        model.addAttribute("returnUrl", returnUrl);
+
+
         HoaDon hoaDon = banHangService.getOneById(Long.valueOf(idHoaDon));
         BigDecimal tienGiamGia = banHangService.voucher(Long.valueOf(idHoaDon), BigDecimal.valueOf(Double.valueOf(tongTien)));
         banHangService.checkXuHoaDon(Long.valueOf(idHoaDon), tongTien, thanhTien, xuTichDiem);

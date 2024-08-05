@@ -11,10 +11,6 @@ public interface ChiTietSanPhamCustomerCt {
 
     String getTenDe_giay();
 
-    String getTenCo_giay();
-
-    String getTenLot_giay();
-
     String getTenDongSp();
 
     BigDecimal getGia_mac_dinh();

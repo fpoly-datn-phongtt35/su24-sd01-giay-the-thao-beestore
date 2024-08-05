@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/ma-giam-gia")
+@RequestMapping("/admin/phieu-giam-gia")
 public class MaGiamGiaController {
     @Autowired
     private PhieuGiamGiaService service;
@@ -50,14 +50,13 @@ public class MaGiamGiaController {
         String noti =
                service.delete(id);
         redirectAttributes.addFlashAttribute("deleteMessage", noti);
-        return "redirect:/admin/ma-giam-gia";
+        return "redirect:/admin/phieu-giam-gia";
     }
     @GetMapping("/view-add")
     public String viewAdd(@ModelAttribute("phieuGiamGia") PhieuGiamGiaRequest phieuGiamGiaRequest,
                           Model model) {
         List<NhanVien> nhanVienList = nhanVienService.getAll();
         model.addAttribute("nhanVien", nhanVienList);
-
         model.addAttribute("phieuGiamGia", new PhieuGiamGia());
         return "admin-template/ma_giam_gia/them_ma_giam_gia";
     }
@@ -74,16 +73,12 @@ public class MaGiamGiaController {
             return "admin-template/ma_giam_gia/them_ma_giam_gia";
         } else {
             if (service.existsByTen(ten)) {
-
                 model.addAttribute("errorTen", "Tên Phiếu giảm giá đã tồn tại");
-
                 return "admin-template/ma_giam_gia/them_ma_giam_gia";
-
             }
-
             service.add(phieuGiamGiaRequest);
             model.addAttribute("successMessage", "Thêm thành công Phiếu giảm giá.");
-            return "redirect:/admin/ma-giam-gia";
+            return "redirect:/admin/phieu-giam-gia";
         }
     }
 
@@ -128,7 +123,7 @@ public class MaGiamGiaController {
                 return "admin-template/ma_giam_gia/sua_ma_giam_gia";
             }
             service.update(phieuGiamGiaRequest);
-            return "redirect:/admin/ma-giam-gia";
+            return "redirect:/admin/phieu-giam-gia";
         }
 
     }
@@ -136,12 +131,12 @@ public class MaGiamGiaController {
     @GetMapping("/huy/{id}")
     public String tattrangthaiphieukhuyenmai(@PathVariable("id") Long id) {
         service.huy(id);
-        return "redirect:/admin/ma-giam-gia";
+        return "redirect:/admin/phieu-giam-gia";
     }
     @GetMapping("/bat/{id}")
     public String battrangthaiphieukhuyenmai(@PathVariable("id") Long id) {
         service.bat(id);
-        return "redirect:/admin/ma-giam-gia";
+        return "redirect:/admin/phieu-giam-gia";
     }
 
     @GetMapping("/filter")
@@ -154,7 +149,7 @@ public class MaGiamGiaController {
             model.addAttribute("listTrangThai", list);
             model.addAttribute("startDate", startDate);
             model.addAttribute("endDate", endDate);
-            return "redirect/admin/ma-giam-gia";
+            return "redirect:/admin/phieu-giam-gia";
         }
         model.addAttribute("listTrangThai", list);
         model.addAttribute("startDate", startDate);
