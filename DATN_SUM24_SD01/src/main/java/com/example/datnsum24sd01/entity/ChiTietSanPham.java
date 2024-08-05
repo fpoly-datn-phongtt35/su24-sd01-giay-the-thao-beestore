@@ -72,7 +72,7 @@ public class ChiTietSanPham {
     private LocalDateTime ngaySua;
 
     @Column(name = "ngay_tao")
-    private LocalDateTime ngayTao;
+    private LocalDate ngayTao;
     @Column(name = "anh_chinh")
     private String anhChinh;
 

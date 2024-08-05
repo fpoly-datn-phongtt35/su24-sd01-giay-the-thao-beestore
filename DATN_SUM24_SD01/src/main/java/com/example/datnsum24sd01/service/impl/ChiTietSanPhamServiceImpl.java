@@ -91,7 +91,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
         MauSac mauSac = mauSacRepository.findById(chiTietSanPhamRequest.getMauSac()).orElse(null);
         chiTietSanPham.setMauSac(mauSac);
         chiTietSanPham.setNgaySua(currentDateTime);
-        chiTietSanPham.setNgayTao(currentDateTime);
+        chiTietSanPham.setNgayTao(LocalDate.now());
 
         chiTietSanPham.setTrangThai(TrangThai.DANG_HOAT_DONG);
         return chiTietSanPhamRepository.save(chiTietSanPham);

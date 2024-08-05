@@ -174,6 +174,16 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     }
 
+    @Override
+    public boolean changeUserPassword(Long idKh, String oldPassword, String newPassword) {
+        KhachHang khachHang = khachHangResponsitory.findById(idKh).orElse(null);
+
+        khachHang.setMatKhau(newPassword);
+        khachHangResponsitory.save(khachHang);
+        return true;
+
+    }
+
 }
 
 

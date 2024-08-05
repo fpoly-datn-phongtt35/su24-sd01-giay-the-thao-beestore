@@ -1,6 +1,7 @@
 package com.example.datnsum24sd01.entity;
 
 
+import com.example.datnsum24sd01.enumation.TrangThai;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -28,19 +29,24 @@ import static jakarta.persistence.EnumType.ORDINAL;
 public class GioHang {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "id_khach_hang", referencedColumnName = "id")
+    private KhachHang khachHang;
 
     @Column(name = "ma", unique = true)
     private String ma;
 
     @Column(name = "ngay_tao")
-    private LocalDate ngaytao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_sua")
-    private LocalDate ngaysua;
+    private LocalDate ngaySua;
 
     @Column(name = "trang_thai")
-    private Integer trangThai;
+    @Enumerated(ORDINAL)
+    private TrangThai trangThai;
 
 }
