@@ -1,28 +1,31 @@
 package com.example.datnsum24sd01.request;
 
-import lombok.AllArgsConstructor;
+
+import com.example.datnsum24sd01.enumation.TrangThai;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class DiaChiRequest {
+
     private Long id;
-    private String diaChi;
-    private String ghiChu;
-    private Date ngaySua;
-    private Date ngayTao;
-    private String sdtNguoiNhan;
-    private String ten;
+
     private String tenNguoiNhan;
-    private String phuongXa;
-    private String quanHuyen;
-    private String thanhPho;
-    private Integer trangThai;
-    private Long idKhachHang;
+
+    private String tinhThanhPho;
+
+    private String huyenQuan;
+
+    private String xaPhuong;
+
+    private String diaChi;
+
+    private String sdt;
+
+    private String ghiChu;
+
+    private TrangThai trangThai;
+
+    private Long khachHang;
 }

@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,7 +14,7 @@ import java.util.Date;
 public class KhachHangRequest {
     private Long id;
     private String email;
-    private Byte gioiTinh;
+    private String gioiTinh;
     private String ma;
     private String matKhau;
     private Date ngaySua;
