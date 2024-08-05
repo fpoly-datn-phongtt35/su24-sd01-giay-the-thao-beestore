@@ -5,6 +5,7 @@ import com.example.datnsum24sd01.entity.HoaDon;
 import com.example.datnsum24sd01.enumation.LoaiHoaDon;
 import com.example.datnsum24sd01.enumation.TrangThaiDonHang;
 import com.example.datnsum24sd01.responsitory.ChiTietSanPhamResponsitory;
+import com.example.datnsum24sd01.responsitory.GioHangChiTietRepository;
 import com.example.datnsum24sd01.responsitory.HoaDonRepo;
 import com.example.datnsum24sd01.service.BanHangService;
 import com.example.datnsum24sd01.service.ChiTietSanPhamService;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
     private final HoaDonRepo repository;
-//    private final GioHangChiTietRepository gioHangChiTietRepository;
+    private final GioHangChiTietRepository gioHangChiTietRepository;
 
     private final ChiTietSanPhamResponsitory chiTietSanPhamRepository;
 
@@ -31,9 +32,9 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     private final BanHangService banHangService;
 
-    public HoaDonServiceImpl(HoaDonRepo repository,  ChiTietSanPhamResponsitory chiTietSanPhamRepository,  BanHangService banHangService) {
+    public HoaDonServiceImpl(HoaDonRepo repository,GioHangChiTietRepository gioHangChiTietRepository,  ChiTietSanPhamResponsitory chiTietSanPhamRepository,  BanHangService banHangService) {
         this.repository = repository;
-//        this.gioHangChiTietRepository = gioHangChiTietRepository;
+        this.gioHangChiTietRepository = gioHangChiTietRepository;
         this.chiTietSanPhamRepository = chiTietSanPhamRepository;
 //        this.sendMailService = sendMailService;
         this.banHangService = banHangService;
@@ -111,7 +112,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public HoaDon createHdHoanTra(HoaDon hoaDon, Long idHd) {
         HoaDon hoaDonNew = new HoaDon();
         LocalDateTime time = LocalDateTime.now();
-        String maHD = "HĐ" + String.valueOf(time.getYear()).substring(2) + time.getMonthValue()
+        String maHD = "Hóa Đơn" + String.valueOf(time.getYear()).substring(2) + time.getMonthValue()
                 + time.getDayOfMonth() + time.getHour() + time.getMinute() + time.getSecond();
 
         hoaDonNew.setMa(maHD);
