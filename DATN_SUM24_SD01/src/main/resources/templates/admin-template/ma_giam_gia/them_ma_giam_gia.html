@@ -61,6 +61,9 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -82,7 +85,7 @@
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -117,10 +120,11 @@
         <div class="container-fluid pt-4">
             <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Phiếu Giảm Giá</h6>
             <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
-                <form th:action="@{/admin/ma-giam-gia/add}" method="post" th:object="${phieuGiamGia}"
+                <form th:action="@{/admin/phieu-giam-gia/add}" method="post" th:object="${phieuGiamGia}"
                      >
 <!--                    onsubmit="return validateDate()"-->
-
+                    <div class="mb-3">
+                        <label for="inputTen" class="form-label">Mã Phiếu Giảm Giá(Viết hoa ,viết liền ,không dấu)</label>
 
                         <input type="text" class="form-control" id="inputMa" th:field="*{ma}"/>
                         <div th:if="${#fields.hasErrors('ma')}" th:errors="*{ma}" style="color: red"></div>
@@ -254,7 +258,7 @@
                              style="color: red"></div>
                         <div id="errorMessage"></div>
                     </div>
-                    <button id="addVoucherButton" type="submit" class="btn btn-primary ">
+                    <button id="addVoucherButton" STYLE="margin-left: 140px" type="submit" class="btn btn-primary ">
                         Thêm Phiếu Giảm Giá
                     </button>
                 </form>
