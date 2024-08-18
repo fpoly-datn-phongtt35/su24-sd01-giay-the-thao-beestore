@@ -315,9 +315,9 @@
                                                                                         <tr th:each="hdct : ${listHoaDonChiTiet}">
                                                                                             <td th:text="${hdct.getTenSanPham()}"></td>
 <!--                                                                                            <td th:text="${hdct.getMauSac()}"></td>-->
-                                                                                            <td>
-                                                                                                <div th:style="'background-color:' + ${hdct.getMauSac()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>
-                                                                                            </td>
+<!--                                                                                            <td>-->
+<!--                                                                                                <div th:style="'background-color:' + ${hdct.getMauSac()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>-->
+<!--                                                                                            </td>-->    <td th:text="${hdct.getMauSac()}"></td>
                                                                                             <td th:text="${hdct.getKichThuoc()}"></td>
                                                                                             <td th:text="${#numbers.formatDecimal(hdct.getGiaBan(), 0, 'POINT', 0, 'COMMA')}"></td>
                                                                                             <td th:text="${hdct.getSoLuong()}"></td>
@@ -398,10 +398,10 @@
                                     <td th:text="${status.index + 1}"></td>
                                     <td th:text="${sanPham.getSanPham().getTen()}"></td>
                                     <td th:text="${sanPham.getSanPham().getThuongHieu().getTen()}"></td>
-                                    <td>
-                                        <div th:style="'background-color:' + ${sanPham.getMauSac().getTen()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>
-                                    </td>
-<!--                                    <td th:text="${sanPham.getMauSac().getTen()}"></td>-->
+<!--                                    <td>-->
+<!--                                        <div th:style="'background-color:' + ${sanPham.getMauSac().getTen()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>-->
+<!--                                    </td>-->
+                                    <td th:text="${sanPham.getMauSac().getTen()}"></td>
                                     <td th:text="${sanPham.getKichThuoc().getTen()}"></td>
                                     <td th:text="${#numbers.formatDecimal(sanPham.getGiaBan(), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
                                     <td th:text="${sanPham.getSoLuongTon()}"></td>
