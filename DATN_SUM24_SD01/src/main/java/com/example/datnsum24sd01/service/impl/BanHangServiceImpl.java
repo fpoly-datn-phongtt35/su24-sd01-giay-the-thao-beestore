@@ -1,3 +1,4 @@
+
 package com.example.datnsum24sd01.service.impl;
 
 import com.example.datnsum24sd01.entity.ChiTietSanPham;
@@ -419,8 +420,8 @@ public class BanHangServiceImpl implements BanHangService {
 
     @Override
     public KhachHang tichDiem(Long idKhachHang, String thanhTien) {
-        KhachHang khachHang = khachHangRepository.findById(idKhachHang).get();
-        if (khachHang.getMa().equals("KH000")) {
+        KhachHang khachHang = khachHangRepository.findById(idKhachHang).orElse(null);
+        if (khachHang != null && "KH000".equals(khachHang.getMa())) {
             return null;
         } else if (khachHang.getTichDiem() != null) {
             khachHang.setTichDiem(khachHang.getTichDiem().add(BigDecimal.valueOf(Double.valueOf(thanhTien)).multiply(new BigDecimal("0.01"))));
