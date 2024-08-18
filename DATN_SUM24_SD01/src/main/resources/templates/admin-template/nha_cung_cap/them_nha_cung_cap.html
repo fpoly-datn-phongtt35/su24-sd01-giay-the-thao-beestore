@@ -83,7 +83,7 @@
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -98,9 +98,8 @@
                 <div class="mb-3">
                     <label class="form-label">Mã Nhà Cung Cấp</label>
                     <input type="text" class="form-control" id="ma" name="ma" th:field="*{ma}"
-                           aria-describedby="emailHelp" />
-                    <div th:if="${#fields.hasErrors('ma')}" th:errors="*{ma}" style="color: red"></div>
-                    <div th:if="${errorMa}" th:text="${errorMa}" style="color: red"></div>
+                           aria-describedby="emailHelp" placeholder="Mã tự tăng!" READONLY />
+
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tên Nhà Cung Cấp</label>

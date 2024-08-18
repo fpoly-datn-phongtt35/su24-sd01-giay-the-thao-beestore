@@ -125,11 +125,10 @@
                                placeholder="Mã màu sắc tự tăng!" maxlength="50"/>
                     </div>
                     <div class=" mb-3">
-
-                        <div class="col-sm-10">
-                            <label for="inputColor" class="col-form-label">Chọn màu sắc:</label>
-
-                            <input type="color" class="form-control form-control-color" id="inputColor" name="ten" th:field="*{ten}" value="#4154f1" title="Choose your color">
+                        <div class="mb-3">
+                            <label class="form-label">Tên Màu Sắc</label>
+                            <input type="text" class="form-control" id="ten" name="ten" th:field="*{ten}"
+                            />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary " style="margin-left: 30%;">

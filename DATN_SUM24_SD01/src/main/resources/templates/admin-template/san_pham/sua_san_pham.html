@@ -87,7 +87,7 @@
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -139,35 +139,38 @@
                         <div th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></div>
                         <div th:if="${errorTen}" th:text="${errorTen}" style="color: red"></div>
                     </div>
-                    <div class="mb-3 row g-2">
-                        <div style="width: 80%;">
-                            <label class="form-label">Dòng Sản Phẩm</label>
-                            <select th:field="*{dongSanPham}" class="form-select mb-3"
-                                    aria-label="Default select example">
-                                <option th:each="dongsp : ${listdongsanpham}" th:value="${dongsp.id}"
-                                        th:text="${dongsp.ten}"></option>
-                            </select>
-                        </div>
-                    <div class="mb-3 row g-2">
-                        <div style="width: 80%;">
-                            <label class="form-label">Nhà Cung Cấp</label>
-                            <select th:field="*{nhaCungCap}" class="form-select mb-3"
-                                    aria-label="Default select example">
-                                <option th:each="nhacc : ${listnhacungcap}" th:value="${nhacc.id}"
-                                        th:text="${nhacc.ten}"></option>
-                            </select>
-                        </div>
+                            <div class="mb-3 ">
+                                    <div style="width: 100%;">
+                                        <label class="form-label">Dòng Sản Phẩm</label>
+                                        <select th:field="*{dongSanPham}" class="form-select mb-3"
+                                                aria-label="Default select example">
+                                            <option th:each="dongsp : ${listdongsanpham}" th:value="${dongsp.id}"
+                                                    th:text="${dongsp.ten}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 ">
+                                        <div style="width: 100%;">
+                                            <label class="form-label">Nhà Cung Cấp</label>
+                                            <select th:field="*{nhaCungCap}" class="form-select mb-3"
+                                                    aria-label="Default select example">
+                                                <option th:each="nhacc : ${listnhacungcap}" th:value="${nhacc.id}"
+                                                        th:text="${nhacc.ten}"></option>
+                                            </select>
+                                        </div>
 
-                        <div class="mb-3 row g-2">
-                            <div style="width: 80%;">
-                                <label class="form-label">Thương Hiệu</label>
-                                <select th:field="*{thuongHieu}" class="form-select mb-3"
-                                        aria-label="Default select example">
-                                    <option th:each="thuongHieu : ${listThuongHieu}" th:value="${thuongHieu.id}"
-                                            th:text="${thuongHieu.ten}"></option>
-                                </select>
-                            </div>
-                        </div>
+                                        <div class="mb-3 ">
+                                            <div style="width: 100%;">
+                                                <label class="form-label">Thương Hiệu</label>
+                                                <select th:field="*{thuongHieu}" class="form-select mb-3"
+                                                        aria-label="Default select example">
+                                                    <option th:each="thuongHieu : ${listThuongHieu}" th:value="${thuongHieu.id}"
+                                                            th:text="${thuongHieu.ten}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
                         <div class="mb-3">
                             <label class="form-label">Trạng Thái</label>
                             <div class="form-check form-check-inline">
@@ -242,10 +245,10 @@
                             </div>
 
                         </div>
+<p></p>
+                    <button type="submit" class="btn btn-outline-primary " style="margin-left: 160px">
 
-                    <button type="submit" class="btn btn-success " style="">
-
-                        Sửa
+                        Sửa Sản Phẩm
                     </button>
                 </form>
 

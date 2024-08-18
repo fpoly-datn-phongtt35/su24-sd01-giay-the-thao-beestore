@@ -275,9 +275,9 @@ public class HoaDonController {
         ) {
             return "redirect:/admin/hoa-don";
         }
-//        if(hoaDon.getTrangThai()!=TrangThaiDonHang.XAC_NHAN_TRA_HANG){
-//            return "redirect:/admin/hoa-don";
-//        }
+        if(hoaDon.getTrangThai()!=TrangThaiDonHang.XAC_NHAN_TRA_HANG){
+            return "redirect:/admin/hoa-don";
+        }
         if (hoaDon != null) {
             for (GioHangChiTiet gioHangChiTiet1 : gioHangChiTiet) {
                 if (gioHangChiTiet1.getTrangThai() == TrangThai.YEU_CAU_TRA_HANG) {

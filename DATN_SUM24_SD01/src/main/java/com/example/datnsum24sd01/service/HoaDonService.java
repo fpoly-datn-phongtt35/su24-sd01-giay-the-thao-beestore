@@ -1,5 +1,7 @@
 package com.example.datnsum24sd01.service;
 
+import com.example.datnsum24sd01.entity.ChiTietSanPham;
+import com.example.datnsum24sd01.entity.GioHangChiTiet;
 import com.example.datnsum24sd01.entity.HoaDon;
 import com.example.datnsum24sd01.enumation.TrangThaiDonHang;
 import com.example.datnsum24sd01.enumation.TrangThaiPhieuKhuyenMai;
@@ -29,10 +31,10 @@ public interface HoaDonService {
 
     HoaDon createHdHoanTra(HoaDon hoaDon,Long idHd);
 
-//    boolean removeGioHangChiTietHoanTra(GioHangChiTiet gioHangChiTiet,HoaDon hoaDon);
-//
-//
-//    ChiTietSanPham refund(GioHangChiTiet gioHangChiTiet);
+    boolean removeGioHangChiTietHoanTra(GioHangChiTiet gioHangChiTiet, HoaDon hoaDon);
+
+
+    ChiTietSanPham refund(GioHangChiTiet gioHangChiTiet);
 
     BigDecimal maGiamGia(Long idHd);
 

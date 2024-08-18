@@ -1,8 +1,10 @@
 package com.example.datnsum24sd01.service.impl;
 
 import com.example.datnsum24sd01.entity.ChiTietSanPham;
+import com.example.datnsum24sd01.entity.GioHangChiTiet;
 import com.example.datnsum24sd01.entity.HoaDon;
 import com.example.datnsum24sd01.enumation.LoaiHoaDon;
+import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.enumation.TrangThaiDonHang;
 import com.example.datnsum24sd01.responsitory.ChiTietSanPhamResponsitory;
 import com.example.datnsum24sd01.responsitory.GioHangChiTietRepository;
@@ -107,7 +109,6 @@ public class HoaDonServiceImpl implements HoaDonService {
         hoaDon = repository.save(hoaDon);
         return hoaDon.getTrangThai().equals(trangThai);
     }
-
     @Override
     public HoaDon createHdHoanTra(HoaDon hoaDon, Long idHd) {
         HoaDon hoaDonNew = new HoaDon();
@@ -128,28 +129,28 @@ public class HoaDonServiceImpl implements HoaDonService {
         repository.save(hoaDonNew);
         return hoaDonNew;
     }
-//
-//    @Override
-//    public boolean removeGioHangChiTietHoanTra(GioHangChiTiet gioHangChiTiet, HoaDon hoaDon) {
-//        if (gioHangChiTiet.getTrangThai().equals(TrangThai.YEU_CAU_TRA_HANG)) {
-//            gioHangChiTietRepository.delete(gioHangChiTiet);
-////            hoaDon.setThanhToan(hoaDon.getThanhToan()- );
-//        }
-//        return true;
-//    }
-//
-//
-//
-//    @Override
-//    public ChiTietSanPham refund(GioHangChiTiet gioHangChiTiet) {
-//        if (gioHangChiTiet.getTrangThai().equals(TrangThai.YEU_CAU_TRA_HANG)) {
-//            ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.findById(gioHangChiTiet.getChiTietSanPham().getId()).orElse(null);
-//            if (chiTietSanPham != null) {
-//                chiTietSanPham.setSoLuongTon(chiTietSanPham.getSoLuongTon() + gioHangChiTiet.getSoLuong());
-//            }
-//        }
-//        return null;
-//    }
+
+    @Override
+    public boolean removeGioHangChiTietHoanTra(GioHangChiTiet gioHangChiTiet, HoaDon hoaDon) {
+        if (gioHangChiTiet.getTrangThai().equals(TrangThai.YEU_CAU_TRA_HANG)) {
+            gioHangChiTietRepository.delete(gioHangChiTiet);
+//            hoaDon.setThanhToan(hoaDon.getThanhToan()- );
+        }
+        return true;
+    }
+
+
+
+    @Override
+    public ChiTietSanPham refund(GioHangChiTiet gioHangChiTiet) {
+        if (gioHangChiTiet.getTrangThai().equals(TrangThai.YEU_CAU_TRA_HANG)) {
+            ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.findById(gioHangChiTiet.getChiTietSanPham().getId()).orElse(null);
+            if (chiTietSanPham != null) {
+                chiTietSanPham.setSoLuongTon(chiTietSanPham.getSoLuongTon() + gioHangChiTiet.getSoLuong());
+            }
+        }
+        return null;
+    }
     @Scheduled(fixedRate = 300000)
     public void updateHoaDonEveryDay(){
         List<HoaDon> hoaDons= repository.findAll();

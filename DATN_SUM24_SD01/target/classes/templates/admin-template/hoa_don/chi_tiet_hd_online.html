@@ -202,12 +202,14 @@
                                 <td th:text="${ghcts.chiTietSanPham.sanPham.thuongHieu.ten}"></td>
                                 <td th:text="${#numbers.formatDecimal(ghcts.donGia*ghcts.soLuong, 0, 'POINT', 0, 'COMMA')}"></td>
                                 <td th:text="${ghcts.ghiChu}"></td>
+<!--                                <td    th:text="${ghcts.trangThai.getDisplayName()}"></td>-->
                                 <td
                                         th:if="${(ghcts.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).YEU_CAU_TRA_HANG)
                                          or(ghcts.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).DA_TRA_HANG)
                                          or(ghcts.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).TU_CHOI_TRA_HANG)
                                         }"
                                         th:text="${ghcts.trangThai.getDisplayName()}"></td>
+
                                 <td>
                                 </td>
                             </tr>

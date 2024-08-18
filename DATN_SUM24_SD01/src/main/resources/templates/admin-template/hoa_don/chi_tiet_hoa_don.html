@@ -63,6 +63,8 @@
                         <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
                             Phẩm</a>
                         <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
                         <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
                         <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
                         <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
@@ -84,7 +86,7 @@
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -119,8 +121,7 @@
 
 
         <div class="container-fluid pt-4 px-4">
-            <h3 style="text-align: center">Chi Tiết  Hoá Đơn</h3>
-            <hr>
+            <h3 style="text-align: center">Thông Tin Hoá Đơn</h3>
 
             <div class="row">
                 <div class="col-md-12">
@@ -130,7 +131,6 @@
                                 display: grid;
                                 grid-template-columns: 1fr 1fr;
                                 gap: 10px;
-                                border: 2px solid #3498db; /* Border color */
                                 border-radius: 8px; /* Rounded corners */
                                 padding: 15px; /* Padding inside the border */
                                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle 3D effect */
@@ -147,53 +147,56 @@
                         </style>
                         <div class="customer-info">
                             <div>
-                                <h5>Thông tin đơn hàng</h5>
-                                <p><strong>Tên Khách Hàng:</strong></p>
-                                <p><strong>Địa Chỉ  :</strong> </p>
-                                <p><strong>Ngày Tạo Hóa Đơn:</strong> </p>
-                                <p><strong>Số Điện Thoại:</strong></p>
+
+                                <p><strong>Tên Khách Hàng:</strong> <span th:text="${hoaDon.tenKhachHang}"></span></p>
+                                <p><strong>Ngày Tạo:</strong> <span><span th:text="${hoaDon.ngayTao}"></span></span></p>
+                                <p><strong>Số Điện Thoại:</strong><span th:text="${hoaDon.sdt}"></span></p>
                             </div>
                             <div>
-                                <p><strong>Trạng Thái:</strong> </p>
-                                <p><strong>Ghi chú:</strong> </p>
-                                <p><strong>Nhân Viên Bán Hàng:</strong></p>
-                                <p><strong>Thanh Toán:</strong></p>
-                                <p><strong>Tổng Tiền Hoá Đơn:</strong></p>
+                                <p><strong>Trạng Thái:</strong> <span th:text="${hoaDon.trangThai.getDisplayName()}"></span></p>
+                                <p><strong>Ghi chú:</strong> <span th:text="${hoaDon.ghiChu}"></span></p>
+                                <p><strong>Nhân Viên Bán Hàng:</strong><span th:text="${hoaDon.nhanVien.ten}"></span></p>
+                                <p><strong>Thanh Toán:</strong><span style="color: red" th:text="${#numbers.formatDecimal(hoaDon.thanhToan, 0, 'POINT', 0, 'COMMA')}"></span></p>
+                                <p><strong>Tổng Tiền Hoá Đơn:</strong><span  style="color:red;" th:text="${#numbers.formatDecimal(hoaDon.tongTien, 0, 'POINT', 0, 'COMMA')}"></span></p>
                             </div>
                         </div>
-                        <hr>
-                        <!-- Chi tiết sản phẩm -->
-                        <h5 style="text-align: center">Chi Tiết  Sản Phẩm</h5>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Số lượng</th>
-                                    <th>Màu sắc</th>
-                                    <th>Kích thước</th>
-                                    <th>Đế giày</th>
-                                    <th>Thương Hiệu</th>
-                                    <th>Đơn giá</th>
-                                </tr>
-                                </thead>
 
-                            </table>
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Màu sắc</th>
+                                <th>Kích thước</th>
+                                <th>Đế giày</th>
+                                <th>Đơn giá</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="hdct : ${hdcts}">
+                                <td th:text="${hdct.tenSanPham}"></td>
+                                <td th:text="${hdct.soLuong}"></td>
+                                <td>
+                                    <div th:style="'background-color:' + ${hdct.mauSac} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>
+                                </td>
+
+                                <td th:text="${hdct.kichThuoc}"></td>
+                                <td th:text="${hdct.deGiay}"></td>
+                                <td th:text="${#numbers.formatDecimal(hdct.giaBan, 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
+                            </tr>
+                        </table>
+                        <p></p>
+
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Footer End -->
-    </div>
-
-</div>
-
 <!-- JavaScript Libraries -->
 <style>
 
     .invoice-details {
         margin-bottom: 30px;
-        border: 1px solid #ccc;
+        border: 1px solid #cccccc;
         padding: 20px;
         border-radius: 5px;
         background-color: #f9f9f9;
@@ -222,7 +225,7 @@
     }
 
     .invoice-details th {
-        background-color: #f2f2f2;
+        background-color: #f9f9f9;
     }
 </style>
 

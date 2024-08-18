@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -121,7 +121,7 @@
         <nav class="navbar bg-light navbar-light">
             <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
 
-                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
@@ -131,7 +131,7 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <h6 class="mb-0">Phạm Văn Dương</h6>
 
                 </div>
             </div>
@@ -139,7 +139,7 @@
                 <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
                     Hàng</a>
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
                     <div class="dropdown-menu bg-transparent border-0">
                         <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
@@ -156,18 +156,18 @@
                 <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
 
                 <div class="nav-item dropdown">
-                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
-                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
 
 
                     </div>
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -185,7 +185,7 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -198,7 +198,6 @@
         </nav>
 
         <!-- Navbar End -->
-
 
 
         <!-- Recent Sales Start -->
@@ -219,7 +218,7 @@
             <div class="bg-light text-center rounded p-4">
                 <div>
                     <div class="bg-light rounded h-100 p-4">
-                        <table id="example" class="table table-striped" >
+                        <table id="example" class="table table-striped">
                             <thead>
                             <tr>
                                 <th>Id</th>
@@ -230,6 +229,20 @@
                                 <th>Thao Tác</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <tr th:each="deGiay: ${listDeGiay}">
+                                <td th:text="${deGiay.id}"></td>
+                                <td th:text="${deGiay.ma}"></td>
+                                <td th:text="${deGiay.ten}"></td>
+                                <td th:text="${deGiay.ngayTao}"></td>
+                                <td th:text="${deGiay.ngaySua}"></td>
+                                <td><a th:href="@{'/admin/de-giay/view-update/'+${deGiay.id}}"
+                                       class='fas fa-wrench' style='font-size:24px;color: green'></a>
+                                    <a th:href="@{'/admin/de-giay/xoaDeGiay/'+${deGiay.id}}"
+                                       class='far fa-trash-alt' style='font-size:24px;color:red'></a>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -240,7 +253,7 @@
     <!-- Content End -->
 
 
-   </div>
+</div>
 
 <!--thư viện js tích tìm kiếm-->
 <script>
