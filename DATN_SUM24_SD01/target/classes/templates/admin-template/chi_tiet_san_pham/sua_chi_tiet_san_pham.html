@@ -84,7 +84,7 @@
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -145,7 +145,21 @@
                     <label class="form-label">Giá mặc định</label>
                     <input type="text" class="form-control" id="giaMacDinh" name="giaMacDinh" th:field="*{giaMacDinh}"/>
                 </div>
-
+                <div class="mb-3">
+                    <label class="form-label">Trạng Thái</label>
+                    <div class="form-check form-check-inline">
+                        <input id="trangThaiHoatDong" name="trangThai" type="radio" class="form-check-input"
+                               th:value="DANG_HOAT_DONG"
+                               th:field="*{trangThai}"/>
+                        <label for="trangThaiHoatDong" class="form-check-label">Hoạt Động</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input id="trangThaiKhongHoatDong" name="trangThai" type="radio" class="form-check-input"
+                               th:value="DUNG_HOAT_DONG"
+                               th:field="*{trangThai}"/>
+                        <label for="trangThaiKhongHoatDong" class="form-check-label">Dừng Hoạt Động</label>
+                    </div>
+                </div>
 
 
         <button type="submit" class="btn btn-primary " style="margin-left: 40%;">

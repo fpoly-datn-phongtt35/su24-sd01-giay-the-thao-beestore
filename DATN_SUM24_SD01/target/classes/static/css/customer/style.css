@@ -121,7 +121,7 @@ a.more {
 }
 
 .hero {
-  background: #3b5d50;
+  background: #0b0b0b;
   padding: calc(4rem - 30px) 0 0rem 0;
 }
 @media (min-width: 768px) {

@@ -35,8 +35,15 @@
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link"  th:href="@{/beestore/cart}"><img src="/../images/cart.svg" style="padding-bottom: 5px"></a>
-                <li>
+                <li class="nav-item position-relative">
+                    <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
+                        <img src="/../images/cart.svg" class="cart-icon" alt="Cart Icon">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:if="${totalQuantity > 0}" th:text="${totalQuantity}">
+            0
+        </span>
+                    </a>
+                </li>
                     <div class="dropdown show" style="padding-top: 5px">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
@@ -45,16 +52,16 @@
                         <div >
                             <!-- If checkSecurity is true, display the dropdown menu -->
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" th:href="'/beestore/thong-tin-cua-toi'">Tài khoản của tôi</a>
-                                <a class="dropdown-item" th:href="'/bestore/hoa-don-cua-toi'">Đơn mua</a>
+                                <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
                                 <a class="dropdown-item" th:href="'/logout'">Đăng xuất</a>
                             </div>
                         </div>
-                        <div >
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
-                            </div>
-                        </div>
+<!--                        <div >-->
+<!--                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+<!--                                <a class="dropdown-item" th:href="'/beestore/login'">Đăng nhập</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>                </li>
 
                 </li>
@@ -118,36 +125,12 @@
 
 </nav>
 
-
-<!-- Start Product Section -->
-<div class="product-section">
-    <div class="container">
-        <div class="row">
-
-            <!-- Start Column 1 -->
-            <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
-                <h2 class="mb-4 section-title">Công Nghệ Mới</h2>
-                <p class="mb-4">Sản phẩm ra mắt lần này là những sự kết hợp tinh tế giữa thiết kế đẹp mắt và hiệu suất vượt trội, mang đến
-                    cho bạn trải nghiệm sự thoải mái và phong cách độc đáo. </p>
-                <p><a th:href="@{/beestore/cua-hang}" class="btn">Tìm Hiểu</a></p>
-            </div>
-            <!-- End Column 1 -->
-
-
-
-        </div>
-    </div>
-</div>
-<!-- End Product Section -->
-
-
-
 <div class="why-choose-section">
     <div class="container">
         <div class="row justify-content-between align-items-center">
             <div class="col-lg-6">
-                <h2 class="section-title">Lý do bạn nên lựa chọn BeeStore</h2>
-                <p>Hơn 10 năm phát triển, XSHOP luôn mang đến những mẫu giày chất lượng tốt nhất với giá cả hợp lí nhất đến tay người tiêu dùng với hệ thống cửa hàng Số 1 Hà Nội và bán online khắp Việt Nam.</p>
+                <h2 class="section-title"> Chào Các Bạn ! Lý do bạn nên lựa chọn BeeStore</h2>
+                <p>Hơn 10 năm phát triển, BEESTORE luôn mang đến những mẫu giày chất lượng tốt nhất với giá cả hợp lí nhất đến tay người tiêu dùng với hệ thống cửa hàng Số 1 Hà Nội và bán online khắp Việt Nam.</p>
 
                 <div class="row my-5">
                     <div class="col-6 col-md-6">
@@ -167,6 +150,7 @@
                             </div>
                             <h3>Dễ dàng mua sắm</h3>
                             <p>Thuận tiên, đảm bảo hàng chính hãng 100%</p>
+                            <p>Đăng Kí tài khoản mua hàng ngay để được nhận 1% giá trị đơn hàng cho đơn tiếp theo</p>
                         </div>
                     </div>
 
@@ -202,10 +186,7 @@
         </div>
     </div>
 </div>
-<!-- End Why Choose Us Section -->
 
-<
-<!-- Start Footer Section -->
 <footer class="footer-section">
     <div class="container relative">
 
@@ -217,7 +198,7 @@
                 <div class="subscription-form">
                     <h3 class="d-flex align-items-center"><span class="me-1"><img src="../images/envelope-outline.svg"
                                                                                   alt="Image"
-                                                                                  class="img-fluid"></span><span>Đăng ký nhận thông tin khuyến Mại</span>
+                                                                                  class="img-fluid"></span><span style="color: black" >Đăng ký nhận thông tin khuyến Mại</span>
                     </h3>
 
                     <form action="#" class="row g-3">
@@ -244,17 +225,12 @@
             </div>
         </div>
 
-        <div class="row g-5 mb-5">
+        <div class="row g-5 mb-5" style="color: black" >
             <div class="col-lg-4">
-                <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">BeeStore<span></span></a></div>
-                <p class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+                <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
 
-                <ul class="list-unstyled custom-social">
-                    <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-                    <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-                    <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
-                    <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
-                </ul>
+
             </div>
 
             <div class="col-lg-8">
