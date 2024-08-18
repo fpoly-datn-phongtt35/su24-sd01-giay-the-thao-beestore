@@ -52,5 +52,8 @@ public enum TrangThai {
                 return this.name();
         }
     }
-
+    private int newInvoiceCount;
+    public int getNewInvoiceCount() {
+        return newInvoiceCount;
+    }
 }
