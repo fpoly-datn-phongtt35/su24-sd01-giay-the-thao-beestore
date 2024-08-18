@@ -220,9 +220,7 @@
                             <tr th:each="mauSac: ${listMauSac}">
                                 <td th:text="${mauSac.id}"></td>
                                 <td th:text="${mauSac.ma}"></td>
-                                <td>
-                                    <div th:style="'background-color:' + ${mauSac.ten} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>
-                                </td>
+                                <td th:text="${mauSac.ten}"></td>
                                 <td th:text="${mauSac.ngayTao}"></td>
                                 <td th:text="${mauSac.ngaySua}"></td>
                                 <td><a th:href="@{'/admin/mau-sac/view-update/'+${mauSac.id}}"
