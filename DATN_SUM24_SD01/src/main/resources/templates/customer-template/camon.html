@@ -1,44 +1,46 @@
+
 <!DOCTYPE html>
-<html lang="en">
-<head th:fragment="page_head">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
     <meta charset="utf-8"/>
     <meta
-            name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
     />
-    <meta name="author" content="Untree.co"/>
-    <link rel="shortcut icon" th:href="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}"/>
+    <meta content="Untree.co" name="author"/>
+    <link href="../..img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon"/>
 
-    <meta name="description" content=""/>
-    <meta name="keywords" content="bootstrap, bootstrap4"/>
+    <meta content="" name="description"/>
+    <meta content="bootstrap, bootstrap4" name="keywords"/>
 
     <!-- Bootstrap CSS -->
-    <link th:href="@{/css/customer/bootstrap.min.css}" rel="stylesheet"/>
-    <link
-            th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}"
-            rel="stylesheet"
-    />
-    <link th:href="@{/css/customer/style.css}" rel="stylesheet"/>
-    <link th:href="@{/css/customer/tiny-slider.css}" rel="stylesheet"/>
-    <link th:href="@{/css/customer/dangnhap.css}" rel="stylesheet"/>
+    <link href="/../css/customer/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          rel="stylesheet"/>
+    <link href="/../css/customer/style.css" rel="stylesheet"/>
+    <link href="/../css/customer/tiny-slider.css" rel="stylesheet"/>
+    <link href="/../css/customer/shop.css" rel="stylesheet"/>
+    <link href="/../css/customer/detail.css" rel="stylesheet"/>
     <title>
-      BeeStore
+        BeeStore
     </title>
 </head>
 <body>
 <!-- Start Header/Navigation -->
-<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+<nav arial-label="Furni navigation bar" class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
-            <img th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}"
-                 style="height: 50px; width: 50px;">
-
+            <img style="height: 50px; width: 50px;"
+                 th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}">
             <a class="navbar-brand"
-               th:href="@{/beestore/trang-chu}">BeeStore<span></span></a></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
-                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+               th:href="@{/beestore/trang-chu}">BeeStore</a></a>
+
+        <button aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbarsFurni" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="active">
@@ -52,23 +54,84 @@
 
             </ul>
 
-
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li><a class="nav-link"  th:href="@{/beestore/cart}"><img src="/../images/cart.svg" style="padding-bottom: 5px"></a>
                 <li>
                     <div class="dropdown show" style="padding-top: 5px">
                         <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <img src="/../images/user.svg">
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
-                            <a class="dropdown-item" th:href="'/bestore/hoa-don-cua-toi'">Đơn mua</a>
-                            <a class="dropdown-item" th:href="'/logout'">Đăng xuất</a>
+                        <div th:if="${checkSecurity}">
+                            <!-- If checkSecurity is true, display the dropdown menu -->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/beestore/thong-tin-cua-toi'">Tài khoản của tôi</a>
+                                <a class="dropdown-item" th:href="'/bestore/hoa-don-cua-toi'">Đơn mua</a>
+                                <a class="dropdown-item" th:href="'/logout'">Đăng xuất</a>
+                            </div>
                         </div>
-                    </div>
+                        <div th:unless="${checkSecurity}">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đăng nhập</a>
+                            </div>
+                        </div>
+                        </div>
+                                  </li>
+
                 </li>
-                <li><a class="nav-link" href="cart.html"><img src="/../images/cart.svg" style="padding-bottom: 5px"></a>
-                </li>
+                <style>
+                    /* Dropdown Button */
+                    /* Ẩn dropdown menu mặc định */
+                    .dropdown-menu {
+                        display: none;
+                        opacity: 0;
+                        position: absolute;
+                        top: 100%; /* Hiển thị menu bên dưới button */
+                        background-color: #fff; /* Màu nền của dropdown */
+                        transition: opacity 0.3s ease; /* Hiệu ứng mượt mà cho opacity */
+                    }
+
+                    /* Hiển thị dropdown menu khi hover vào .dropdown */
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                        opacity: 1;
+                    }
+
+                    /* Hiệu ứng transition khi hiển thị dropdown */
+                    .dropdown-menu {
+                        transform: translateY(-10px); /* Di chuyển dropdown lên trên */
+                        transition: transform 0.3s ease, opacity 0.3s ease;
+                    }
+
+                    .dropdown:hover .dropdown-menu {
+                        transform: translateY(0); /* Đặt lại vị trí ban đầu */
+                    }
+
+                    .dropdown-toggle {
+                        cursor: pointer;
+                        padding: 0;
+                        border: none;
+                        background: transparent;
+                        outline: none;
+                        height: 100%; /* Đặt chiều cao của dropdown button là 100% */
+                    }
+
+                    /* Dropdown Menu */
+                    .dropdown-menu {
+                        width: auto;
+                        box-shadow: none;
+                    }
+
+                    /* Dropdown Items */
+                    .dropdown-item {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: left;
+                    }
+
+                    /* Cart Icon */
+                </style>
             </ul>
 
         </div>
@@ -77,81 +140,26 @@
 </nav>
 
 
-<div class="container" style="padding-bottom: 50px">
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h2 class="page-title" style="padding-top: 70px">Đăng nhập</h2>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <!-- CREATE-NEW-ACCOUNT START -->
-            <div class="create-new-account">
-                <form
-                        class="new-account-box primari-box ng-pristine ng-valid"
-                        id="create-new-account"
-                        method="post"
-                        action="#"
-                >
-                    <h3 class="box-subheading">Tạo tài khoản</h3>
-                    <div class="form-content">
-                        <p>Đăng ký nếu bạn chưa có tài khoản !</p>
-                        <div class="submit-button">
-                            <a href="dangky.html" id="SubmitCreate" class="btn main-btn">
-                                <span> Tạo tài khoản </span>
-                            </a>
-                        </div>
-                    </div>
-                </form>
+
+<div class="untree_co-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center pt-5">
+                <img style="height: 200px; width: 350px; margin-right: 5px;margin-bottom: 8px"
+                     th:src="@{/images/camon.png}" alt="Address Icon">
+                <h2 class="display-3 text-black">Cảm ơn bạn đã đặt hàng !</h2>
+                <p></p>
+                <label>Đơn hàng của bạn sẽ được gửi đến tay bạn trong thời gian sớm nhất ,bạn hãy chú ý số tiền để thanh toán nha !</label>
+<p></p>
+                <p>
+                    <a th:href="@{/beestore/cua-hang}" class="btn btn-sm btn-outline-black">
+                        Tiếp tục mua hàng
+                    </a>
+                    <a th:href="@{/beestore/hoa-don-cua-toi}" class="btn btn-sm btn-outline-black">
+                        Xem Chi Tiết Đơn Hàng
+                    </a>
+                </p>
             </div>
-            <!-- CREATE-NEW-ACCOUNT END -->
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-            <!-- REGISTERED-ACCOUNT START -->
-            <div class="primari-box registered-account ng-scope">
-                <form
-                        class="new-account-box ng-pristine ng-valid-email ng-invalid ng-invalid-required"
-                        id="accountLogin"
-                        method="post"
-                        novalidate=""
-                        name="formLogin"
-                >
-                    <h3 class="box-subheading">Bạn đã có tài khoản?</h3>
-                    <div class="form-content">
-                        <form action="/user/login" method="post">
-                            <div class="form-group primary-form-group">
-                                <label for="loginemail">Email</label>
-                                <input
-                                        type="email"
-                                        name="txtTen"
-                                        id="loginemail"
-                                        ng-model="username"
-                                        class="form-control input-feild ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required"
-                                        required=""
-                                />
-                            </div>
-                            <div class="form-group primary-form-group">
-                                <label for="password">Mật khẩu</label>
-                                <input
-                                        type="password"
-                                        name="txtPass"
-                                        ng-model="password"
-                                        id="password"
-                                        class="form-control input-feild ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
-                                        required=""
-                                />
-                            </div>
-                            <div class="forget-password">
-                                <p><a href="quenmk.html">Quên mật khẩu?</a></p>
-                            </div>
-                            <div class="submit-button">
-                                <button type="submit" id="signinCreate" class="btn main-btn">
-                                    <span> Đăng nhập </span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </form>
-            </div>
-            <!-- REGISTERED-ACCOUNT END -->
         </div>
     </div>
 </div>
@@ -262,8 +270,8 @@
 </footer>
 <!-- End Footer Section -->
 
-<script th:src="@{/js/customer/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/js/customer/tiny-slider.js}"></script>
-<script th:src="@{/js/customer/custom.js}"></script>
+<script src="/../js/customer/bootstrap.bundle.min.js"></script>
+<script src="/../js/customer/tiny-slider.js"></script>
+<script src="/../js/customer/custom.js"></script>
 </body>
 </html>
