@@ -171,7 +171,7 @@
                 </div>
 
 
-                <a th:href="@{/admin/ma-giam-gia}" class="nav-item nav-link"><i
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
                         class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
                 <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
                         class="fa fa-chart-bar me-2"></i>Thống Kê</a>
@@ -270,8 +270,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a th:href="@{'/admin/san-pham/edit/' + ${sp.id}}">
-                                            <img src="/../../img/pen_v2.png" style="width: 25px; padding-right: 5px;">
+                                        <a class='fas fa-wrench' style='font-size:24px;color: green'  th:href="@{'/admin/san-pham/edit/' + ${sp.id}}">
                                         </a>
 <!--                                    </td>-->
 <!--                                    <td> <a th:href="@{'/admin/san-pham/xoaSanPham/'+${sp.id}}"-->
