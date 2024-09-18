@@ -3,6 +3,7 @@ package com.example.datnsum24sd01.controller;
 import com.example.datnsum24sd01.entity.KichThuoc;
 import com.example.datnsum24sd01.request.KichThuocRequest;
 import com.example.datnsum24sd01.service.KhichThuocService;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class KichThuocController {
 
 
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     @Autowired
     private KhichThuocService kichThuocService;
 
     @GetMapping
     public String getAll(Model model) {
+        model.addAttribute("tenNhanVien", spingsecurity.getCurrentNhanVienTen());
         model.addAttribute("listKichThuoc", kichThuocService.getAllKichThuoc());
         return "admin-template/kich_thuoc/kich_thuoc";
     }
@@ -66,6 +69,7 @@ public class KichThuocController {
         redirectAttributes.addFlashAttribute("deleteMessage", note);
         return "redirect:/admin/kich-thuoc";
     }
+
 
 
 }

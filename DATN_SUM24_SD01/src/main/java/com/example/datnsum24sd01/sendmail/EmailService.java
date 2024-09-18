@@ -1,11 +1,23 @@
 package com.example.datnsum24sd01.sendmail;
 
+import com.example.datnsum24sd01.entity.GioHangChiTiet;
+import com.example.datnsum24sd01.entity.HoaDon;
+import com.example.datnsum24sd01.entity.KhachHang;
+import com.example.datnsum24sd01.enumation.TrangThaiDonHang;
+import com.example.datnsum24sd01.responsitory.GioHangChiTietRepository;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
 
 @Service
 public class EmailService {
@@ -13,7 +25,8 @@ public class EmailService {
 
     @Value("duongpvph20350@fpt.edu.vn")
     private String senderEmail;
-
+    @Autowired
+    private GioHangChiTietRepository gioHangChiTietRepository;
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
@@ -49,17 +62,17 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void sendMaPhieuGiamGiaKH(String recipientEmail,String content) {
+
+
+    public void sendPasswordEmail(String recipientEmail, String newPassword) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setText(content);
         message.setFrom(senderEmail);
         message.setTo(recipientEmail);
-        message.setSubject("Thông báo: BeeStore gửi đến bạn 1 ưu Đãi");
-        message.setText("Chào '"+ recipientEmail +"' ,\n\n" +
-                "Bạn là một khách hàng thân thiết của BeeStore . Để tri ân và thay lời cảm ơn đến bạn BeeStore xin gửi bạn ưu đãi khi mua hàng tại của hàng hay trên hệ thống của BeeStore,\n\n" +
-                "Bạn hãy nhanh tay dùng mã giảm giá này để nhận nhiều ưu đãi của chúng tôi nhé  : " +content + " ,\n\n" +
-                "Một lần nữa cảm ơn và hẹn gặp lại bạn !  ,\n\n" +
-                " * Quý khách vui lòng không trả lời email này * ,\n\n" +
+        message.setSubject("THÔNG BÁO : BẠN ĐÃ YÊU CẦU KHÔI PHỤC MẬT KHẨU !");
+        message.setText("Chào "+ recipientEmail + " ,\n\n" +
+                "Bạn vừa dùng mail này để xác nhận quên mật khẩu tài khoản BeeStore,\n\n" +
+                "Mật Khẩu đăng nhập mới của bạn là : " + newPassword + " ,\n\n" +
+                "Nếu bạn không xác nhận quên mật khẩu mà vẫn nhận được mail này thì hãy liên hệ lại với BeeStore ngay lập tức qua hotline :0398194211   ,\n\n" +
                 "Trân trọng,\n[BEESTORE]");
 
         javaMailSender.send(message);

@@ -6,6 +6,7 @@ import com.example.datnsum24sd01.request.KichThuocRequest;
 import com.example.datnsum24sd01.request.MauSacRequest;
 import com.example.datnsum24sd01.service.MauSacService;
 import com.example.datnsum24sd01.service.impl.KichThuocServiceImpl;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,12 @@ public class MauSacController {
 
     @Autowired
     private MauSacService mauSacService;
+    private Spingsecurity spingsecurity = new Spingsecurity();
+
 
     @GetMapping
     public String getAll(Model model) {
+        model.addAttribute("tenNhanVien", spingsecurity.getCurrentNhanVienTen());
         model.addAttribute("listMauSac", mauSacService.getAllMauSac());
         return "admin-template/mau_sac/mau_sac";
     }

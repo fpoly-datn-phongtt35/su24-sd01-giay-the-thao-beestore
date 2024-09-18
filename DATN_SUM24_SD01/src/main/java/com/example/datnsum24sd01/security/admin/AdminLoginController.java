@@ -46,18 +46,22 @@ public class AdminLoginController {
     }
     @PostMapping("/dang-ky")
     public String dangKy(
-            @Valid
-            @ModelAttribute("khachHang") RegisterRequest khachHang,
+            @Valid @ModelAttribute("khachHang") RegisterRequest khachHang,
             BindingResult result,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     ){
         if(result.hasErrors() || khachHangService.existsByEmail(khachHang.getEmail()) || khachHangService.existsBySdt(khachHang.getSdt())){
             model.addAttribute("validateRegis", true);
             model.addAttribute("exSdt", khachHangService.existsBySdt(khachHang.getSdt()));
             model.addAttribute("exEmail", khachHangService.existsByEmail(khachHang.getEmail()));
+            System.out.println("In error ");
+            model.addAttribute("errorLogin", true);
             return "admin-template/login";
         }
         khachHangService.registration(khachHang);
+        redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công, check mail để lấy password !");
+
         return "redirect:/login";
     }
     @GetMapping("/quen-mat-khau")

@@ -13,19 +13,17 @@ public interface BanHangOnlineCustomService {
 
     Integer nextPage(Integer pageNo);
 
-    List<ChiTietSanPhamCustomerCt> list3New();
-
-    List<ChiTietSanPhamCustomerCt> list3Prominent();
-
     List<ChiTietSanPhamCustomerCt> list3Custom();
 
-    List<ChiTietSanPhamCustomerCt> list3Limited();
+
 
     List<ChiTietSanPhamCustomerCt> list4Random();
 
     List<Anhspcustom> listAnhDetail(Long id);
 
     ChiTietSanPham getById(Long id);
+
+
 
     public ChiTietSanPhamDTO convertToDTO(ChiTietSanPham chiTietSanPham);
 

@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 
 
 import java.io.IOException;
+//thông báo lỗi chuyển về login
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override

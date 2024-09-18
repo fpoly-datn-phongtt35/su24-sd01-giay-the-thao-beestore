@@ -3,6 +3,7 @@ package com.example.datnsum24sd01.controller;
 import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.request.ThuongHieuRequest;
 import com.example.datnsum24sd01.service.ThuongHieuSerivice;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/thuong-hieu")
 public class ThuongHieuController {
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     private final ThuongHieuSerivice thuongHieuService;
 
@@ -36,7 +38,7 @@ public class ThuongHieuController {
 
     @GetMapping()
     public String getAllTH(Model model) {
-
+        model.addAttribute("tenNhanVien", spingsecurity.getCurrentNhanVienTen());
         model.addAttribute("listThuongHieu", thuongHieuService.getList());
         model.addAttribute("index", pageNo + 1);
         model.addAttribute("trangThais", list);

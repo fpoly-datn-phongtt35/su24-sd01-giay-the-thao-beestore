@@ -47,13 +47,18 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <label>Nhân Viên </label>
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
-                    Hàng</a>
+                <!-- Menu Items -->
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/admin/ban-hang}" class="nav-item nav-link d-inline-flex align-items-center">
+                        <i class="fa fa-laptop "></i>Bán Hàng Tại Quầy
+                    </a>
+                </div>
                 <div class="nav-item dropdown">
                     <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
@@ -92,9 +97,6 @@
             </div>
         </nav>
     </div>
-    <!-- Sidebar End -->
-
-    <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -103,22 +105,21 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
-
 
 
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-
-                        <a  class="dropdown-item">Đăng xuất</a>
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
         </nav>
 
         <div class="container-fluid pt-4 px-4">
-            <h3 style="text-align: center">Thông Tin Hoá Đơn</h3>
+            <h1 style="text-align: center">Chi Tiết hóa Đơn Online</h1>
+            <p></p>
             <div th:if="${not #strings.isEmpty(err)}" class="error-message">
                 <p  class="alert alert-danger" th:text="${err}"></p>
             </div>
@@ -131,9 +132,7 @@
                                 grid-template-columns: 1fr 1fr;
                                 gap: 10px;
 
-                                border-radius: 8px; /* Rounded corners */
-                                padding: 15px; /* Padding inside the border */
-                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle 3D effect */
+
                             }
 
                             .customer-info p {
@@ -147,19 +146,21 @@
                         </style>
                         <div class="customer-info">
                             <div>
-                                <h5>Thông tin đơn hàng</h5>
-                                <p><strong>Tên Khách Hàng:</strong> <span th:text="${hoaDon.tenKhachHang}"></span></p>
+                                <h6><i class="fa fa-user" aria-hidden="true"></i> Thông tin Khách hàng</h6>
+                                <p><strong>Tên Khách Hàng:</strong> <span  style="color: red" th:text="${hoaDon.tenKhachHang}"></span></p>
                                 <p><strong>Ngày Tạo:</strong> <span><span th:text="${hoaDon.ngayTao}"></span></span></p>
                                 <p><strong>Ngày Thanh Toán:</strong> <span><span th:text="${hoaDon.ngayThanhToan}"></span></span></p>
                                 <p><strong>Số Điện Thoại:</strong><span th:text="${hoaDon.sdt}"></span></p>
                                 <p><strong>Địa Chỉ Giao:</strong> <span th:text="${hoaDon.diaChi}"></span></p>
                             </div>
                             <div>
+                                <h6><i class="fa fa-file-invoice" aria-hidden="true"></i> Thông tin hóa đơn</h6>
+
                                 <p><strong>Trạng Thái:</strong> <span th:text="${hoaDon.trangThai.getDisplayName()}"></span></p>
                                 <p><strong>Ghi chú:</strong> <span th:text="${hoaDon.ghiChu}"></span></p>
                                 <p>
                                     <strong>Tổng Tiền Hoá Đơn:</strong>
-                                    <span style="color: red;table-layout: fixed" th:if="${hoaDon.tongTien != null}" th:text="${#numbers.formatDecimal(hoaDon.tongTien, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+                                    <span th:if="${hoaDon.tongTien != null}" th:text="${#numbers.formatDecimal(hoaDon.tongTien, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
                                     <span th:if="${hoaDon.tongTien == null}">0 VND</span>
                                 </p>
                                 <p>
@@ -168,7 +169,7 @@
                                 </p>
                                 <p>
                                     <strong>Phí Vận Chuyển:</strong>
-                                    <span style="color: red" th:if="${hoaDon.phiVanChuyen != null}" th:text="${#numbers.formatDecimal(hoaDon.phiVanChuyen, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+                                    <span th:if="${hoaDon.phiVanChuyen != null}" th:text="${#numbers.formatDecimal(hoaDon.phiVanChuyen, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
                                 </p>
                                 <p>
                                     <strong>Thanh Toán: </strong>
@@ -215,54 +216,115 @@
                             </tr>
                         </table>
 
+                        <table>
+                            <!-- Display the header only if there are images -->
+                            <tr th:if="${!#lists.isEmpty(ghcts)}">
+                                <th colspan="3">Hình ảnh tình trạng sản phẩm hoàn trả</th>
+                            </tr>
 
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-outline-success" style="margin-right: 30px"
-                                    th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG }"
-                                    data-bs-toggle="modal"
-                                    th:data-bs-target="'#ghiChu1' + ${hoaDon.id}">
-                                <i class="bi bi-arrow-counterclockwise"></i>
-                                </svg>Hoàn Trả Và Hoàn Kho
-                            </button>
-                            <button class="btn btn-outline-success" style="margin-right: 30px"
-                                    th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG }"
-                                    data-bs-toggle="modal"
-                                    th:data-bs-target="'#ghiChu2' + ${hoaDon.id}">
-                                <i class="bi bi-arrow-counterclockwise"></i>
-                                </svg> Hoàn Trả Và Không Hoàn Kho
-                            </button>
-                            <button class="btn btn-outline-danger ml-2"
-                                    th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG or hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}"
-                                    data-bs-toggle="modal"
-                                    th:data-bs-target="'#huyDon' + ${hoaDon.id}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                </svg> Từ chối Hoàn Trả
-                            </button>
+                            <!-- Display images in a single horizontal row -->
+                            <tr th:if="${!#lists.isEmpty(ghcts)}">
+                                <td colspan="3">
+                                    <!-- Container for images -->
+                                    <div style="white-space: nowrap;">
+                                        <div th:each="ghcts : ${ghcts}" th:if="${ghcts.hinhAnh != null}" style="display: inline-block; margin-right: 10px;">
+                                            <img th:src="@{/images/{fileName}(fileName=${ghcts.hinhAnh})}" alt="Product Image" style="width: 100px; height: auto;"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Display a message if no images are available -->
+                            <tr th:if="${#lists.isEmpty(ghcts)}">
+                                <td colspan="3">Không có hàng hoàn</td>
+                            </tr>
+                        </table>
+                        <br>
+
+
+                        </table>
+
+
+<!--                        <div class="d-flex justify-content-end">-->
+<!--                            <button class="btn btn-outline-success" style="margin-right: 30px"-->
+<!--                                    th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG }"-->
+<!--                                    data-bs-toggle="modal"-->
+<!--                                    th:data-bs-target="'#ghiChu1' + ${hoaDon.id}">-->
+<!--                                <i class="bi bi-arrow-counterclockwise"></i>-->
+<!--                                </svg>Hoàn Trả Và Hoàn Kho-->
+<!--                            </button>-->
+<!--                            <button class="btn btn-outline-success" style="margin-right: 30px"-->
+<!--                                    th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG }"-->
+<!--                                    data-bs-toggle="modal"-->
+<!--                                    th:data-bs-target="'#ghiChu2' + ${hoaDon.id}">-->
+<!--                                <i class="bi bi-arrow-counterclockwise"></i>-->
+<!--                                </svg> Hoàn Trả Và Không Hoàn Kho-->
+<!--                            </button>-->
+<!--                            <button class="btn btn-outline-danger ml-2"-->
+<!--                                    th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG or hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}"-->
+<!--                                    data-bs-toggle="modal"-->
+<!--                                    th:data-bs-target="'#huyDon' + ${hoaDon.id}">-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">-->
+<!--                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>-->
+<!--                                </svg> Từ chối Hoàn Trả-->
+<!--                            </button>-->
+<!--                        </div>-->
+
+                        <div class="d-flex justify-content-end" style="margin-right: 850px">
+                            <!-- Dropdown button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="margin-right: 30px">
+                                    <i ></i> Thao Tác
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item"
+                                           th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG }"
+                                           data-bs-toggle="modal"
+                                           th:data-bs-target="'#ghiChu1' + ${hoaDon.id}">
+                                            Hoàn Trả Và Hoàn Kho
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item"
+                                           th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG }"
+                                           data-bs-toggle="modal"
+                                           th:data-bs-target="'#ghiChu2' + ${hoaDon.id}">
+                                            Hoàn Trả Và Không Hoàn Kho
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item"
+                                           th:if="${hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG or hoaDon.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}"
+                                           data-bs-toggle="modal"
+                                           th:data-bs-target="'#huyDon' + ${hoaDon.id}">
+                                            Từ chối Trả Hàng
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+
 
                     </div>
 
                 </div>
 
             </div>
+            <p></p>
 
             <div class="modal fade" th:id="'ghiChu1' + ${hoaDon.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-center mt-3">
-                                Xác Nhận Hoàn Trả
+                                Hoàn trả và hoàn kho
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="padding: 20px 40px;"> <!-- Adjusted padding -->
                             <form th:action="@{/admin/hoa-don/validation/accept-refund}" method="post">
                                 <input type="hidden" name="id" th:value="${hoaDon.id}" />
-                                <div class="mb-3">
-                                    <label for="oldNote" class="form-label">Ghi chú cũ</label>
-                                    <input type="text" class="form-control" id="oldNote" name="id" th:value="${hoaDon.ghiChu}" readonly />
-                                </div>
                                 <div class="mb-3">
                                     <label for="newNote" class="form-label">Ghi chú</label>
                                     <input type="text" class="form-control" id="newNote" name="ghiChu" th:value="${ghiChu}" />
@@ -282,17 +344,14 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-center mt-3">
-                                Xác Nhận Hoàn Trả
+                                Hoàn trả không hoàn kho
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="padding: 20px 40px;"> <!-- Adjusted padding -->
                             <form th:action="@{/admin/hoa-don/validation/accept}" method="post">
                                 <input type="hidden" name="id" th:value="${hoaDon.id}" />
-                                <div class="mb-3">
-                                    <label for="oldNote" class="form-label">Ghi chú cũ</label>
-                                    <input type="text" class="form-control" id="oldNote" name="id" th:value="${hoaDon.ghiChu}" readonly />
-                                </div>
+
                                 <div class="mb-3">
                                     <label for="newNote" class="form-label">Ghi chú</label>
                                     <input type="text" class="form-control" id="newNote" name="ghiChu" th:value="${ghiChu}" />
@@ -312,7 +371,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title text-center mt-3">
-                                Xác Nhận Hoàn Trả
+                                Từ chối trả hàng
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -320,11 +379,7 @@
                             <form th:action="@{/admin/hoa-don/validation/unaccept}" method="post">
                                 <input type="hidden" name="id" th:value="${hoaDon.id}" />
                                 <div class="mb-3">
-                                    <label for="oldNote" class="form-label">Ghi chú cũ</label>
-                                    <input type="text" class="form-control" id="oldNote" name="id" th:value="${hoaDon.ghiChu}" readonly />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="newNote" class="form-label">Ghi chú</label>
+                                    <label for="newNote" class="form-label">Gửi lí do từ chối</label>
                                     <input type="text" class="form-control" id="newNote" name="ghiChu" th:value="${ghiChu}" />
                                 </div>
                                 <div class="modal-footer">

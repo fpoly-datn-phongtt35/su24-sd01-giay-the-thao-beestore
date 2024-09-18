@@ -1337,9 +1337,9 @@ a:hover {
     float: right;
 }
 
-.section-top .row .divider-line a {
-    color: #00ac8b;
-}
+/*.section-top .row .divider-line a {*/
+/*    color: #00ac8b;*/
+/*}*/
 
 .section-top .row .divider-line h6 {
     display: inline;

@@ -3,6 +3,7 @@ package com.example.datnsum24sd01.controller;
 import com.example.datnsum24sd01.entity.DeGiay;
 import com.example.datnsum24sd01.request.DeGiayRequest;
 import com.example.datnsum24sd01.service.Degiayserviec;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,11 @@ public class DeGiayController {
 
     @Autowired
     private Degiayserviec deGiayService;
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     @GetMapping
     public String getAll(Model model) {
+        model.addAttribute("tenNhanVien", spingsecurity.getCurrentNhanVienTen());
         model.addAttribute("listDeGiay", deGiayService.getAllDeGiay());
         return "admin-template/de_giay/de_giay";
     }

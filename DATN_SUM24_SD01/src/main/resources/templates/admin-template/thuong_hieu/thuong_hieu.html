@@ -120,13 +120,18 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <label>Nhân Viên </label>
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
-                    Hàng</a>
+                <!-- Menu Items -->
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/admin/ban-hang}" class="nav-item nav-link d-inline-flex align-items-center">
+                        <i class="fa fa-laptop "></i>Bán Hàng Tại Quầy
+                    </a>
+                </div>
                 <div class="nav-item dropdown">
                     <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
@@ -165,9 +170,6 @@
             </div>
         </nav>
     </div>
-    <!-- Sidebar End -->
-
-    <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -176,18 +178,17 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
+
+
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">Thông Tin Cá Nhân</a>
-                        <a href="#" class="dropdown-item">Cài Đặt</a>
-                        <a href="#" class="dropdown-item">Đăng Xuất</a>
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
         </nav>
-
 
         <div th:if="${param.success}">
             <div class="alert alert-info" id="success-alert">Thành Công!</div>

@@ -19,4 +19,6 @@ public interface MauSacService {
     MauSac findById(Long id);
 
     MauSac update(MauSac mauSac);
+
+    List<MauSac> findByProductAndSize(Long productId, Long size);
 }

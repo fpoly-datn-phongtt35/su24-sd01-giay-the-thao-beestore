@@ -134,13 +134,18 @@
           </div>
         </div>
         <div class="ms-3">
-          <h6 class="mb-0" >Phạm Văn Dương</h6>
+          <label>Nhân Viên </label>
+          <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
         </div>
       </div>
       <div class="navbar-nav w-100">
-        <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
-          Hàng</a>
+        <!-- Menu Items -->
+        <div class="d-flex align-items-center">
+          <a th:href="@{/admin/ban-hang}" class="nav-item nav-link d-inline-flex align-items-center">
+            <i class="fa fa-laptop "></i>Bán Hàng Tại Quầy
+          </a>
+        </div>
         <div class="nav-item dropdown">
           <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                   class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
@@ -177,9 +182,6 @@
       </div>
     </nav>
   </div>
-  <!-- Sidebar End -->
-
-  <!-- Content Start -->
   <div class="content">
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -188,295 +190,235 @@
       <div class="navbar-nav align-items-center ms-auto">
         <div class="fa fa-sign-out"></div>
         <div class="nav-item dropdown">
-          <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
             <i class="fa fa-bars"></i>
+
+
           </a>
           <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-            <a href="#" class="dropdown-item">Thông Tin Cá Nhân</a>
-            <a href="#" class="dropdown-item">Cài Đặt</a>
-            <a href="#" class="dropdown-item">Đăng Xuất</a>
+            <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
           </div>
         </div>
       </div>
     </nav>
-    <!-- Navbar End -->
+
     <div class="container-fluid pt-4 px-4">
       <div id="errorMessageDate"></div>
 
-      <form th:action="@{/admin/thong-ke}" method="get" onsubmit="return validateDate()">
-        <div class="container-fluid pt-3">
-          <input type="hidden" id="hiddenTrangThai" name="trangThai" th:value="${trangThai}"/>
 
-          <div class="row g-2">
-            <div class="col-md-4">
-              <!-- Ngày bắt đầu -->
-              <label class="sr-only" for="start7">Ngày bắt đầu</label>
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Ngày bắt đầu</div>
+
+      <div class="card-body">
+        <!-- Bordered Tabs Justified -->
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Thống Kê Doanh Thu</button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Thống Kê Sản Phẩm </button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="contactt-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contactt" type="button" role="tab" aria-controls="contactt" aria-selected="false">Thống Kê Hóa Đơn</button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Thống Kê Tài Khoản</button>
+          </li>
+        </ul>
+
+        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+          <!-- Thống Kê Doanh Thu Tab -->
+          <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="col-sm-6 col-xl-4">
+              <div class="stat-card">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Doanh Thu</p>
+                  <h6 class="mb-0">
+                    <strong class="text-danger" th:text="${#numbers.formatDecimal(doanhThu != null ? doanhThu : 0, 0, 'POINT', 0, 'COMMA') + ' VND'}"></strong>
+                  </h6>
                 </div>
-                <input type="date" class="form-control" name="startDate" id="start7"
-                       th:value="${startDate}">
               </div>
             </div>
-            <div class="col-md-4">
-              <!-- Ngày kết thúc -->
-              <label class="sr-only" for="end7">Ngày kết thúc</label>
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Ngày kết thúc</div>
+
+            <div class="col-sm-12 col-xl-12">
+              <div class="bg-light rounded h-100 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h5 class="m-0">Biểu Đồ Doanh thu</h5>
+                  <select id="selectType" class="custom-select">
+                    <option value="daily">Ngày</option>
+                    <option value="monthly">Tháng</option>
+                    <option value="yearly">Năm</option>
+                  </select>
                 </div>
-                <input type="date" class="form-control" name="endDate" id="end7" th:value="${endDate}">
+                <canvas id="myChart" style="width: 70%; height: 200px;"></canvas>
               </div>
             </div>
-            <div class="col-md-2" style="padding-bottom: 5px">
-              <!-- Button thứ nhất -->
-              <button type="submit" class="btn btn-outline-info" style="width: 100%"><i class="bi bi-search"></i>Tìm kiếm</button>
+          </div>
+
+          <!-- Thống Kê Sản Phẩm Tab -->
+          <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="col-sm-6 col-xl-4">
+              <div class="stat-card">
+                <i class="fa fa-box fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Tổng Số Sản Phẩm</p>
+                  <h6 class="mb-0">
+                    <strong class="text-danger" th:text="${sanPhamCount}"></strong>
+                  </h6>
+                </div>
+              </div>
             </div>
-            <div class="col-md-2" style="padding-bottom: 5px">
-              <!-- Button thứ hai -->
-              <a class="btn btn-outline-info" href="/admin/thong-ke"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
-              </svg>Làm mới</a>
+
+            <div class="bg-light rounded h-100 p-4">
+              <div id="container2" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Thống Kê Hóa Đơn Tab -->
+          <div class="tab-pane fade" id="bordered-justified-contactt" role="tabpanel" aria-labelledby="contactt-tab">
+            <div class="bg-light rounded h-100 p-4">
+              <div id="container3"></div>
+            </div>
+            <h5 class="text-center"><strong>Danh Sách Hoá Đơn</strong></h5>
+            <table id="example" class="table table-striped custom-table">
+              <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã</th>
+                <th>Tên Khách Hàng</th>
+                <th>Hình Thức Mua Hàng</th>
+                <th>Trạng Thái</th>
+                <th>Thanh Toán</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="hd,state : ${hoadons}">
+                <td>
+                  <a  th:text="${state.index+1}"></a>
+                </td>
+                <td>
+                  <a th:text="${hd.ma}"></a>
+                </td>
+                <td>
+                  <a th:text="${hd.khachHang.ten}"></a>
+                </td>
+                <td>
+                  <a th:text="${hd.loaiHoaDon.getDisplayName()}"></a>
+                </td>
+                <td>
+                  <a  th:text="${hd.trangThai.getDisplayName()}"></a>
+                </td>
+                <td>
+                  <a  th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Thống Kê Tài Khoản Tab -->
+          <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="row g-4">
+              <div class="col-sm-6">
+                <div class="stat-card">
+                  <i class="fa fa-users fa-3x text-primary"></i>
+                  <div class="ms-3">
+                    <p class="mb-2">Số Tài Khoản Nhân Viên</p>
+                    <h6 class="text-danger" th:text="${nhanVienCount}"></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="stat-card">
+                  <i class="fa fa-users fa-3x text-primary"></i>
+                  <div class="ms-3">
+                    <p class="mb-2">Số Tài Khoản Khách Hàng</p>
+                    <h6 class="text-danger" th:text="${khachHangCount}"></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-light text-center rounded ">
+                <div>
+                  <h3>Danh Sách Nhân Viên</h3>
+                  <div class="bg-light rounded h-100 p-4">
+                    <table id="example" class="table table-striped" >
+                      <thead>
+                      <tr>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>SĐT</th>
+                        <th>Giới tính</th>
+                        <th>Email</th>
+                        <th>Địa Chỉ</th>
+                        <th>Trạng Thái</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="nhanVien : ${nhanViens}">
+                        <td th:text="${nhanVien.ma}">Ma</td>
+                        <td th:text="${nhanVien.ten}">Ten</td>
+                        <td th:text="${nhanVien.sdt}">Sdt</td>
+                        <td th:text="${nhanVien.gioiTinh ? 'Nam' : 'Nữ'}">Gioi Tinh</td>
+                        <!--                                <td th:text="${#temporals.format(nhanVien.ngayTao, 'yyyy-MM-dd')}"></td>-->
+                        <td th:text="${nhanVien.email}">Email</td>
+                        <td th:text="${nhanVien.diachi}">Địa Chỉ</td>
+                        <!--                                <td th:text="${nhanVien.ngayTao}"></td>-->
+                        <td th:text="${nhanVien.trangThai == 0 ? 'Đang làm' : 'Nghỉ việc'}">Trang Thai</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <p></p>
+              <div class="bg-light text-center rounded ">
+                <div>
+                  <h3>Danh Sách Khách Hàng</h3>
+                  <div class="bg-light rounded h-100 p-4">
+                    <table id="example" class="table table-striped" >
+                      <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Mã Khách Hàng</th>
+                        <th>Tên</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>SĐT</th>
+                        <th>Trạng Thái</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="khachHang, stat : ${list}">
+                        <td th:text="${stat.index + 1}"></td>
+                        <td th:text="${khachHang.ma}">Mã</td>
+                        <td th:text="${khachHang.ten}">Tên</td>
+                        <td th:text="${khachHang.gioiTinh }">Giới tính</td>
+                        <td th:text="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${khachHang.sdt}">SĐT</td>
+                        <td th:text="${khachHang.trangThai == 1 ? 'Hoạt Động' : 'KHông Hoạt Động'}">Trạng
+                          Thái
+                        </td>
+
+                      </tr>
+                      </tbody>
+
+
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-      </form>
-
-      <div class="">
-        <div class="card-body">
-
-          <!-- Bordered Tabs Justified -->
-          <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
-            <li class="nav-item flex-fill" role="presentation">
-              <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Thống Kê Doanh Thu</button>
-            </li>
-            <li class="nav-item flex-fill" role="presentation">
-              <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Thống Kê Sản Phẩm </button>
-            </li>
-            <li class="nav-item flex-fill" role="presentation">
-              <button class="nav-link w-100" id="contactt-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contactt" type="button" role="tab" aria-controls="contact" aria-selected="false">Thống Kê Hóa Đơn</button>
-            </li>
-            <li class="nav-item flex-fill" role="presentation">
-              <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Thống Kê Tài Khoản</button>
-            </li>
-
-
-          </ul>
-          <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-            <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="col-sm-6 col-xl-4">
-                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                  <i class="fa fa-chart-line fa-3x text-primary"></i>
-                  <div class="ms-3">
-                    <p class="mb-2">Tổng Doanh Thu</p>
-                    <h6 class="mb-0">
-                      <strong  style="color: red" th:text="${#numbers.formatDecimal(doanhThu != null ? doanhThu : 0, 0, 'POINT', 0, 'COMMA') + ' VND'}"></strong>
-                    </h6>
-                  </div>
-
-                </div>
-
-              </div>
-              <div class="col-sm-12 col-xl-12">
-                <div class="bg-light rounded h-100 p-4">
-                  <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h5 class="m-0" >  Biểu Đồ Doanh thu</h5>
-                    <div class="custom-select-wrapper">
-                      <select id="selectType" class="custom-select">
-                        <option value="daily">Ngày</option>
-                        <option value="monthly">Tháng</option>
-                        <option value="yearly">Năm</option>
-                      </select>
-                    </div>
-                  </div>
-                  <style>
-                    .custom-select {
-                      display: inline-block;
-                      padding: 8px 12px;
-                      font-size: 16px;
-                      border: 1px solid #ccc;
-                      border-radius: 4px;
-                      background-color: #fff;
-                      color: #333;
-                      appearance: none; /* Loại bỏ giao diện mặc định */
-                    }
-
-                    .custom-select:hover {
-                      border-color: #aaa;
-                    }
-
-                    .custom-select:focus {
-                      outline: none;
-                      border-color: #555;
-                    }
-
-                  </style>
-
-                  <canvas id="myChart" style="width: 70%; height: 200px;"></canvas>
-                </div>
-              </div>
-
-            </div>
-
-
-            <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-<!--              <div class="ms-3">-->
-<!--                <p class="mb-2">Tổng Số Sản Phẩm</p>-->
-<!--                <h6 class="mb-0">-->
-<!--                  <strong  style="color: red" th:text="${sanPhamCount}"></strong>-->
-<!--                </h6>-->
-<!--              </div>-->
-              <div class="col-sm-6 col-xl-4">
-                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                  <i class="fa fa-box fa-3x text-primary"></i>
-                  <div class="ms-3">
-                    <p class="mb-2">Tổng Số Sản Phẩm</p>
-                    <h6 class="mb-0">
-                      <strong  style="color: red" th:text="${sanPhamCount}"></strong>
-                  </div>
-
-                </div>
-
-              </div>
-              <div class="">
-                <div class="bg-light rounded h-100 p-4" >
-                  <!--            biểu đồ thống kê sl bán chạy-->
-                  <div  id="container2" style="width: 100%"></div>
-
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="bordered-justified-contactt" role="tabpanel" aria-labelledby="contactt-tab">
-
-              <div class="">
-              <div class="bg-light rounded h-100 p-4">
-                <!--            biẻu đồ tròn hoá đơn-->
-                <div id="container3" ></div>
-              </div>
-            </div>
-              <h5><strong style="margin-left: 420px">Danh Sách Hoá Đơn</strong></h5>
-              <table id="example" class="table table-striped" style="width:100%">
-                <thead>
-                <tr>
-                  <th>STT</th>
-                  <th>Mã</th>
-                  <th>Tên Khách Hàng</th>
-                  <th>Hình Thức Mua Hàng</th>
-                  <th>Trạng Thái</th>
-                  <th>Thanh Toán</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="hd,state : ${hoadons}">
-                  <td>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${state.index+1}"
-                       style="color: black;"></a>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${state.index+1}"
-                       style="color: black;"></a>
-                  </td>
-                  <td>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${hd.ma}"
-                       style="color: black;"></a>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${hd.ma}"
-                       style="color: black;"></a>
-                  </td>
-                  <td>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${hd.khachHang.ten}"
-                       style="color: black;"></a>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${hd.khachHang.ten}"
-                       style="color: black;"></a>
-                  </td>
-                  <td>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-hoa-don/' + ${hd.id}}"
-                       th:text="${hd.loaiHoaDon.getDisplayName()}"
-                       style="color: black;"></a>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-gio-hang/' + ${hd.id}}"
-                       th:text="${hd.loaiHoaDon.getDisplayName()}"
-                       style="color: black;"></a>
-                  </td>
-                  <td>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-hoa-don/' + ${hd.id}}"
-                       th:text="${hd.trangThai.getDisplayName()}"
-                       style="color: black;"></a>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
-                       th:href="@{'/admin/thong-ke/chi-tiet-gio-hang/' + ${hd.id}}"
-                       th:text="${hd.trangThai.getDisplayName()}"
-                       style="color: black;"></a>
-                  </td>
-                  <td>
-                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
-                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"
-                       th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"
-                       style="color: black;"></a>
-                    <a th:if="${(hd.loaiHoaDon ==T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
-                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"
-                       th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"
-                       style="color: black;"></a>
-                  </td>
-                </tr>
-                </tbody>
-                <tfoot hidden="hidden">
-                <tr>
-                  <th>STT</th>
-                  <th>Mã</th>
-                  <th>Tên Khách Hàng</th>
-                  <th>Ngày Tạo</th>
-                  <th>Trạng Thái</th>
-                  <th>Thanh Toán</th>
-                </tr>
-                </tfoot>
-              </table>
-            </div>
-            </div>
-            <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
-              <div class="row g-4">
-                <!-- First column -->
-                <div class="col-sm-6">
-                  <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                    <i class="fa fa-users fa-3x text-primary"></i> <!-- Changed icon to user -->
-                    <div class="ms-3">
-                      <p class="mb-2">Số Tài Khoản Nhân Viên</p>
-                      <h6 style="color:red;" class="mb-0" th:text="${nhanVienCount}"></h6>
-                    </div>
-                  </div>
-                </div>
-                <!-- Second column -->
-                <div class="col-sm-6">
-                  <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                    <i class="fa fa-users fa-3x text-primary"></i> <!-- Changed icon to users -->
-                    <div class="ms-3">
-                      <p class="mb-2">Số Tài Khoản Khách Hàng</p>
-                      <h6 style="color: red" class="mb-0"  th:text="${khachHangCount}"></h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-
-
-
-
-
-    <div class="container-fluid pt-4">
-      <div class="bg-light text-center rounded p-4">
-        <div>
+      <div class="container-fluid pt-4">
+        <div class="bg-light text-center rounded p-4">
           <div class="bg-light rounded h-100 p-4">
+            <!-- Table Styling -->
             <style>
-              /* Trong một tệp CSS hoặc trong một thẻ style ở đầu trang HTML */
               .custom-table {
                 width: 100%;
                 border-collapse: collapse;
@@ -502,26 +444,26 @@
                 background-color: #e9e9e9;
               }
 
-              /* Để ẩn footer của bảng */
               tfoot[hidden] {
                 display: none;
-              }a {
-                 text-decoration: none;
-               }
+              }
 
+              .stat-card {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 16px;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+              }
             </style>
-
+          </div>
         </div>
       </div>
+
+
     </div>
-
-
-  </div>
-  <!-- Content End -->
-
-  <!-- Back to Top -->
-  <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</div>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

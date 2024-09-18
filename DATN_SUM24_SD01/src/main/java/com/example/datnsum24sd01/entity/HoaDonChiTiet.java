@@ -70,7 +70,6 @@ public class HoaDonChiTiet {
 
     @Column(name = "ngay_sua")
     private LocalDate ngaySua;
-
     @Column(name = "trang_thai")
     @Enumerated(ORDINAL)
     private TrangThaiDonHang trangThaiDonHang;

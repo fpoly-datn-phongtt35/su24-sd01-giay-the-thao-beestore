@@ -65,13 +65,18 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0">Phạm Văn Dương</h6>
+                    <label>Nhân Viên </label>
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
-                    Hàng</a>
+                <!-- Menu Items -->
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/admin/ban-hang}" class="nav-item nav-link d-inline-flex align-items-center">
+                        <i class="fa fa-laptop "></i>Bán Hàng Tại Quầy
+                    </a>
+                </div>
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
@@ -109,9 +114,29 @@
         </nav>
     </div>
     <!-- Sidebar End -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
 
 
-    <div class="container-fluid pt-4">
+            <div class="navbar-nav align-items-center ms-auto">
+                <div class="fa fa-sign-out"></div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-bars"></i>
+
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <div class="container-fluid pt-4">
         <h6 class="mb-4" style="font-size: 40px; text-align: center;">Thêm Chi Tiết Sản Phẩm</h6>
         <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
             <form action="#" th:action="@{/admin/chi-tiet-san-pham/themChiTietSanPham}"
@@ -139,8 +164,10 @@
                 <div class="mb-3 row g-2">
                     <div style="width: 100%;">
                         <label class="form-label">Màu sắc</label>
-                        <select class="js-example-basic-multiple form-select mb-3" name="mauSac" multiple="multiple" th:field="*{mauSac}">
-                            <option th:each="mauSac : ${listMauSac}" th:value="${mauSac.id}" th:text="${mauSac.ten}"></option>
+                        <select th:field="*{mauSac}" class="form-select mb-3"
+                                aria-label="Default select example">
+                            <option th:each="mauSac: ${listMauSac}" th:value="${mauSac.id}"
+                                    th:text="${mauSac.ten}"></option>
                         </select>
                     </div>
                 </div>

@@ -47,13 +47,13 @@
                     <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
                 </li>
                 <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
-                <li><a class="nav-link" th:href="@{/beestore/dich-vu}">Dịch vụ</a></li>
-                <li><a class="nav-link" th:href="@{/beestore/thong-tin}">Thông tin</a></li>
-                <li><a class="nav-link" th:href="@{/beestore/lien-he}">Liên hệ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
 
 
             </ul>
-
+<!-- số lượng sản phẩm có trong card-->
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <li class="nav-item position-relative">
                     <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
@@ -72,8 +72,8 @@
                         <div >
                             <!-- If checkSecurity is true, display the dropdown menu -->
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" th:href="'/beestore/thong-tin-cua-toi'">Tài khoản của tôi</a>
-                                <a class="dropdown-item" th:href="'/bestore/hoa-don-cua-toi'">Đơn mua</a>
+                                <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
                                 <a class="dropdown-item" th:href="'/logout'">Đăng xuất</a>
                             </div>
                         </div>
@@ -147,11 +147,12 @@
 
 
 <!-- Start Hero Section -->
-<h1 style="color: #000000; text-align: center; padding-top: 100px">Giỏ hàng</h1>
+<h1 style="color: #000000; text-align: center; padding-top: 100px">
+    <i class="fas fa-shopping-cart" style="font-size: 40px;"></i> Giỏ hàng
+</h1>
 <!-- End Hero Section -->
 
-
-
+<!-- thông báo giỏ hàng rỗng -->
 <div class="row mb-5" th:if="${#lists.isEmpty(listGioHangChiTiet)}">
     <div class="col-md-12" style="text-align: center; padding-top: 50px">
         <img style=""
@@ -159,7 +160,11 @@
         <h6>Hãy tiếp tục mua sắm để thêm sản phẩm vào giỏ hàng của bạn.</h6>
     </div>
 </div>
-
+<div class="container">
+    <div class="col-7">
+    </div>
+    <div class="col-3">
+</div>
 <div class="untree_co-section before-footer-section">
     <div class="container">
         <div class="row mb-5" th:unless="${#lists.isEmpty(listGioHangChiTiet)}">
@@ -175,12 +180,14 @@
                                            value="">
                                 </div>
                             </th>
-                            <th class="product-thumbnail">Ảnh</th>
+
+
+                            <th class="product-name">Hình ảnh </th>
                             <th class="product-name">Sản phẩm</th>
-                            <th class="product-price">Giá</th>
-                            <th class="product-quantity">Số lượng</th>
+                            <th class="product-price"> Đơn Giá</th>
+                            <th class="product-quantity" >Số lượng</th>
                             <th class="product-total">Thành tiền</th>
-                            <th class="product-remove">Xóa</th>
+                            <th class="product-remove">Thao Tác</th>
                         </tr>
                         </thead>
                         <tbody th:each="gioHangChiTiet : ${listGioHangChiTiet}">
@@ -204,46 +211,22 @@
                             <td class="product-name">
                                 <h2 class="h5 text-black name" style="font-weight: bold; color: #333; line-height: 1.4;">
                                     <span th:text="${gioHangChiTiet.chiTietSanPham.sanPham.ten}"></span>
-                                    <span th:text="${' ' + gioHangChiTiet.chiTietSanPham.sanPham.dongSanPham.ten}"></span>
                                     <span th:text="${' ' + gioHangChiTiet.chiTietSanPham.deGiay.ten}"></span>
                                     <span th:text="${' (Màu sắc: ' + gioHangChiTiet.chiTietSanPham.mauSac.ten + ', Kích thước: ' + gioHangChiTiet.chiTietSanPham.kichThuoc.ten + ')'}"></span>
                                 </h2>
+                                <span>Còn lại: [[${gioHangChiTiet.chiTietSanPham.soLuongTon}]] Sản Phẩm</span>
+
                             </td>
                             <td class="price"
                                 th:text="${#numbers.formatDecimal(gioHangChiTiet.chiTietSanPham.giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}">
                             </td>
                             <input type="hidden" class="priceValue" th:value="${gioHangChiTiet.chiTietSanPham.giaBan}">
-<!--                            <td>-->
-<!--                                <div class="input-group mb-3 d-flex align-items-center quantity-container"-->
-<!--                                     style="max-width: 100%">-->
-<!--                                    <div class="tru" onclick="handlerChange(this)">-->
-<!--                                        <button class="btn btn-outline-black "-->
-<!--                                                type="button">-->
-<!--                                            &minus;-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                    <input aria-describedby="button-addon1"-->
-<!--                                           aria-label="Example text with button addon"-->
-<!--                                           class="form-control text-center quantity-amount"-->
-<!--                                           placeholder=""-->
-<!--                                           th:value="${gioHangChiTiet.soLuong}"-->
-<!--                                           type="text"-->
-<!--                                           name="soLuong"-->
-<!--                                           onchange="handleChangeOfInput(this)"-->
-<!--                                           th:data-max-quantity="${gioHangChiTiet.chiTietSanPham.soLuongTon}"/>-->
-<!--                                    <div class="cong" onclick="handlerChange(this)">-->
-<!--                                        <button class="btn btn-outline-black "-->
-<!--                                                type="button">-->
-<!--                                            &plus;-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <span>Số lượng Tồn: [[${gioHangChiTiet.chiTietSanPham.soLuongTon}]]</span>-->
-<!--                            </td>-->
+
                             <td>
                                 <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 100%">
                                     <div class="input-group-prepend">
-                                        <button class="btn btn-outline-black" type="button" onclick="adjustQuantity(-1)">
+                                        <button class="btn btn-outline-black" type="button"
+                                                onclick="adjustQuantity(this, -1)">
                                             &minus;
                                         </button>
                                     </div>
@@ -257,21 +240,29 @@
                                            onchange="handleChangeOfInput(this)"
                                            th:data-max-quantity="${gioHangChiTiet.chiTietSanPham.soLuongTon}"/>
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-black" type="button" onclick="adjustQuantity(1)">
+                                        <button class="btn btn-outline-black" type="button"
+                                                onclick="adjustQuantity(this, 1)">
                                             &plus;
                                         </button>
                                     </div>
                                 </div>
-                                <span>Số lượng Tồn: [[${gioHangChiTiet.chiTietSanPham.soLuongTon}]]</span>
+
                             </td>
 
                             <td class="thanhtien"
+
                                 th:text="${#numbers.formatDecimal(gioHangChiTiet.soLuong * gioHangChiTiet.chiTietSanPham.giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}">
                             </td>
                             <input type="hidden" class="thanhtienValue"
                                    th:value="${gioHangChiTiet.soLuong * gioHangChiTiet.chiTietSanPham.giaBan}">
-                            <td><a class="btn btn-black btn-sm delete-button"
-                                   th:attr="data-id=${gioHangChiTiet.id}">X</a></td>
+
+                            <td>
+                                <a class="btn btn-black btn-sm delete-button"
+                                   th:attr="data-id=${gioHangChiTiet.id}">
+                                    <i  style="width: 100px" class="fas fa-trash-alt"></i> <!-- Font Awesome trash bin icon -->
+                                </a>
+                            </td>
+
                         </tr>
                         </tbody>
                     </table>
@@ -295,27 +286,37 @@
                     <div class="col-md-7">
                         <div class="row">
                             <div class="col-md-12 text-right border-bottom mb-5">
-                                <h3 class="text-black h4 text-uppercase">Thành Tiền</h3>
+                                <h3 class="text-black h4 text-uppercase">Đơn Hàng</h3>
                             </div>
                         </div>
-
                         <div class="row mb-5">
                             <div class="col-md-6">
-                                <span class="text-black">Tổng tiền</span>
+                                <span class="text-black">Giảm giá </span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong >0</strong>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Tổng thanh toán </span>
                             </div>
                             <div class="col-md-6 text-right">
                                 <strong class="text-black total">0</strong>
                             </div>
                         </div>
+<hr>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-black btn-lg py-3 btn-block"
-                                        onclick="checkOut()">
-                                    Mua hàng
-                                </button>
-                            </div>
+<P></P><div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-black btn-md py-3 btn-block"
+                                    onclick="checkOut()">
+                                Tiếp tục thanh toán <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
+                    </div>
+
+
                     </div>
                 </div>
             </div>
@@ -342,6 +343,11 @@
         </div>
     </div>
 </div>
+
+
+
+
+
         <div class="row g-5 mb-5" style="color: black" >
             <div class="col-lg-4">
                 <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
@@ -393,7 +399,7 @@
         <div class="border-top copyright">
             <div class="row pt-4">
                 <div class="col-lg-6">
-                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                    <p class="mb-2 text-center text-lg-start"> &copy;
                         <script>document.write(new Date().getFullYear());</script> &mdash;
                         BEESTORE_SD01_SUM24
 
@@ -434,16 +440,22 @@
 
 <script>
 
-    function adjustQuantity(change) {
-        const input = document.querySelector('.quantity-amount');
-        const currentValue = parseInt(input.value) || 0;
-        const maxQuantity = parseInt(input.getAttribute('data-max-quantity'));
+    function adjustQuantity(buttonElement , change) {
+
+        const inputElement = buttonElement.closest('.quantity-container').querySelector('.quantity-amount');
+
+        const currentValue = parseInt(inputElement.value) || 0;
+        const maxQuantity = parseInt(inputElement.getAttribute('data-max-quantity'));
+
+
 
         let newValue = currentValue + change;
         if (newValue < 0) newValue = 0;
         if (newValue > maxQuantity) newValue = maxQuantity;
 
-        input.value = newValue;
+        inputElement.value = newValue;
+
+        handleChangeOfInput(inputElement);
     }
 
     function handleChangeOfInput(input) {
@@ -524,6 +536,8 @@
     }
 
     function handleChangeOfInput(input) {
+
+        console.log("in change of input quantity ");
         let father = input.parentElement.parentElement.parentElement.parentElement;
         let priceE = father.querySelector(".thanhtien");
         let price = father.querySelector(".priceValue").value;
@@ -649,12 +663,20 @@
         var checkboxes = document.querySelectorAll("input[name='options[]']");
         // Mảng để lưu trữ giá trị của các checkbox được chọn
         var selectedOptions = [];
+        var quantity = [];
 
         checkboxes.forEach(function (checkbox) {
             if (checkbox.checked) {
                 // Nếu checkbox được chọn, thêm giá trị của nó vào mảng
                 selectedOptions.push(encodeURIComponent(checkbox.value));
             }
+
+            var soLuongInput = checkbox.closest('tr').querySelector('input[name="soLuong"]');
+
+
+        if (soLuongInput) {
+            quantity.push(soLuongInput.value);
+        }
         });
 
         if (selectedOptions.length === 0) {

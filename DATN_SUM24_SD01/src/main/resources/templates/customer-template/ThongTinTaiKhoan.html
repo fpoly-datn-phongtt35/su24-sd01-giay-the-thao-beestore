@@ -50,9 +50,9 @@
                     <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
                 </li>
                 <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
-                <li><a class="nav-link" th:href="@{/beestore/dich-vu}">Dịch vụ</a></li>
-                <li><a class="nav-link" th:href="@{/beestore/thong-tin}">Thông tin</a></li>
-                <li><a class="nav-link" th:href="@{/beestore/lien-he}">Liên hệ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
 
 
             </ul>
@@ -68,7 +68,7 @@
                         <div >
                             <!-- If checkSecurity is true, display the dropdown menu -->
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" th:href="'/beestore/thong-tin-cua-toi'">Tài khoản của tôi</a>
+                                <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
                                 <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
                                 <a class="dropdown-item" th:href="'/logout'">Đăng xuất</a>
                             </div>
@@ -183,7 +183,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="profile-setting-tab" data-toggle="pill"
                                    href="#profile-setting" role="tab" aria-controls="profile-setting"
-                                   aria-selected="true">Hồ sơ tài khoản</a>
+                                   aria-selected="true">Hồ sơ của tôi</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="address-setting-tab" data-toggle="pill" href="#address-setting"
@@ -266,29 +266,41 @@
                         <div class="tab-pane fade" id="address-setting" role="tabpanel"
                              aria-labelledby="address-setting-tab">
                             <!-- Item-->
+                            <button class="btn black-btn " data-toggle="modal"
+                                    data-target="#addNewShipping10"
+                                    onclick="apiAddDiaChi(event)">
+                                Thêm Địa Mới
+                            </button>
+                            <p></p>
                             <div style="max-height: 400px;overflow-y: auto;">
                                 <div class="setting-box">
                                     <div class="address-item">
                                         <div class="header diaChiRow" th:each="diaChi, status  : ${listDC}">
                                             <div class="col">
+                                                <!-- Address Header with Numbering -->
                                                 <div style="display: flex; align-items: center;">
-
+                                                    <span style="margin-right: 8px; font-weight: bold;" th:text="'Địa chỉ ' + (${status.index + 1}) + '.'"> </span>
                                                     <h6 style="margin: 0;" th:text="${diaChi.tenNguoiNhan}" id="nguoiNhan"></h6>
                                                     <span style="margin: 0 8px; border-left: 1px solid #666; height: 20px; display: inline-block;"></span>
                                                     <p style="margin: 0;" class="phone" th:text="${diaChi.sdt}"></p>
                                                 </div>
-                                                <div style="display: flex;flex-wrap: wrap;">
-                                                    <p class="card-text" th:text="${diaChi.diaChi}"></p>
-                                                    <p th:id="${diaChi.phuongXa}" class="phuongXaColumn"></p>
-                                                    <p th:id="${diaChi.quanHuyen}" class="quanHuyenColumn"></p>
-                                                    <p th:id="${diaChi.thanhPho}" class="thanhPhoColumn"></p>
+
+                                                <!-- Address Details -->
+                                                <div style="display: flex; flex-wrap: wrap; margin-top: 8px;">
+                                                    <p class="card-text" th:text="${diaChi.diaChi}" style="margin: 0;"></p>
+                                                    <p th:id="${diaChi.phuongXa}" class="phuongXaColumn" style="margin: 0;"></p>
+                                                    <p th:id="${diaChi.quanHuyen}" class="quanHuyenColumn" style="margin: 0;"></p>
+                                                    <p th:id="${diaChi.thanhPho}" class="thanhPhoColumn" style="margin: 0;"></p>
                                                 </div>
-                                                <hr style="width: 50%;">
+
+                                                <!-- Divider -->
+                                                <hr style="width: 50%; margin-top: 8px;">
                                             </div>
 
-                                            <div class="edit-address btn  black-btn" data-bs-toggle="modal"
+
+                                            <div  class="edit-address btn  black-btn" data-bs-toggle="modal"
                                                  th:data-bs-target="'#suaDiaChi' + ${diaChi.id}" data-target="#addNewShipping">
-                                                Cập nhật
+                                                Sửa
                                             </div>
 
                                             <div class="ms-2 d-inline-block">
@@ -775,13 +787,9 @@
                             </div>
 
                             <div>
-                                <p></p>
 
-                                <button class="btn black-btn " data-toggle="modal"
-                                        data-target="#addNewShipping10"
-                                        onclick="apiAddDiaChi(event)">
-                                     Thêm Địa Mới
-                                </button>
+
+
                             </div>
                             <!--   Modal thêm địa chỉ  -->
                             <form id="myFormAdd" th:action="@{'/admin/thongtincanhan/add-dia-chi/'+${khachHang.id}}"
@@ -928,7 +936,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn" type="button" data-dismiss="modal">Huỷ bỏ</button>
-                            <button id="submitButton" class="btn btn-primary black-btn" type="submit">Lưu</button>
+                            <button id="submitButton" class="btn btn" type="submit">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -1028,7 +1036,7 @@
         <div class="border-top copyright">
             <div class="row pt-4">
                 <div class="col-lg-6">
-                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                    <p class="mb-2 text-center text-lg-start"> &copy;
                         <script>document.write(new Date().getFullYear());</script> &mdash;
                         BEESTORE_SD01_SUM24
 
@@ -1039,7 +1047,6 @@
 
 
             </div>
-        </div>
 
     </div>
 </footer>
@@ -1273,8 +1280,9 @@
                     // Nếu muốn xử lý dữ liệu trả về từ máy chủ, thêm logic xử lý ở đây
                     // ...
 
+                     console.log("them dia chi thanh cong ");
                     // Load lại trang hiện tại sau khi gửi dữ liệu thành công
-                    location.reload();
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);

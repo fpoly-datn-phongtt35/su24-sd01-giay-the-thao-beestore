@@ -46,13 +46,10 @@ public interface  BanHangService {
 
     HoaDon updateKhachHang(Long idHoaDon, Long idKhachHang);
 
-    HoaDon themGiamGia(Long idHoaDon, Long idGiamGia, BigDecimal tongTien);
-
-    HoaDon huyGiamGia(Long idHoaDon);
 
     PhieuGiamGia updateGiamGia(Long idHoaDon);
 
-    HoaDon checkGiamGia(Long idHoaDon, BigDecimal tongTien);
+
 
     HoaDonChiTiet tangSoLuongSanPham(Long idHDCT, Integer soLuong);
 

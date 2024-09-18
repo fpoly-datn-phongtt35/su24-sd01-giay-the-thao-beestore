@@ -1,6 +1,7 @@
 package com.example.datnsum24sd01.service;
 
 import com.example.datnsum24sd01.dto.GioHangWrapper;
+import com.example.datnsum24sd01.dto.OrderDataDTO;
 import com.example.datnsum24sd01.entity.GioHangChiTiet;
 import com.example.datnsum24sd01.entity.HoaDon;
 
@@ -21,4 +22,12 @@ public interface BanHangonlinectservice {
     List<GioHangChiTiet> findAllById(List<String> listIdString);
 
     GioHangWrapper findAllItemsById(List<String> listIdString);
+
+    void saveOrderData(OrderDataDTO orderDataDTO);
+
+    OrderDataDTO getOrderData();
+
+    void saveGioHangWrapper(GioHangWrapper gioHangWrapper);
+
+    GioHangWrapper getGioHangWrapper();
 }

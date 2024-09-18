@@ -18,7 +18,7 @@ public class CustomNhanVienDetailService implements UserDetailsService {
 
     @Autowired
     private KhachHangResponsitory khachHangRepository;
-
+//tìm xem người dùng có tài khoản hay không, tự động chuyển đến đường trang với tài khoản tương ứng
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<NhanVien> nhanVien = nhanVienRepository.findByEmail(username);

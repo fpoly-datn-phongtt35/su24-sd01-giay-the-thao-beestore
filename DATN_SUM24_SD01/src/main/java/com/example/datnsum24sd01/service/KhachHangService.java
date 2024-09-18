@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public interface KhachHangService {
-//    List<KhachHang> getByTrangThai(TrangThai trangThai);
+    //    List<KhachHang> getByTrangThai(TrangThai trangThai);
     List<KhachHang> getList();
     boolean existsBySdt(String sdt);
 
@@ -41,4 +41,5 @@ public interface KhachHangService {
 
     DiaChi getByIdDiaChi(Long idDiaChi);
     boolean changeUserPassword(Long idKh,String oldPassword, String newPassword);
+    boolean forgotpassword(String newPassword);
 }

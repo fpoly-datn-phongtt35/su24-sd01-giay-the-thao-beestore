@@ -11,6 +11,7 @@ import com.example.datnsum24sd01.service.DongSanPhamService;
 import com.example.datnsum24sd01.service.NhaCungCapServiec;
 import com.example.datnsum24sd01.service.SanPhamService;
 import com.example.datnsum24sd01.service.ThuongHieuSerivice;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -45,10 +46,17 @@ public class SanPhamController {
 
     List<TrangThai> list = new ArrayList<>(Arrays.asList(TrangThai.DANG_HOAT_DONG, TrangThai.DUNG_HOAT_DONG));
 
-
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     @GetMapping()
     public String hienThi(Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
 
         model.addAttribute("listSanPham", sanPhamService.getAll());
         model.addAttribute("index", pageNo + 1);
@@ -69,6 +77,12 @@ public class SanPhamController {
     @GetMapping("/view-add-san-pham")
     public String getViewAdd(Model model) {
 
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
         model.addAttribute("sanPham", new SanPhamRequest());
         model.addAttribute("listTH",thuongHieuService.getList().stream().sorted(Comparator.comparing(ThuongHieu::getId).reversed()).collect(Collectors.toList()));
 
@@ -160,6 +174,12 @@ public class SanPhamController {
 
     @GetMapping("edit/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
 
         SanPham sanPham = sanPhamService.findById(id);
         List<AnhBia> listAnh = sanPham.getListAnhSanPham();

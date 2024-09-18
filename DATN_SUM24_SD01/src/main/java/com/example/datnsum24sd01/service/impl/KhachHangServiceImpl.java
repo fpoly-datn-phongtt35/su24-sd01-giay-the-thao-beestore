@@ -12,6 +12,7 @@ import com.example.datnsum24sd01.responsitory.KhachHangResponsitory;
 import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.KhachHangService;
 import com.example.datnsum24sd01.worker.AutoGenCodeRandom;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     private EmailService emailService;
 
 
-
     @Override
     public List<KhachHang> getList() {
         return khachHangResponsitory.getListKhachHang();
@@ -56,15 +56,16 @@ public class KhachHangServiceImpl implements KhachHangService {
         return khachHangResponsitory.existsBySdtAndIdNot(sdt, id);
     }
 
+    //đăng kí khách hàng gửi mật khẩu random về mail
     @Override
     public KhachHang registration(RegisterRequest request) {
 
         KhachHang khachHang = khachHangResponsitory.save(RegisterRequest.convertToEntity(request));
-        khachHang.setMatKhau(AutoGenCodeRandom.genUUID());
+        String matKhau = AutoGenCodeRandom.genUUID();
+        khachHang.setMatKhau(matKhau);
         khachHangResponsitory.save(khachHang);
-//        sendMailService.sendDangKy(khachHang.getEmail());
-//        sendMailService.sendNewPassWord(khachHang.getEmail());
-        emailService.sendNewAccountKHEmail(khachHang.getEmail(), khachHang.getEmail(),AutoGenCodeRandom.genUUID());
+
+        emailService.sendNewAccountKHEmail(khachHang.getEmail(), khachHang.getEmail(), matKhau);
 
         return khachHang;
     }
@@ -107,7 +108,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     @Override
     public boolean checkSdtDuplicate(String sdt) {
-      return   khachHangResponsitory.existsKhachHangBySdt(sdt);
+        return khachHangResponsitory.existsKhachHangBySdt(sdt);
     }
 
     @Override
@@ -118,9 +119,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public KhachHang getById(Long id) {
         Optional<KhachHang> optional = khachHangResponsitory.findById(id);
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
-        }else {
+        } else {
             return null;
         }
     }
@@ -155,7 +156,7 @@ public class KhachHangServiceImpl implements KhachHangService {
         }
     }
 
-
+    //view địa chỉ của từng khách hàng
     @Override
     public List<DiaChi> getDiaChiByIdKhachHang(Long idKhachHang) {
         List<DiaChi> list = new ArrayList<>();
@@ -174,6 +175,7 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     }
 
+    //đổi mật khẩu
     @Override
     public boolean changeUserPassword(Long idKh, String oldPassword, String newPassword) {
         KhachHang khachHang = khachHangResponsitory.findById(idKh).orElse(null);
@@ -184,6 +186,32 @@ public class KhachHangServiceImpl implements KhachHangService {
 
     }
 
+    //quên mật khẩu
+    public boolean forgotpassword(String email) {
+
+        KhachHang khachHang = khachHangResponsitory.findByEmail(email).orElse(null);
+        if (khachHang != null) {
+
+            String newPassword = generateRandomPassword(10);
+
+            // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+            khachHang.setMatKhau(newPassword); // Lưu mật khẩu không mã hóa
+
+
+            khachHangResponsitory.save(khachHang);
+
+            // Gửi email với mật khẩu mới
+            emailService.sendPasswordEmail(email, newPassword);
+
+            return true;
+        }
+        return false;
+    }
+
+
+    private String generateRandomPassword(int length) {
+        return RandomStringUtils.random(length, true, true); // Sinh chuỗi ngẫu nhiên bao gồm chữ cái và số
+    }
 }
 
 

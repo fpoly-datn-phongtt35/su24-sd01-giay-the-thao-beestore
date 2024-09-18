@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+//Ánh xạ giữa các thực thể và DTO
 public class ChiTietSanPhamMapper{
     public static ChiTietSanPhamDTO toDTO(ChiTietSanPham entity) {
         ChiTietSanPhamDTO dto = new ChiTietSanPhamDTO();
@@ -24,6 +24,7 @@ public class ChiTietSanPhamMapper{
         dto.setTenTrangThai(entity.getTrangThai());
         dto.setNgayTao(entity.getNgayTao());
         dto.setSoLuongTon(entity.getSoLuongTon());
+        dto.setIdSanPham(entity.getSanPham().getId());
         return dto;
     }
 

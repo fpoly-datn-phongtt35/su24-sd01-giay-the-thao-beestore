@@ -23,7 +23,7 @@ public class ChiTietSanPhamDTO {
     private Integer soLuongTon;
     private BigDecimal giaMacDinh;
     private BigDecimal giaBan;
-    //    private KhuyenMai khuyenMai;
     private TrangThai tenTrangThai;
     private LocalDate ngayTao;
+    private Long idSanPham;
 }

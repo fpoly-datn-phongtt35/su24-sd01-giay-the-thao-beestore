@@ -12,7 +12,7 @@ import java.util.List;
 public class ChiTietHoaDonServiceImpl implements HoaDonChiTietService {
     @Autowired
     private HoaDonChiTietRepo hoaDonChiTietRepo;
-
+//hoa don online
     @Override
     public List<HoaDonChiTiet> getCtspById(Long id) {
         return hoaDonChiTietRepo.getHoaDonChiTietByIdHoaDon(id);

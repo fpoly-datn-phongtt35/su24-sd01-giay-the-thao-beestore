@@ -1,5 +1,5 @@
 package com.example.datnsum24sd01.enumation;
-
+//biểu diễn một nhóm các hằng số có liên quan
 public enum TrangThaiPhieuKhuyenMai {
     DANG_DIEN_RA(0),
     DA_KET_THUC(1),
