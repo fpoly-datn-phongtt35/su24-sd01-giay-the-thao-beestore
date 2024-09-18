@@ -7,6 +7,7 @@ import com.example.datnsum24sd01.service.Degiayserviec;
 import com.example.datnsum24sd01.service.KhichThuocService;
 import com.example.datnsum24sd01.service.MauSacService;
 import com.example.datnsum24sd01.service.SanPhamService;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,9 +38,16 @@ public class ChiTietSanPhamController {
         this.mauSacService = mauSacService;
         this.sanPhamService = sanPhamService;
     }
-
+    private Spingsecurity spingsecurity = new Spingsecurity();
     @GetMapping()
     public String getAll(Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
         model.addAttribute("listChiTietSanPham", chiTietSanPhamService.getAllChiTietSanPham());
         return "admin-template/chi_tiet_san_pham/chi_tiet_san_pham";
     }
@@ -47,6 +55,13 @@ public class ChiTietSanPhamController {
 
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
         model.addAttribute("chiTietSanPhamRequest", new ChiTietSanPhamRequest());
         model.addAttribute("listDeGiay", deGiayService.getAllDeGiay());
         model.addAttribute("listKichThuoc", kichThuocService.getAllKichThuoc());
@@ -58,6 +73,13 @@ public class ChiTietSanPhamController {
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id") long id, Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
         ChiTietSanPham chiTietSanPham = this.chiTietSanPhamService.getOne(id);
         model.addAttribute("chiTietSanPhamUpdate", chiTietSanPham);
         model.addAttribute("listDeGiay", deGiayService.getAllDeGiay());

@@ -21,7 +21,9 @@ public class GioHangChiTietServiceImpl implements GioHangChiTietService {
     @Override
     public List<GioHangChiTiet> getAll(Long idKhachHang) {
         GioHang gioHang = gioHangRepository.getByKhachHangId(idKhachHang);
-        return gioHangChiTietRepository.findAllByGioHang(gioHang.getId());
+        if(gioHang != null) {
+            return gioHangChiTietRepository.findAllByGioHang(gioHang.getId());
+        } else return null;
     }
 
     @Override

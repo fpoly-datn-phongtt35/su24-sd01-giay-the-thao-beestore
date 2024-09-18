@@ -8,6 +8,7 @@ import com.example.datnsum24sd01.responsitory.KhachHangResponsitory;
 import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.DiaChiService;
 import com.example.datnsum24sd01.service.KhachHangService;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,7 @@ public class KhachHangController {
 
     @Autowired
     private EmailService emailService;
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     List<TrangThai> list = new ArrayList<>(Arrays.asList(TrangThai.DANG_HOAT_DONG, TrangThai.DUNG_HOAT_DONG));
     @GetMapping()
@@ -48,6 +50,13 @@ public class KhachHangController {
                          @RequestParam(name = "keyWord", required = false) String keyWord,
                          @RequestParam(name = "status", required = false) String status) {
         List<KhachHang> kh;
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
 
         if (keyWord == null || keyWord.isEmpty()) {
             if (status == null || status.isEmpty()) {
@@ -72,7 +81,14 @@ public class KhachHangController {
         return "admin-template/khach_hang/khach_hang";
     }
     @GetMapping("/view-add")
-    public String viewAdd(Model model) {
+    public String viewAdd(Model model) { Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
+
         model.addAttribute("newKhachHang", new KhachHangRequest());
         return "admin-template/khach_hang/them_khach_hang";
     }
@@ -90,6 +106,13 @@ public class KhachHangController {
     }
     @GetMapping("/view-update/{id}")
     public String viewUpdate(@PathVariable("id") Long id, Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
 
         KhachHang khachHang = khachHangService.getById(id);
         model.addAttribute("listDC", diaChiService.getAllTheoKhachHang(id));
@@ -193,5 +216,17 @@ public class KhachHangController {
 
         diaChiService.remove(id);
         return "redirect:/admin/khach-hang/view-update/" + idKH;
+    }
+    @PostMapping("/forgot")
+    public String forgotPassword(@RequestParam String email,  RedirectAttributes redirectAttributes, Model model) {
+        boolean result = khachHangService.forgotpassword(email);
+        if (result) {
+            redirectAttributes.addFlashAttribute("status", "Mật khẩu mới đã được gửi đến email của bạn.");
+        } else {
+            redirectAttributes.addFlashAttribute("status", "Có lỗi xảy ra hoặc email không tồn tại. Vui lòng kiểm tra và thử lại.");
+        }
+
+
+        return "redirect:/login";
     }
 }

@@ -15,6 +15,7 @@ import com.example.datnsum24sd01.responsitory.HoaDonRepository;
 import com.example.datnsum24sd01.responsitory.KhachHangResponsitory;
 import com.example.datnsum24sd01.responsitory.NhanVienRepository;
 import com.example.datnsum24sd01.responsitory.PhieuGiamGiaResponsitory;
+import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.BanHangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class BanHangServiceImpl implements BanHangService {
     private NhanVienRepository nhanVienRepository;
 
 
-
+//view hóa đơn chờ
     @Override
     public List<HoaDon> getHoaDonCho() {
         List<HoaDon> listHoaDonCho = new ArrayList<>();
@@ -60,7 +61,7 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return listHoaDonCho;
     }
-
+// Lấy danh sách chi tiết hóa đơn dựa trên ID hóa đơn và chỉ trả về các chi tiết có trạng thái là CHO_XAC_NHAN.
     @Override
     public List<HoaDonChiTiet> getHoaDonChiTietByIdHoaDon(Long idHoaDon) {
         List<HoaDonChiTiet> listHDCT = new ArrayList<>();
@@ -71,7 +72,7 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return listHDCT;
     }
-
+//Lấy hóa đơn dựa trên ID hóa đơn.
     @Override
     public HoaDon getOneById(Long idHoaDon) {
         return hoaDonRepository.findById(idHoaDon).get();
@@ -83,7 +84,7 @@ public class BanHangServiceImpl implements BanHangService {
     }
 
 
-
+    //Lấy danh sách tất cả chi tiết sản phẩm có trạng thái null.(trạng thái hóa đơn chờ)
     @Override
     public List<ChiTietSanPham> getChiTietSanPham() {
         List<ChiTietSanPham> listChiTietSanPham = new ArrayList<>();
@@ -94,7 +95,7 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return listChiTietSanPham;
     }
-
+//thêm hóa đơn chờ tối đa 5 hóa đơn chờ
     @Override
     public HoaDon themHoaDon(HoaDon hoaDon, Long idNhanVien) {
         LocalDateTime time = LocalDateTime.now();
@@ -119,6 +120,7 @@ public class BanHangServiceImpl implements BanHangService {
         return null;
     }
 
+    //thêm sản phẩm vào giỏ hàng để thêm vào hóa đơn chờ
     @Override
     public HoaDonChiTiet taoHoaDonChiTiet(Long idSanPham, Long idHoaDon, HoaDonChiTiet hoaDonChiTiet) {
         HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
@@ -148,14 +150,14 @@ public class BanHangServiceImpl implements BanHangService {
     public HoaDonChiTiet getOneByIdHDCT(Long idHDCT) {
         return hoaDonChiTietRepository.findById(idHDCT).get();
     }
-
+//xóa sản phẩm trong giỏ hàng
     @Override
     public HoaDonChiTiet xoaHoaDonChiTiet(Long idHoaDonChiTiet) {
         hoaDonChiTietRepository.deleteById(idHoaDonChiTiet);
         return null;
     }
 
-
+//thanh toán hóa đơn chờ
     @Override
     public HoaDon thanhToanHoaDon(Long idHoaDon, BigDecimal tienGiamGia) {
         HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
@@ -167,6 +169,7 @@ public class BanHangServiceImpl implements BanHangService {
         hoaDon.setTrangThai(TrangThaiDonHang.HOAN_THANH);
         return hoaDonRepository.save(hoaDon);
     }
+    //check điểm thành viên giảm tối đa 50k điểm
 
     @Override
     public HoaDon checkXuHoaDon(Long idHoaDon, String tongTien, String thanhTien, Boolean xuTichDiem) {
@@ -197,44 +200,8 @@ public class BanHangServiceImpl implements BanHangService {
         return hoaDonRepository.save(hoaDon);
     }
 
-    @Override
-    public HoaDon themGiamGia(Long idHoaDon, Long idGiamGia, BigDecimal tongTien) {
-        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-        if (hoaDon.getKhachHang().getMa().equals("KH000")) {
-            return null;
-        }
-        PhieuGiamGia maGiamGia = maGiamGiaRepository.findById(idGiamGia).get();
-        if (tongTien.compareTo(maGiamGia.getGiaTriDonHang()) >= 0) {
-            hoaDon.setMaGiamGia(maGiamGia);
-            return hoaDonRepository.save(hoaDon);
-        }
-        return null;
-    }
 
-    @Override
-    public PhieuGiamGia updateGiamGia(Long idHoaDon) {
-        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-        try {
-            if (hoaDon != null) {
-                PhieuGiamGia maGiamGia = maGiamGiaRepository.findById(hoaDon.getMaGiamGia().getId()).get();
-                maGiamGia.setSoLuong(maGiamGia.getSoLuong() - 1);
-                return maGiamGiaRepository.save(maGiamGia);
-            }
-        } catch (NullPointerException nullPointerException) {
-            return null;
-        }
-        return null;
-    }
-
-    @Override
-    public HoaDon huyGiamGia(Long idHoaDon) {
-        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-        if (hoaDon.getMaGiamGia() != null) {
-            hoaDon.setMaGiamGia(null);
-            hoaDonRepository.save(hoaDon);
-        }
-        return null;
-    }
+    //thêm mã giảm giá cho thành viên có tài khoản  chưa done
 
     @Override
     public BigDecimal voucher(Long idHoaDon, BigDecimal tongTien) {
@@ -255,19 +222,13 @@ public class BanHangServiceImpl implements BanHangService {
         }
 
     }
-
+//chưa done
     @Override
     public Integer checkVoucher(Long idHoaDon, Long idMaGiamGia, BigDecimal tongTien) {
-        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-        PhieuGiamGia maGiamGia = maGiamGiaRepository.findById(idMaGiamGia).get();
-        if (hoaDon.getKhachHang().getMa().equals("KH000")) {
-            return 1;
-        } else if (tongTien.compareTo(maGiamGia.getGiaTriDonHang()) < 0) {
-            return 2;
-        }
-        return 0;
+        return null;
     }
 
+//tong tien san pham
     @Override
     public BigDecimal getTongTien(Long idHoaDon) {
         BigDecimal tongTien = BigDecimal.valueOf(0);
@@ -282,7 +243,7 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return tongTien;
     }
-
+//thành tiền khi áp điểm ,gg
     @Override
     public BigDecimal getThanhTien(Long idHoaDon, BigDecimal tongTien) {
         HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
@@ -298,14 +259,14 @@ public class BanHangServiceImpl implements BanHangService {
 
 
     }
-
+//update sl sp khi thêm vào giỏ
     @Override
     public ChiTietSanPham updateSoLuong(Long idSanPham, Integer soLuong) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.getChiTietSanPhamById(idSanPham).orElse(null);
         chiTietSanPham.setSoLuongTon(chiTietSanPham.getSoLuongTon() - soLuong);
         return chiTietSanPhamRepository.save(chiTietSanPham);
     }
-
+//
     @Override
     public ChiTietSanPham updateSoLuongTuHDCT(Long idHDCT) {
         Long idSanPham;
@@ -319,7 +280,7 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return null;
     }
-
+//thêm khách hàng vào hóa đơn chờ
     @Override
     public HoaDon updateKhachHang(Long idHoaDon, Long idKhachHang) {
         HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
@@ -330,20 +291,12 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return null;
     }
-
+//chưa done
     @Override
-    public HoaDon checkGiamGia(Long idHoaDon, BigDecimal tongTien) {
-        HoaDon hoaDon = hoaDonRepository.findById(idHoaDon).get();
-        if (hoaDon.getMaGiamGia() == null) {
-            return null;
-        }
-        if (hoaDon.getMaGiamGia().getGiaTriDonHang().compareTo(tongTien) > 0) {
-            hoaDon.setMaGiamGia(null);
-            return hoaDonRepository.save(hoaDon);
-        }
+    public PhieuGiamGia updateGiamGia(Long idHoaDon) {
         return null;
-
     }
+
 
     @Override
     public HoaDonChiTiet tangSoLuongSanPham(Long idHDCT, Integer soLuong) {
@@ -357,6 +310,9 @@ public class BanHangServiceImpl implements BanHangService {
         return hoaDonChiTietRepository.save(hoaDonChiTiet);
     }
 
+
+    //tăng số lượng sản phẩm trong giỏ hàng chưa done
+
     @Override
     public HoaDonChiTiet tangSoLuongSanPhamHoaDon(Long idHDCT, Integer soLuong) {
         Long idSanPham;
@@ -368,7 +324,7 @@ public class BanHangServiceImpl implements BanHangService {
         chiTietSanPhamRepository.save(chiTietSanPham);
         return hoaDonChiTietRepository.save(hoaDonChiTiet);
     }
-
+    //tăng số lượng sản phẩm trong giỏ hàng chưa done
     @Override
     public HoaDonChiTiet giamSoLuongSanPhamHoaDon(Long idHDCT, Integer soLuong) {
         Long idSanPham;
@@ -384,7 +340,7 @@ public class BanHangServiceImpl implements BanHangService {
         }
         return hoaDonChiTietRepository.save(hoaDonChiTiet);
     }
-
+//sửa slsp chưa done
     @Override
     public ChiTietSanPham suaSoLuongSanPham(Long idHDCT) {
         HoaDonChiTiet hoaDonChiTiet = hoaDonChiTietRepository.findById(idHDCT).orElse(null);
@@ -393,7 +349,7 @@ public class BanHangServiceImpl implements BanHangService {
         chiTietSanPham.setSoLuongTon(chiTietSanPham.getSoLuongTon() + hoaDonChiTiet.getSoLuong());
         return chiTietSanPhamRepository.save(chiTietSanPham);
     }
-
+//hủy đơn hàng
     @Override
     public Boolean huyDon(Long idHoaDon) {
         Boolean check = false;
@@ -417,7 +373,7 @@ public class BanHangServiceImpl implements BanHangService {
             return true;
         }
     }
-
+//tích điểm khách hàng 
     @Override
     public KhachHang tichDiem(Long idKhachHang, String thanhTien) {
         KhachHang khachHang = khachHangRepository.findById(idKhachHang).orElse(null);

@@ -50,7 +50,7 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
 
 
-
+//chi tiết sản phẩm view
     @Override
     public List<ChiTietSanPham> getAll() {
         List<ChiTietSanPham> sortedList =chiTietSanPhamRepository.findAll().stream()
@@ -138,4 +138,12 @@ public class ChiTietSanPhamServiceImpl implements ChiTietSanPhamService {
 
 
     }
+
+    @Override
+    public ChiTietSanPham findByColorAndSize(Long colorId, Long sizeId, Long productId) {
+
+        return chiTietSanPhamRepository.findByMauSacAndKichThuoc(colorId, sizeId, productId).get(0);
+    }
+
+
 }

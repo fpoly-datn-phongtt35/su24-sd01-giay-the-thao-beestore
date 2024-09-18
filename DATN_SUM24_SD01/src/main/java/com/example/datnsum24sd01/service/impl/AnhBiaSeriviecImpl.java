@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public class AnhBiaSeriviecImpl implements AnhBiaSeriviec {
+    //view add, update delete ảnh service
     private final AnhBiaResponsitory repository;
 
     public AnhBiaSeriviecImpl(AnhBiaResponsitory repository) {

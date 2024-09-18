@@ -8,6 +8,7 @@ import com.example.datnsum24sd01.entity.ChiTietSanPham;
 import com.example.datnsum24sd01.entity.SanPham;
 import com.example.datnsum24sd01.responsitory.BanHangOnlineResponsitory;
 import com.example.datnsum24sd01.service.BanHangOnlineCustomService;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
@@ -19,14 +20,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class BanHangOnlineServiceImpl  implements BanHangOnlineCustomService {
+    //phân trang trong shop
     @Autowired
     private BanHangOnlineResponsitory repository;
+
     @Override
     public Page<ChiTietSanPham> pageAllInShop(Integer pageNo, Integer size) {
         Pageable pageable = PageRequest.of(pageNo, size);
@@ -47,25 +51,13 @@ public class BanHangOnlineServiceImpl  implements BanHangOnlineCustomService {
         System.out.println(pageNo);
         return pageNo;
     }
+//list các sản phẩm trong shop
 
-    @Override
-    public List<ChiTietSanPhamCustomerCt> list3New() {
-        return repository.list3New();
-    }
 
-    @Override
-    public List<ChiTietSanPhamCustomerCt> list3Prominent() {
-        return repository.list3Prominent();
-    }
 
     @Override
     public List<ChiTietSanPhamCustomerCt> list3Custom() {
         return repository.list3Custom();
-    }
-
-    @Override
-    public List<ChiTietSanPhamCustomerCt> list3Limited() {
-        return repository.list3Limited();
     }
 
     @Override
@@ -96,7 +88,7 @@ public class BanHangOnlineServiceImpl  implements BanHangOnlineCustomService {
     }
 
 
-
+//bộ lọc trong shop
     @Override
     public Page<ChiTietSanPhamDTO> findAllByCondition(
             List<String> tenThuongHieu,
@@ -140,6 +132,12 @@ public class BanHangOnlineServiceImpl  implements BanHangOnlineCustomService {
             }
             predicates.add(cb.greaterThan(root.get("soLuongTon"), 0));
             predicates.add(cb.equal(root.get("trangThai"), 0));
+
+
+           // gom nhóm theo id sản phẩm trùng
+            query.groupBy(root.get("sanPham").get("id"));
+
+
             return cb.and(predicates.toArray(new Predicate[0]));
         };
 
@@ -161,6 +159,5 @@ public class BanHangOnlineServiceImpl  implements BanHangOnlineCustomService {
 
         return ChiTietSanPhamMapper.toDTOPage(repository.findAll(spec, pageable));
     }
-
 
 }

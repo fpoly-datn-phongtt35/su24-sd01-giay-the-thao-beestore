@@ -5,6 +5,7 @@ import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.request.NhaCungCapRequest;
 import com.example.datnsum24sd01.request.ThuongHieuRequest;
 import com.example.datnsum24sd01.service.NhaCungCapServiec;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequestMapping("/admin/nha-cung-cap")
 public class NhaCungCapController {
 
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     private final NhaCungCapServiec nhaCungCapServiec;
 
@@ -38,6 +40,7 @@ public class NhaCungCapController {
 
     @GetMapping()
     public String getAll(Model model) {
+        model.addAttribute("tenNhanVien", spingsecurity.getCurrentNhanVienTen());
 
         model.addAttribute("listnhacc", nhaCungCapServiec.getList());
         model.addAttribute("trangThais", list);

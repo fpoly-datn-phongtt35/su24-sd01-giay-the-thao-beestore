@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChiTietSanPhamResponsitory extends JpaRepository<ChiTietSanPham,Long> {
+
+    List<ChiTietSanPham> findBySanPham_Id(Long sanPhamId);
+
+
     @Query(value = "select * from chi_tiet_san_pham where id = :idChiTietSanPham", nativeQuery = true)
     Optional<ChiTietSanPham> getChiTietSanPhamById(@Param("idChiTietSanPham") Long idChiTietSanPham);
 
@@ -67,6 +71,9 @@ public interface ChiTietSanPhamResponsitory extends JpaRepository<ChiTietSanPham
     List<ChiTietSanPham> getSanPhamByMaAndTenAndMauAndSize(@Param("maSanPham") String maSanPham, @Param("tenSanPham") String tenSanPham, @Param("mauSac") String mauSac, @Param("kichThuoc") String kichThuoc);
 
 
+
+    @Query("SELECT c FROM ChiTietSanPham c WHERE c.mauSac.id = :idMauSac AND c.kichThuoc.id = :idKichThuoc AND c.sanPham.id = :productId" )
+    List<ChiTietSanPham> findByMauSacAndKichThuoc(@Param("idMauSac") Long idMauSac, @Param("idKichThuoc") Long idKichThuoc, Long productId);
 
 
 

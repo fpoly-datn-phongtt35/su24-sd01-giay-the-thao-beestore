@@ -67,4 +67,7 @@ public class GioHangChiTiet {
     @Column(name = "ghi_chu")
     private String ghiChu;
 
+    @Column(name = "hinh_anh")
+    private String hinhAnh;
+
 }

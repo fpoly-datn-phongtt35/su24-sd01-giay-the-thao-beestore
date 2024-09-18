@@ -72,4 +72,13 @@ public class KichThuocServiceImpl implements KhichThuocService {
         kichThuoc.setNgaySua(currentDateTime);
         return this.kichThuocRepository.save(kichThuoc);
     }
+
+    @Override
+    public List<KichThuoc> findByProductId(Long productId) {
+
+        //        lấy toàn bộ kích thước
+        List<KichThuoc> kichThuocs=  kichThuocRepository.findByProductId(productId);
+
+        return kichThuocs;
+    }
 }

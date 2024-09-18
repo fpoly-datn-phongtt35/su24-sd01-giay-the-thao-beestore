@@ -75,4 +75,14 @@ public class MauSacServiceImpl implements MauSacService {
         mauSac.setNgaySua(currentDateTime);
         return this.mauSacRepository.save(mauSac);
     }
+
+
+    // danh sách các màu sắc
+    @Override
+    public List<MauSac> findByProductAndSize(Long productId, Long size) {
+        List<MauSac> mauSacs = mauSacRepository.findByProductIdAndSize(productId, size);
+        return mauSacs;
+    }
+
+
 }

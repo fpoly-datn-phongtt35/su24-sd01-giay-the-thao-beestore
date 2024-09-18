@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class FileUpload {
+    //upload ảnh sp
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile){
         Path uploadPath = Paths.get(uploadDir);
 

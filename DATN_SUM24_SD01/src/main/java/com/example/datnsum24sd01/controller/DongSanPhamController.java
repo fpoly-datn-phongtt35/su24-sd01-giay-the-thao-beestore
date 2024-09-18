@@ -5,6 +5,7 @@ import com.example.datnsum24sd01.entity.DongSanPham;
 import com.example.datnsum24sd01.enumation.TrangThai;
 import com.example.datnsum24sd01.request.DongSanPhamRequest;
 import com.example.datnsum24sd01.service.DongSanPhamService;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import jakarta.validation.Valid;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import java.util.List;
 public class DongSanPhamController {
 
     private final DongSanPhamService dongSanPhamService;
+    private Spingsecurity spingsecurity = new Spingsecurity();
 
     public DongSanPhamController(DongSanPhamService dongSanPhamService) {
         this.dongSanPhamService = dongSanPhamService;
@@ -41,6 +43,7 @@ public class DongSanPhamController {
         model.addAttribute("listDongSp", dongSanPhamService.getList());
         model.addAttribute("trangThais", list);
         model.addAttribute("index", pageNo + 1);
+        model.addAttribute("tenNhanVien", spingsecurity.getCurrentNhanVienTen());
 
         return "admin-template/dong_san_pham/dong_san_pham";
     }

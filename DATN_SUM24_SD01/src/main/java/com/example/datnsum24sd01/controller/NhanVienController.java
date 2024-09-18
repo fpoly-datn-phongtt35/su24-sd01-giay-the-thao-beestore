@@ -4,6 +4,7 @@ import com.example.datnsum24sd01.entity.NhanVien;
 import com.example.datnsum24sd01.request.NhanVienRequest;
 import com.example.datnsum24sd01.responsitory.NhanVienRepository;
 import com.example.datnsum24sd01.service.NhanVienService;
+import com.example.datnsum24sd01.worker.Spingsecurity;
 import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,35 +13,96 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/nhan-vien")
 public class NhanVienController {
+
     @Autowired
     private NhanVienService nhanVienService;
 
     @Autowired
     private NhanVienRepository nhanVienRepository;
 
+    //    employee status list
+    private final List<String> employeeStatus = Arrays.asList("Đang làm", "Nghỉ việc");
 
+    // selected employee index
+    private Integer empStatusIndex = 0;
+
+    // Create a map from index to status
+    Map<Integer, String> statusMap = new HashMap<>();
+
+
+    public NhanVienController() {
+        statusMap = new HashMap<>();
+        for (int i = 0; i < employeeStatus.size(); i++) {
+            statusMap.put(i, employeeStatus.get(i));
+        }
+    }
+
+    private Spingsecurity spingsecurity = new Spingsecurity();
     @GetMapping()
     public String getAll(Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
         List<NhanVien> nhanVienList = nhanVienService.getAll();
+
+        model.addAttribute("employeeStatus", employeeStatus);
+        model.addAttribute("empStatusIndex", empStatusIndex);
+        model.addAttribute("statusMap", statusMap);
         model.addAttribute("nhanVien", nhanVienList);
         return "admin-template/nhan_vien/nhan_vien";
     }
-    @GetMapping("/search")
-    public String seach(Model model, @RequestParam("tSearch") String tSearch ) {
 
-        List<NhanVien> nhanVienList = this.nhanVienRepository.findAllByTenContains(tSearch);
-        model.addAttribute("nhanVien", nhanVienList);
+
+    @PostMapping("/search")
+    public String search(Model model,
+                         @RequestParam("tSearch") String tSearch,
+                         @RequestParam(name = "empStatus", required = false) Integer empStatus) {
+
+        empStatusIndex = empStatus;
+        List<NhanVien> filterEmployeeList = nhanVienRepository.findAll();
+
+
+        // case has input search text
+        if(!tSearch.isBlank() ) {
+            filterEmployeeList = nhanVienRepository.findByTenOrEmail(tSearch);
+        } else {
+            filterEmployeeList = nhanVienRepository.findAll();
+        }
+
+        // filter status
+        filterEmployeeList = filterEmployeeList.stream()
+                .filter(employee -> employee.getTrangThai() == empStatusIndex)
+                .collect(Collectors.toList());
+
+        // Add attributes to the model
+        model.addAttribute("nhanVien", filterEmployeeList);
+        model.addAttribute("employeeStatus", employeeStatus);
+        model.addAttribute("empStatusIndex", empStatusIndex);
+        model.addAttribute("statusMap", statusMap);
+
         return "admin-template/nhan_vien/nhan_vien";
     }
 
     @GetMapping("/view-update/{id}")
     public String viewUpdate(Model model, @PathVariable long id
     ) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
 
         NhanVien nhanVien = this.nhanVienService.getOne(id);
         model.addAttribute("nhanVienForUpdating", nhanVien);
@@ -50,6 +112,13 @@ public class NhanVienController {
 
     @GetMapping("/view-add")
     public String viewAdd(Model model) {
+        Long idNhanVien = spingsecurity.getCurrentNhanVienId();
+        if (idNhanVien == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("tenNhanVien",spingsecurity.getCurrentNhanVienTen());
+
         model.addAttribute("nhanVienRequest", new NhanVienRequest());
         return "admin-template/nhan_vien/them_nhan_vien";
     }

@@ -1,6 +1,7 @@
 package com.example.datnsum24sd01.service.impl;
 
 import com.example.datnsum24sd01.dto.GioHangWrapper;
+import com.example.datnsum24sd01.dto.OrderDataDTO;
 import com.example.datnsum24sd01.entity.ChiTietSanPham;
 import com.example.datnsum24sd01.entity.GioHang;
 import com.example.datnsum24sd01.entity.GioHangChiTiet;
@@ -54,9 +55,11 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
     @Autowired
     private PhieuGiamGiaResponsitory maGiamGiaRepository;
 
+    private OrderDataDTO orderData;
 
+    private GioHangWrapper gioHangWrapper;
 
-
+//thêm sp vào giỏ hàng
     @Override
     public GioHangChiTiet themVaoGioHang(Long khachHangId, Long chiTietSanPhamId, Integer soLuong) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamRepository.findById(chiTietSanPhamId).orElse(null);
@@ -83,12 +86,12 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
         gioHangChiTiet.setGioHang(gioHang);
         return gioHangChiTietRepository.save(gioHangChiTiet);
     }
-
+//xóa sản phẩm khỏi giỏ hàng
     @Override
     public void xoaKhoiGioHang(Long id) {
         gioHangChiTietRepository.deleteById(id);
     }
-
+    //thanh toán trong giỏ hàng
     @Transactional
     @Override
     public void datHang(List<GioHangChiTiet> listGioHangChiTiet, String ten, String diaChi, String sdt, String ghiChu) {
@@ -129,7 +132,7 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
         hoaDon.setThanhToan(thanhToan);
         hoaDonRepository.save(hoaDon);
     }
-
+//đặt hàng trong checkout
     @Override
     public HoaDon datHangItems(GioHangWrapper gioHangWrapper, Long idKachHang, String ten, String diaChi, String sdt, String ghiChu, BigDecimal shippingFee, BigDecimal tongTien, BigDecimal totalAmount, BigDecimal tienGiamGia, Long selectedVoucherId, BigDecimal diemTichLuy, String useAll) {
         KhachHang khachHang = khachHangRepository.findById(idKachHang).orElse(null);
@@ -169,6 +172,7 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
         if (useAll.equals("false")) {
             hoaDon.setXu(BigDecimal.valueOf(0));
         } else {
+
             if (diemTichLuy.compareTo(BigDecimal.valueOf(50000)) > 0) {
                 hoaDon.setXu(BigDecimal.valueOf(50000));
                 totalAmount = BigDecimal.valueOf(totalAmount.intValue() - BigDecimal.valueOf(50000).intValue());
@@ -186,7 +190,7 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
 
         return hoaDonRepository.save(hoaDon);
     }
-
+//sửa giỏ hàng
     @Override
     public List<GioHangChiTiet> updateGioHangChiTiet(Long idGioHangChiTiet, Integer soLuong) {
         Optional<GioHangChiTiet> optionalGioHangChiTiet = gioHangChiTietRepository.findById(idGioHangChiTiet);
@@ -203,7 +207,7 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
 
         return updatedItems;
     }
-
+//Tìm tất cả các đối tượng GioHangChiTiet dựa trên một danh sách các ID chuỗi.
     @Override
     public List<GioHangChiTiet> findAllById(List<String> listIdString) {
         List<Long> listIdLong = new ArrayList<>();
@@ -218,7 +222,7 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
         }
         return gioHangChiTietRepository.findAllById(listIdLong);
     }
-
+// Tìm tất cả các đối tượng GioHangChiTiet dựa trên một danh sách các ID chuỗi và đóng gói chúng vào một đối tượng GioHangWrapper.
     @Override
     public GioHangWrapper findAllItemsById(List<String> listIdString) {
         List<Long> listIdLong = new ArrayList<>();
@@ -233,5 +237,31 @@ public class BanHangonlinectserviceImpl implements BanHangonlinectservice {
         GioHangWrapper gioHangWrapper = new GioHangWrapper();
         gioHangWrapper.setListGioHangChiTiet(gioHangChiTietRepository.findAllById(listIdLong));
         return gioHangWrapper;
+    }
+    //Lưu trữ thông tin đơn hàng tạm thời.
+    @Override
+    public void saveOrderData(OrderDataDTO orderDataDTO) {
+
+        // save temp order data
+
+        this.orderData = orderDataDTO;
+
+    }
+//truy suất thông tin đơn hàng tạm thời
+    @Override
+    public OrderDataDTO getOrderData() {
+
+        return this.orderData;
+
+    }
+   // Lưu trữ thông tin giỏ hàng tạm thời.
+    @Override
+    public void saveGioHangWrapper(GioHangWrapper gioHangWrapper) {
+        this.gioHangWrapper = gioHangWrapper;
+    }
+//Truy xuất thông tin giỏ hàng đã lưu trữ.
+    @Override
+    public GioHangWrapper getGioHangWrapper() {
+        return this.gioHangWrapper;
     }
 }

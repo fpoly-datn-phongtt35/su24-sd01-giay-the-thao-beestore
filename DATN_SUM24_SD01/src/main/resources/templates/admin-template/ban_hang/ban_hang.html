@@ -11,6 +11,7 @@
     <!-- Favicon -->
     <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
 
+
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
 
@@ -162,17 +163,6 @@
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script src='https://github.com/jasonday/printThis/blob/master/printThis.js'></script>
 
-    <style>
-        .btn-outline-success a {
-            color: black !important; /* Set the text color to black */
-        }
-
-        /* Optional: If you want to change the text color on hover, you can add the following */
-        .btn-outline-success a:hover {
-            color: #0a53be !important; /* Change the hover text color to red (you can replace with your desired color) */
-        }
-    </style>
-
 </head>
 
 <body>
@@ -191,13 +181,19 @@
                     </div>
                 </div>
                 <div class="ms-3">
+                    <label>Nhân Viên </label>
                     <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
-                    Hàng</a>
+                <!-- Menu Items -->
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/admin/ban-hang}" class="nav-item nav-link d-inline-flex align-items-center">
+                        <i class="fa fa-laptop "></i>Bán Hàng Tại Quầy
+                    </a>
+                </div>
+
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
@@ -275,6 +271,7 @@
                     </button>
                 </form>
             </div>
+<!--            //list hóa đơn chờ-->
             <div class="row g-2">
                 <div style="width: 70%;">
                     <div>
@@ -296,10 +293,13 @@
                                 </div>
                             </nav>
                             <p></p>
+
+<!--                            //giỏ hàng-->
                             <div class="bg-light text-center rounded ">
                                 <div>
-                                    <h5>Giỏ Hàng</h5>
+                                    <h5><i class="fas fa-shopping-cart"></i> Giỏ Hàng</h5>
                                     <div style="width:100%">
+
                                         <table class="table ">
                                             <thead>
                                             <tr>
@@ -312,201 +312,192 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                                                        <tr th:each="hdct : ${listHoaDonChiTiet}">
-                                                                                            <td th:text="${hdct.getTenSanPham()}"></td>
-<!--                                                                                            <td th:text="${hdct.getMauSac()}"></td>-->
-<!--                                                                                            <td>-->
-<!--                                                                                                <div th:style="'background-color:' + ${hdct.getMauSac()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>-->
-<!--                                                                                            </td>-->    <td th:text="${hdct.getMauSac()}"></td>
-                                                                                            <td th:text="${hdct.getKichThuoc()}"></td>
-                                                                                            <td th:text="${#numbers.formatDecimal(hdct.getGiaBan(), 0, 'POINT', 0, 'COMMA')}"></td>
-                                                                                            <td th:text="${hdct.getSoLuong()}"></td>
-                                                                                            <td>
-
-                                            <div style="width: 50%">
-                                                <button class="btn btn-outline-danger"
-                                                        th:data-bs-target="'#xoaSanPham' + ${hdct.id}"
-                                                        data-bs-toggle="modal"
-                                                        style="width: auto">
-                                                    <img src="/../../img/xoa_v2.png"
-                                                         style="width: 15px;">
-                                                </button>
-                                                <div class="modal fade"
-                                                     th:id="'xoaSanPham' + ${hdct.id}"
-                                                     data-bs-backdrop="static" data-bs-keyboard="false"
-                                                     aria-hidden="true"
-                                                     aria-labelledby="xoaSanPhamLabel" tabindex="-1">
-                                                    <form th:action="@{'/admin/ban-hang/hoa-don/'+ ${idHoaDonCho}+'/xoa-hoa-don-chi-tiet/'+${hdct.id}}">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-
-
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Xác nhận xóa sản phẩm?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button"
-                                                                            class="btn btn-danger"
-                                                                            data-bs-dismiss="modal"
-                                                                            style="width: 80px">
-                                                                        Không
-                                                                    </button>
-                                                                    <button type="submit"
-                                                                            class="btn btn-primary"
-                                                                            style="width: 80px;">
-                                                                        Có
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                            <div class="row mb-5" th:if="${#lists.isEmpty(listHoaDonChiTiet)}">
+                                                <div class="col-md-12" >
+                                                    <img style=" width: 600px;height: 400px"
+                                                         th:src="@{/images/empty-cart.png}">
+                                                    <h6>Hãy thêm sản phẩm vào giỏ hàng để thanh toán nha !</h6>
                                                 </div>
                                             </div>
+                                            <tr th:each="hdct : ${listHoaDonChiTiet}">
+                                                <td th:text="${hdct.getTenSanPham()}"></td>
+                                                <!--                                                                                            <td th:text="${hdct.getMauSac()}"></td>-->
+                                                <!--                                                                                            <td>-->
+                                                <!--                                                                                                <div th:style="'background-color:' + ${hdct.getMauSac()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>-->
+                                                <!--                                                                                            </td>-->    <td th:text="${hdct.getMauSac()}"></td>
+                                                <td th:text="${hdct.getKichThuoc()}"></td>
+                                                <td th:text="${#numbers.formatDecimal(hdct.getGiaBan(), 0, 'POINT', 0, 'COMMA')}"></td>
+                                                <td th:text="${hdct.getSoLuong()}"></td>
+                                                <td>
 
-                                    </td>
-                                    </tr>
+                                                    <div style="width: 50%">
+                                                        <button class="btn btn-outline-danger"
+                                                                th:data-bs-target="'#xoaSanPham' + ${hdct.id}"
+                                                                data-bs-toggle="modal"
+                                                                style="width: auto">
+                                                            <img src="/../../img/xoa_v2.png"
+                                                                 style="width: 15px;">
+                                                        </button>
+                                                        <div class="modal fade"
+                                                             th:id="'xoaSanPham' + ${hdct.id}"
+                                                             data-bs-backdrop="static" data-bs-keyboard="false"
+                                                             aria-hidden="true"
+                                                             aria-labelledby="xoaSanPhamLabel" tabindex="-1">
+                                                            <form th:action="@{'/admin/ban-hang/hoa-don/'+ ${idHoaDonCho}+'/xoa-hoa-don-chi-tiet/'+${hdct.id}}">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
 
-                                    </table>
+
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Xác nhận xóa sản phẩm?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                    class="btn btn-danger"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    style="width: 80px">
+                                                                                Không
+                                                                            </button>
+                                                                            <button type="submit"
+                                                                                    class="btn btn-primary"
+                                                                                    style="width: 80px;">
+                                                                                Có
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
 
-                <div style="width: 100%" class="bg-light text-center rounded p-4">
-                    <h5>Sản Phẩm</h5>
-                    <div>
-                        <div class="bg-light rounded h-100" style="width:100%">
-                            <table id="san-pham" class="table">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Thương Hiệu</th>
-                                    <th>Màu sắc</th>
-                                    <th>Kích Thước</th>
-                                    <th>Giá bán</th>
-                                    <th>Số lượng Tồn</th>
-                                    <th>Thao Tác</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="sanPham, status : ${listSanPham}">
-                                    <td th:text="${status.index + 1}"></td>
-                                    <td th:text="${sanPham.getSanPham().getTen()}"></td>
-                                    <td th:text="${sanPham.getSanPham().getThuongHieu().getTen()}"></td>
-<!--                                    <td>-->
-<!--                                        <div th:style="'background-color:' + ${sanPham.getMauSac().getTen()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>-->
-<!--                                    </td>-->
-                                    <td th:text="${sanPham.getMauSac().getTen()}"></td>
-                                    <td th:text="${sanPham.getKichThuoc().getTen()}"></td>
-                                    <td th:text="${#numbers.formatDecimal(sanPham.getGiaBan(), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
-                                    <td th:text="${sanPham.getSoLuongTon()}"></td>
+<!--//sản phẩm-->
+                    <div style="width: 100%" class="bg-light text-center rounded p-4">
+                        <h5>Sản Phẩm</h5>
+                        <div>
+                            <div class="bg-light rounded h-100" style="width:100%">
+                                <table id="san-pham" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Thương Hiệu</th>
+                                        <th>Màu sắc</th>
+                                        <th>Kích Thước</th>
+                                        <th>Giá bán</th>
+                                        <th>Số lượng Tồn</th>
+                                        <th>Thao Tác</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="sanPham, status : ${listSanPham}">
+                                        <td th:text="${status.index + 1}"></td>
+                                        <td th:text="${sanPham.getSanPham().getTen()}"></td>
+                                        <td th:text="${sanPham.getSanPham().getThuongHieu().getTen()}"></td>
+                                        <!--                                    <td>-->
+                                        <!--                                        <div th:style="'background-color:' + ${sanPham.getMauSac().getTen()} + '; width: 40px; height: 40px; border: 1px solid #000;'"></div>-->
+                                        <!--                                    </td>-->
+                                        <td th:text="${sanPham.getMauSac().getTen()}"></td>
+                                        <td th:text="${sanPham.getKichThuoc().getTen()}"></td>
+                                        <td th:text="${#numbers.formatDecimal(sanPham.getGiaBan(), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
+                                        <td th:text="${sanPham.getSoLuongTon()}"></td>
 
-                                    <td>
-                                        <!-- Button for adding quantity -->
-                                        <button type="button"
-                                                class="btn btn-primary d-flex align-items-center justify-content-center"
-                                                data-bs-toggle="modal"
-                                                th:data-bs-target="'#themSoLuong' + ${sanPham.id}"
-                                                onclick="truyenSoLuongTon(this)"
-                                                th:data-so-luong-ton="${sanPham.soLuongTon}"
-                                                th:disabled="${sanPham.soLuongTon == 0}"
-                                                style="
-            font-size: 1.2rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s, transform 0.2s;
-        "
-                                                onmouseover="this.style.transform='scale(1.05)';"
-                                                onmouseout="this.style.transform='scale(1)';">
+                                        <td>
+                                            <!-- Button for adding quantity -->
+                                            <button type="button"
+                                                                                                    class="btn btn-primary d-flex align-items-center justify-content-center"
+                                                                                                    data-bs-toggle="modal"
+                                                                                                    th:data-bs-target="'#themSoLuong' + ${sanPham.id}"
+                                                                                                    onclick="truyenSoLuongTon(this)"
+                                                                                                    th:data-so-luong-ton="${sanPham.soLuongTon}"
+                                                                                                    th:disabled="${sanPham.soLuongTon == 0}"
+                                                                                                    style="
+                                                            font-size: 1rem;
+                                                            padding: 0.2rem 0.4rem;
+                                                            border-radius: 20px;
+                                                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                                                            transition: background-color 0.3s, transform 0.2s;
+                                                        "
+                                                                                                    onmouseover="this.style.transform='scale(1.05)';"
+                                                                                                    onmouseout="this.style.transform='scale(1)';">
 
-                                            <i class="fa fa-plus"></i>
-                                        </button>
+                                                                                                Chọn
+                                                                                            </button>
 
 
 
-                                        <div class="modal fade" th:id="'themSoLuong' + ${sanPham.id}"
-                                             data-bs-backdrop="static" data-bs-keyboard="false"
-                                             tabindex="-1"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <form th:action="@{'/admin/ban-hang/hoa-don/'+ ${idHoaDonCho} +'/them-san-pham/' + ${sanPham.id}}"
-                                                          th:object="${hoaDonChiTiet}"
-                                                          onsubmit="return checkSoLuong(this);"
-                                                          method="post">
-                                                        <div class="modal-header">
 
-                                                            <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Nhập Số Lượng Sản Phẩm:
-                                                            <input type="text" class="form-control"
-                                                                   name="soLuong" th:field="*{soLuong}">
-                                                            <input type="text" id="soLuongTon" name="soLuongTon" hidden
-                                                                   th:value="${sanPham.soLuongTon}"/>
-                                                        </div>
+                                                <div class="modal fade" th:id="'themSoLuong' + ${sanPham.id}"
+                                                 data-bs-backdrop="static" data-bs-keyboard="false"
+                                                 tabindex="-1"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <form th:action="@{'/admin/ban-hang/hoa-don/'+ ${idHoaDonCho} +'/them-san-pham/' + ${sanPham.id}}"
+                                                              th:object="${hoaDonChiTiet}"
+                                                              onsubmit="return checkSoLuong(this);"
+                                                              method="post">
+                                                            <div class="modal-header">
 
-                                                        <button type="submit" class="btn btn-outline-primary">Thêm Vào Giỏ
-                                                            Hàng
-                                                        </button>
-                                                        <p></p>
-                                                    </form>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Số Lượng Sản Phẩm:<span id="soLuongTon" th:text="${sanPham.soLuongTon}"></span>                                                                <input type="text" class="form-control"
+                                                                       name="soLuong" th:field="*{soLuong}">
+                                                                <input type="text" id="soLuongTon" name="soLuongTon" hidden
+                                                                       th:value="${sanPham.soLuongTon}"/>
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-outline-primary">Thêm Vào Giỏ
+                                                                Hàng
+                                                            </button>
+                                                            <p></p>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
+                                        </td>
+                                    </tr>
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+<!--                //Detail hóa đơn chờ-->
                 <div class="col-sm-12 col-xl-6" style="width: 30%;">
                     <div class="bg-light rounded h-100 p-4">
                         <div th:object="${hoaDonCho}">
-                            <h6 class="form-label">Thông Tin : <span style="color: red" th:text="*{ma}"></span></h6>
+                            <h5 class="form-label"> <span style="color: red" th:text="*{ma}"></span></h5>
+                            <p class="form-label" th:if="*{ngayTao} != null">
+                                Ngày tạo: <span th:text="*{ngayTao}"></span>
+                            </p>
 
-                            <div class="mb-3 row">
-                                <div class="col-9">
+                            <div class="mb-3 ">
                                     <label class="form-label">Tên Khách Hàng</label>
                                     <input type="text" class="form-control" name="tenKhachHang" readonly th:field="*{khachHang.ten}" />
-                                </div>
-                                <div  class="col-3 d-flex align-items-end">
-                                    <button  id="selectButton" type="button" th:class="'btn btn-outline-primary ' + (${checkBtn} == '0' ? 'disabled' : '')"
-                                            data-bs-toggle="modal" data-bs-target="#khachHang">
-                                        Thêm
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Số Điện Thoại</label>
-                                <input type="text" class="form-control" name="tenKhachHang" readonly th:field="*{khachHang.sdt}" />
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Ngày Mua Hàng</label>
-                                <input type="date" class="form-control" name="ngayTao" th:value="*{ngayTao}" readonly />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Thành Tiền</label>
-                                <input id="thanhTien" type="text" class="form-control" style="color: red" name="thanhTien" readonly
-                                       th:value="${#numbers.formatDecimal(tongTien, 0, 'POINT', 0, 'COMMA')} + ' VND'" />
-
-                            </div>
-                            <div class="mb-3">
-                                <input id="thanhTienInput" type="text" class="form-control" style="color: red" name="thanhTien" hidden
-                                       th:value="${thanhTien}" />
+                                <button  id="selectButton" type="button" th:class="'btn btn-outline-primary ' + (${checkBtn} == '0' ? 'disabled' : '')"
+                                         data-bs-toggle="modal" data-bs-target="#khachHang">
+                                    Khách Hàng đã có tài khoản
+                                </button>
                             </div>
                             <div class="mb-3">
                                 <div class="form-check form-switch">
@@ -519,53 +510,24 @@
                                            th:text="${#numbers.formatDecimal(xu, 0, 'POINT', 0, 'COMMA')} + ' Điểm Thành Viên'">
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tổng Tiền</label>
+                                <input id="thanhTien" type="text" class="form-control" style="color: red" name="thanhTien" readonly
+                                       th:value="${#numbers.formatDecimal(tongTien, 0, 'POINT', 0, 'COMMA')} + ' VND'" />
+
+
+                            </div>
+                            <div class="mb-3">
+                                <input id="thanhTienInput" type="text" class="form-control" style="color: red" name="thanhTien" hidden
+                                       th:value="${thanhTien}" />
+                            </div>
+
                             <!-- Hidden inputs for dynamic values -->
                             <input type="hidden" id="orderId" value="${orderId}" />
                             <input type="hidden" id="uniqueTransactionId" th:value="${uniqueTransactionId}" />
                             <input type="hidden" id="returnUrl" th:value="${returnUrl}" />
                             <input type="hidden" id="userIpAddress" th:value="${userIpAddress}" />
-                            <script>
-                                function startVnPayPayment() {
-                                    var vnpayUrl = "https://pay.vnpay.vn/vpcpay.html";
-                                    var thanhTienInput = document.getElementById("thanhTienInput").value.replace(/[^\d]/g, '');
 
-                                    // Convert amount to VND x 100
-                                    var amount = thanhTienInput + "00"; // Ensure the amount is correctly formatted
-
-                                    // Check if the amount is valid
-                                    if (!thanhTienInput || isNaN(thanhTienInput) || thanhTienInput <= 0) {
-                                        alert("Invalid amount. Please check the amount and try again.");
-                                        return;
-                                    }
-
-                                    // Get order ID if available
-                                    var orderIdElement = document.getElementById("orderId");
-                                    var orderId = orderIdElement ? orderIdElement.value : 'unknown';
-
-                                    // Prepare parameters
-                                    var params = {
-                                        vnp_Version: "2.1.0",
-                                        vnp_Command: "pay",
-                                        vnp_TmnCode: "03KRICMM", // Replace with your TMN Code
-                                        vnp_Amount: document.getElementById("thanhTienInput").value.replace(/[^\d]/g, '') + "00",
-                                        vnp_CurrCode: "VND",
-                                        vnp_TxnRef: document.getElementById("uniqueTransactionId").value,
-                                        vnp_OrderInfo: "Payment for order #" + orderId,
-                                        vnp_OrderType: "billpayment",
-                                        vnp_Locale: "vn",
-                                        vnp_ReturnUrl: document.getElementById("returnUrl").value,
-                                        vnp_IpAddr: document.getElementById("userIpAddress").value
-                                    };
-
-                                    // Create query string
-                                    var query = Object.keys(params)
-                                        .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-                                        .join("&");
-
-                                    // Redirect to VNPay
-                                    window.location.href = vnpayUrl + "?" + query;
-                                }
-                            </script>
                             <script>
                                 function applyDiscount() {
                                     var thanhTienInput = document.getElementById("thanhTienInput");
@@ -579,25 +541,77 @@
                                         return;
                                     }
 
-                                    if (xu < discount) {
-                                        var discountedValue = xuInput.checked ? (thanhTien - xu) : thanhTien;
+                                    if (xu <= discount) {
+
+
+                                        var discountedValue = thanhTien;
+
+                                        if(xuInput.checked) {
+
+                                                if(thanhTien > xu && xu <= discount) {
+
+                                                    discountedValue = thanhTien - xu;
+                                                } else {
+
+                                                        discountedValue = 0;
+                                                }
+                                        } else {
+
+                                            discountedValue = thanhTien;
+                                        }
+
+
                                         var formattedDiscountedValue = formatCurrency(discountedValue);
                                         document.getElementById("thanhTien").value = formattedDiscountedValue;
                                         document.getElementById("thanhTienAn").innerText = formattedDiscountedValue;
 
                                         var xuTru = xuInput.checked ? 0 : xu;
                                         var xuTruAn = xuInput.checked ? xu : 0;
-                                        xuInput.nextSibling.textContent = " " + xuTru.toLocaleString("vi-VN") + " Xu";
-                                        document.getElementById("xu").innerText = " " + xuTruAn.toLocaleString("vi-VN") + " Xu";
+                                        xuInput.nextSibling.textContent = " " + xuTru.toLocaleString("vi-VN") + " Điểm Thành Viên";
+                                        document.getElementById("xu").innerText = " " + xuTruAn.toLocaleString("vi-VN") + " Điểm Thành Viên";
                                     } else {
-                                        var discountedValue = xuInput.checked ? (thanhTien - discount) : thanhTien;
+                                        var discountedValue = thanhTien;
+
+                                        if(xuInput.checked) {
+
+                                                if(thanhTien > discount ) {
+
+                                                    discountedValue = thanhTien - discount;
+                                                } else {
+
+                                                        discountedValue = 0;
+                                                }
+                                        } else {
+
+                                            discountedValue = thanhTien;
+                                        }
+
                                         var formattedDiscountedValue = formatCurrency(discountedValue);
                                         document.getElementById("thanhTien").value = formattedDiscountedValue;
                                         document.getElementById("thanhTienAn").innerText = formattedDiscountedValue;
 
                                         var xuTru = xuInput.checked ? (xu - discount) : xu;
-                                        xuInput.nextSibling.textContent = " " + xuTru.toLocaleString("vi-VN") + " Xu";
-                                        document.getElementById("xu").innerText = " " + discount.toLocaleString("vi-VN") + " Xu";
+
+                                        if (xuInput.checked ) {
+
+                                                    if(thanhTien > discount ) {
+
+                                                        xuTru = xu - discount;
+
+                                                    } else {
+
+                                                        xuTru = xu - thanhTien ;
+
+                                                    }
+
+
+
+
+                                        }
+
+
+                                        xuInput.nextSibling.textContent = " " + xuTru.toLocaleString("vi-VN") + " Điểm Thành Viên";
+                                        document.getElementById("xu").innerText = " " + discount.toLocaleString("vi-VN") + " Điểm Thành Viên";
                                     }
                                 }
 
@@ -617,29 +631,7 @@
                                     xuTichDiemCheckbox2.checked = checked;
                                 }
 
-                                // function startVnPayPayment() {
-                                //     var vnpayUrl = "https://pay.vnpay.vn/vpcpay.html";
-                                //     var params = {
-                                //         vnp_Version: "2.1.0",
-                                //         vnp_Command: "pay",
-                                //         vnp_TmnCode: "Y30QPC4D",
-                                //         vnp_Amount: document.getElementById("thanhTienInput").value.replace(/[^\d]/g, '') + "00", // Amount in VND x 100
-                                //         vnp_CurrCode: "VND",
-                                //         vnp_TxnRef: document.getElementById("uniqueTransactionId").value,// Replace with a unique transaction ID
-                                //         vnp_OrderInfo: "Payment for order #" + document.getElementById("orderId").value,
-                                //         vnp_OrderType: "billpayment",
-                                //         vnp_Locale: "vn",
-                                //         vnp_ReturnUrl: "/vnpay-payment",
-                                //         vnp_HashSecret : "YUPXV1UAR8I5IV4MBN89QMPV0ICUBECL",
-                                //         vnp_IpAddr: "127.0.0.1" // Replace with user's IP address
-                                //     };
-                                //
-                                //     var query = Object.keys(params)
-                                //         .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
-                                //         .join("&");
-                                //
-                                //     window.location.href = vnpayUrl + "?" + query;
-                                // }
+
                             </script>
                         </div>
 
@@ -658,47 +650,53 @@
                                 <input type="text" class="form-control" style="color: red" name="thanhTien" hidden th:value="${thanhTien}" />
                                 <input type="checkbox" id="xuTichDiemCheckbox1" name="xuTichDiem" hidden />
 
-                                <button class="btn btn-outline-primary">
-<!--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--                                         class="bi bi-wallet2" viewBox="0 0 16 16">-->
-<!--                                        <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.5-1.5H2V1.5A1.5 1.5 0 0 1 3.5 0h7a1.5 1.5 0 0 1 1.432 1.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>-->
-<!--                                    </svg>-->
-                                    Thanh Toán Tiền Mặt
+                                <button id="xuatHoaDon" class="btn btn-outline-primary">
+                                    <i class="fas fa-money-bill"></i> Thanh Toán Tiền Mặt
                                 </button>
-<p></p>
-                                <button type="button" onclick="startVnPayPayment()" class="btn btn-outline-primary ">
-                                    Thanh Toán Ví Điện tử
+
+                                <p></p>
+                                <button type="button" onclick="startVnPayPayment()" class="btn btn-outline-primary">
+                                    <i class="fas fa-wallet"></i> Thanh Toán Ví Điện tử
                                 </button>
                             </form>
 
-                            <button class="btn btn-outline-danger ms-2" th:data-bs-target="'#huyDon' + ${idHoaDonCho}" data-bs-toggle="modal">
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-<!--                                     class="bi bi-x-lg" viewBox="0 0 16 16">-->
-<!--                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>-->
-<!--                                </svg>-->
-                                Hủy Đơn
+                            <button style="margin-left: 2%" class="btn btn-outline-danger"
+                                    th:data-bs-target="'#huyDon' + ${idHoaDonCho}"
+                                    data-bs-toggle="modal">
+
+                                Hủy Đơn Hàng
                             </button>
                         </div>
 
-                        <div class="modal fade text-center" th:id="'huyDon' + ${idHoaDonCho}" data-bs-backdrop="static" data-bs-keyboard="false"
-                             aria-hidden="true" aria-labelledby="huyDonLabel" tabindex="-1">
+                        <div class="modal fade text-center" th:id="'huyDon' + ${idHoaDonCho}"
+                             data-bs-backdrop="static" data-bs-keyboard="false"
+                             aria-hidden="true"
+                             aria-labelledby="huyDonLabel" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="huyDonLabel">Hủy Hóa Đơn Chờ</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h1 class="modal-title fs-5"
+                                            id="huyDonLabel">Hủy Hóa Đơn</h1>
+                                        <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         Bạn có muốn hủy hóa đơn hay không?
                                     </div>
                                     <div class="modal-footer">
-                                        <form th:action="@{'/admin/ban-hang/hoa-don/' +${idHoaDonCho}+ '/huy-don'}" onsubmit="return checkHuyDon(this);">
-                                            <input hidden th:value="${idHoaDonCho}" name="id" />
-                                            <button type="submit" class="btn btn-primary" style="width: 100%">
-                                                Hủy
+                                        <form th:action="@{'/admin/ban-hang/hoa-don/' +${idHoaDonCho}+ '/huy-don'}"
+                                              onsubmit="return checkHuyDon(this);">
+                                            <input hidden th:value="${idHoaDonCho}" name="id"/>
+                                            <button type="submit"
+                                                    class="btn btn-primary"
+                                                    style="width: 100%">
+                                                Có
                                             </button>
                                         </form>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                        <button type="button"
+                                                class="btn btn-danger"
+                                                data-bs-dismiss="modal">
                                             Không
                                         </button>
                                     </div>
@@ -707,483 +705,577 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <p></p>
+<!--//model khách hàng-->
+        <div class="modal fade" id="khachHang" tabindex="-1"
+             aria-labelledby="exampleModalLabel" aria-hidden="true"
+             data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-lg" style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" style="text-align: center"> Danh Sách Khách Hàng</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bg-light rounded h-100 p-4">
+                            <table id="kh"  class="table table-striped" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã Khách Hàng</th>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Điểm Thành Viên</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-    <div class="modal fade" id="khachHang" tabindex="-1"
-         aria-labelledby="exampleModalLabel" aria-hidden="true"
-         data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-lg" style="width: 100%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" style="text-align: center"> Danh Sách Khách Hàng</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="bg-light rounded h-100 p-4">
-                        <table id="kh"  class="table table-striped" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Mã Khách Hàng</th>
-                                <th>Tên Khách Hàng</th>
-                                <th>Số Điện Thoại</th>
-                                <th>Điểm Thành Viên</th>
-                                <th>Thao Tác</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr th:each="khachHang,status : ${listKhachHang}">
-                                <td th:text="${status.index + 1}"></td>
-                                <td th:text="${khachHang.getMa}"></td>
-                                <td th:text="${khachHang.getTen}"></td>
-                                <td th:text="${khachHang.getSdt}"></td>
-                                <td th:text="${khachHang.getTichDiem}"></td>
-                                <td>
-                                    <form th:action="@{/admin/ban-hang/hoa-don/{idHoaDon}/them-khach-hang/{idKhachHang}
+                                <tr th:each="khachHang,status : ${listKhachHang}">
+                                    <td th:text="${status.index + 1}"></td>
+                                    <td th:text="${khachHang.getMa}"></td>
+                                    <td th:text="${khachHang.getTen}"></td>
+                                    <td th:text="${khachHang.getSdt}"></td>
+                                    <td th:text="${khachHang.getTichDiem}"></td>
+                                    <td>
+                                        <form th:action="@{/admin/ban-hang/hoa-don/{idHoaDon}/them-khach-hang/{idKhachHang}
                                                                                                             (idHoaDon=${idHoaDonCho},idKhachHang=${khachHang.getId()})}"
-                                          th:object="${khachHang}"
-                                          method="post">
-                                        <!-- Submit button with icon -->
-                                        <button type="submit"
-                                                class="btn btn-primary d-flex align-items-center justify-content-center"
-                                                style="
-            font-size: 1.2rem;
-            padding: 0.5rem 0.8rem;
+                                              th:object="${khachHang}"
+                                              method="post">
+                                            <!-- Submit button with icon -->
+                                            <button type="submit"
+                                                    class="btn btn-primary d-flex align-items-center justify-content-center"
+                                                    style="
+            font-size: 1rem; /* Kích thước chữ nhỏ hơn */
+            padding: 0.4rem 0.6rem; /* Padding nhỏ hơn */
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s, transform 0.2s;
             border: none; /* Remove default border */
         "
-                                                onmouseover="this.style.transform='scale(1.05)';"
-                                                onmouseout="this.style.transform='scale(1)';">
+                                                    onmouseover="this.style.transform='scale(1.05)';"
+                                                    onmouseout="this.style.transform='scale(1)';">
+                                                Chọn
+                                            </button>
 
-                                            <i class="fa fa-plus"></i>
-                                        </button>
 
-                                    </form>
-                                </td>
-                            </tr>
-                            </tbody>
-                            <tfoot hidden="hidden">
-                            <tr>
-                                <th>Tên Khách Hàng</th>
-                                <th>Số Điện Thoại</th>
-                                <th>Chọn</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot hidden="hidden">
+                                <tr>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Chọn</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
                 </div>
             </div>
         </div>
     </div>
-            <!--Thông Báo Các Lỗi-->
-            <div class="modal fade text-center" id="modalDialog"
-                 data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modalTitle">Warning</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <span id="modalBody"></span>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
-                        </div>
+<!--  In hóa đơn pfd-->
+    <div class="inHoaDon">
+        <section class="row" style="margin: auto;margin-top: -10%;width: 100%;height:100%;background-color: white">
+            <div class="col-md-12">
+
+                <div class="logo-hoa-don">
+                    <img src="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" alt="" style="width: 28px ;height: 28px">
+                    <h1>BeeStore</h1>
+                </div>
+                <p></p>
+
+            </div>
+            <div class="col-md-12">
+                <div class="logo-hoa-don2">
+                    <h6>Nhóm SD01 -Cao Đẳng FPT POLYTECHNICH</h6>
+                    <h6>Phố Trịnh Văn Bô - Nam Từ Liêm - Hà Nội</h6>
+                    <label>Hotline:0398194211</label>
+                </div>
+                <div class="border-hoadon"></div>
+                <div class="mid">
+                    <h2>HÓA ĐƠN BÁN LẺ</h2>
+                    <h5> HĐ: [[${hoaDonCho.ma}]] </h5>
+                    <div style="display: flex; margin-left: 80px">
+                        <label>Ngày Bán: [[${hoaDonCho.ngayTao}]]</label>
+                        <div id="clock" style="margin-left: 10px;"></div>
+                        <label style="margin-left: 80px;">Nhân viên Bán Hàng: [[${tenNhanVien}]]</label>
                     </div>
+                    <!--                    <span id="ngayTao">[[${hoaDonCho.ngayTao}]]</span>-->
+                    <script>
+                        function updateClock() {
+                            const now = new Date();
+                            const hours = String(now.getHours()).padStart(2, '0');
+                            const minutes = String(now.getMinutes()).padStart(2, '0');
+                            const seconds = String(now.getSeconds()).padStart(2, '0');
+                            const timeString = `${hours}:${minutes}:${seconds}`;
+
+                            document.getElementById('clock').textContent = timeString;
+                        }
+
+                        setInterval(updateClock, 1000); // Cập nhật mỗi giây
+                        updateClock(); // Gọi ngay để hiển thị thời gian ngay lập tức
+                    </script>
+
                 </div>
             </div>
+            <p></p>
+            <hr style="border: none; border-top: 1px dotted #000;">
+            <div class="col-md-12">
+
+
+                <div class="">
+
+                    <h6>Tên Khách hàng: [[${hoaDonCho.khachHang.ten}]]</h6>
+                    <h6>Số điện thoại: [[${hoaDonCho.khachHang.sdt}]]</h6>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr style="border: none; border-top: 1px dotted #000;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên Sản Phẩm</th>
+                        <th scope="col">Số Lượng</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Thành Tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="hdct, status : ${listHoaDonChiTiet}">
+                        <td th:text="${status.index + 1}"></td>
+                        <td th:text="${hdct.getTenSanPham()}"></td>
+                        <td th:text="${hdct.getSoLuong()}"></td>
+                        <td th:text="${#numbers.formatDecimal(hdct.getGiaBan(), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
+                        <td th:text="${#numbers.formatDecimal((hdct.getGiaBan()*hdct.getSoLuong()), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-12" >
+
+
+                <div >
+                    <p><span class="info-label">Tổng số tiền:</span>
+                        <span class="info-value" th:text="${#numbers.formatDecimal(tongTien, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+                    </p>
+
+                    <p><span class="info-label">Điểm Thành Viên:</span>
+                        <span id="xu" class="info-value">0 VND</span>
+                    </p>
+
+                    <p><span class="info-label">Thanh Toán:</span> <span id="thanhTienAn" class="info-value"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <hr style="border: none; border-top: 1px dotted #000;">
+
+                <div class="bottom-hoadon">
+                    <label>(Giá đã bao gồm thuế GTGT)</label>
+                    <h3>Cảm ơn quý khách và hẹn gặp lại !</h3>
+                    <p></p>
+                    <label>Website: http://localhost:8080/beestore/trang-chu</label>
+
+                </div>
+            </div>
+        </section>
+        <style>
+            .table {
+                margin-top: 3%;
+            }
+
+            .bottom-hoadon {
+                text-align: center;
+            }
+
+            .logo-hoa-don {
+                margin-top: 10%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .logo-hoa-don img {
+                max-width: 100%;
+                margin-right: 10px;
+            }
+
+            .logo-hoa-don h1 {
+                margin-top: 10px;
+            }
+
+            .info-label {
+                display: inline-block;
+                width: 200px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                margin-left: 50%;
+            }
+
+            .info-value {
+                white-space: nowrap;
+                float: right;
+                font-weight: bold;
+            }
+
+            .logo-hoa-don2 {
+                text-align: center;
+                margin-top: -3%;
+                margin-bottom: 3%;
+
+            }
+
+            .logo-hoa-don2 h6 {
+                font-weight: bold;
+            }
+
+            .mid {
+                text-align: center;
+            }
+
+            .mid h2 {
+                font-weight: bold;
+            }
+
+            .border-hoadon {
+                border-top: 1px solid #000000;
+                margin-top: 5%;
+                margin-bottom: 5%;
+            }
+
+            .border-hoadon-duoi {
+                border-top: 1px solid #000000;
+                margin-top: 1%;
+                margin-bottom: 5%;
+            }
+        </style>
+    </div>
+
 </div>
-        <div class="inHoaDon">
-            <section class="row" style="margin: auto;margin-top: -10%;width: 100%;height:100%;background-color: white">
-                <div class="col-md-12">
-
-                    <div class="logo-hoa-don">
-                        <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
-                        <h1>BeeStore</h1>
-                    </div>
-                    <div class="border-hoadon"></div>
-                </div>
-                <div class="col-md-12">
-                    <div class="logo-hoa-don2">
-                        <h6> Tòa nhà FPT Polytechnic, 13 phố Trịnh Văn Bô,Phường Phương Canh, Quận Nam Từ Liêm, TP Hà Nội</h6>
-                        <h6>Tel: (024) 8582 0808</h6>
-                    </div>
-                    <div class="mid">
-                        <h2>HÓA ĐƠN BÁN HÀNG</h2>
-                        <h5>Số HĐ: [[${hoaDonCho.ma}]] - [[${hoaDonCho.ngayTao}]]</h5>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Tên Sản Phẩm</th>
-                            <th scope="col">Số Lượng</th>
-                            <th scope="col">Đơn giá</th>
-                            <th scope="col">Thành Tiền</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="hdct, status : ${listHoaDonChiTiet}">
-                            <td th:text="${status.index + 1}"></td>
-                            <td th:text="${hdct.getTenSanPham()}"></td>
-                            <td th:text="${hdct.getSoLuong()}"></td>
-                            <td th:text="${#numbers.formatDecimal(hdct.getGiaBan(), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
-                            <td th:text="${#numbers.formatDecimal((hdct.getGiaBan()*hdct.getSoLuong()), 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="border-hoadon-duoi"></div>
-                    <div>
-                        <p><span class="info-label">Tổng tiền:</span>
-                            <span class="info-value" th:text="${#numbers.formatDecimal(tongTien, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
-                        </p>
-                        <p>
-                        </p>
-                        <p><span class="info-label">Xu:</span>
-                            <span id="xu" class="info-value">0 VND</span>
-                        </p>
-                        <p><span class="info-label">Thành tiền:</span> <span id="thanhTienAn" class="info-value"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="border-hoadon-duoi"></div>
-
-                    <div class="">
-                        <h5>KHÁCH HÀNG:</h5>
-                        <h6>Tên Khách hàng: [[${hoaDonCho.khachHang.ten}]]</h6>
-                        <h6>Số điện thoại: [[${hoaDonCho.khachHang.sdt}]]</h6>
-                        <h6>Địa chỉ: [[${hoaDonCho.diaChi}]]</h6>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="border-hoadon-duoi"></div>
-
-                    <div class="bottom-hoadon">
-                        <h3>Xin cảm ơn quý khách !</h3>
-                        <h6>Nhân viên: [[${tenNhanVien}]]</h6>
-                    </div>
-                </div>
-            </section>
-            <style>
-                .table {
-                    margin-top: 3%;
-                }
-
-                .bottom-hoadon {
-                    text-align: center;
-                }
-
-                .logo-hoa-don {
-                    margin-top: 10%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                }
-
-                .logo-hoa-don img {
-                    max-width: 100%;
-                    margin-right: 10px;
-                }
-
-                .logo-hoa-don h1 {
-                    margin-top: 10px;
-                }
-
-                .info-label {
-                    display: inline-block;
-                    width: 200px;
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                    margin-left: 50%;
-                }
-
-                .info-value {
-                    white-space: nowrap;
-                    float: right;
-                    font-weight: bold;
-                }
-
-                .logo-hoa-don2 {
-                    text-align: center;
-                    margin-top: -3%;
-                    margin-bottom: 3%;
-
-                }
-
-                .logo-hoa-don2 h6 {
-                    font-weight: bold;
-                }
-
-                .mid {
-                    text-align: center;
-                }
-
-                .mid h2 {
-                    font-weight: bold;
-                }
-
-                .border-hoadon {
-                    border-top: 1px solid #000000;
-                    margin-top: 5%;
-                    margin-bottom: 5%;
-                }
-
-                .border-hoadon-duoi {
-                    border-top: 1px solid #000000;
-                    margin-top: 1%;
-                    margin-bottom: 5%;
-                }
-            </style>
+<!--thông báo các lỗi-->
+<div class="modal fade text-center" id="modalDialog"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Warning</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+            </div>
         </div>
+    </div>
+</div>
 
-        <script type="text/javascript">
+<script type="text/javascript">
 
-            function checkThanhToan(form) {
-                var url = "[[@{/admin/ban-hang/check-thanh-toan}]]";
-                var idHoaDon = form.id.value;
+    function checkThanhToan(form) {
+        var url = "[[@{/admin/ban-hang/check-thanh-toan}]]";
+        var idHoaDon = form.id.value;
 
-                var xuInput = document.getElementById("xuTichDiem");
-                var xuTichDiemValue = xuInput.checked ? "true" : "false";
+        var xuInput = document.getElementById("xuTichDiem");
+        var xuTichDiemValue = xuInput.checked ? "true" : "false";
 
-                var params = {
-                    id: idHoaDon,
-                    xuTichDiem: xuTichDiemValue
-                };
+        var params = {
+            id: idHoaDon,
+            xuTichDiem: xuTichDiemValue
+        };
 
-                $.post(url, params, function (response) {
-                    if (response === 0) {
-                        $("#liveToastSuccess").hide();
-                        $(".content").hide();
-                        $(".sidebar").hide();
-                        $(".muiTen").hide();
-                        $(".inHoaDon").show();
-                        $('#pdfDocument').attr('src', 'https://connect-hm.top/pdf/test.pdf');
-                        print();
-                        setTimeout(function () {
-                            $(".inHoaDon").hide();
-                            $(".content").show();
-                            $(".sidebar").show();
-                            $(".muiTen").show();
-                        }, 1);
-                        form.submit();
-                    } else if (response === 1) {
-                        showThongBaoModal("Vui lòng chọn hóa đơn để thanh toán.");
-                    } else if (response === 2) {
-                        showThongBaoModal("Hóa đơn chưa có sản phẩm vui lòng thêm sản phẩm!");
-                    } else {
-                        showErrorModal("Lỗi phản hồi từ server");
-                    }
-                }).fail(function () {
-                    showErrorModal("Không thể kết nối đến server");
-                });
-                return false;
+        $.post(url, params, function (response) {
+            if (response === 0) {
+                $("#liveToastSuccess").hide();
+                $(".content").hide();
+                $(".sidebar").hide();
+                $(".muiTen").hide();
+                $(".inHoaDon").show();
+                $('#pdfDocument').attr('src', 'https://connect-hm.top/pdf/test.pdf');
+                print();
+                setTimeout(function () {
+                    $(".inHoaDon").hide();
+                    $(".content").show();
+                    $(".sidebar").show();
+                    $(".muiTen").show();
+                }, 1);
+                form.submit();
+            } else if (response === 1) {
+                showThongBaoModal("Vui Lòng Chọn 1 Hóa Đơn Để Thanh Toán !");
+            } else if (response === 2) {
+                showThongBaoModal("Vui Lòng Thêm Sản Phẩm Vào Hóa Đơn");
+            } else {
+                showErrorModal("Lỗi");
             }
+        }).fail(function () {
+            showErrorModal("Lỗi");
+        });
+        return false;
+    }
 
-            function checkHuyDon(form) {
-                var url = "[[@{/admin/ban-hang/check-huy-don}]]";
-                var idHoaDon = $("input[name='id']").val();
+    function checkHuyDon(form) {
+        var url = "[[@{/admin/ban-hang/check-huy-don}]]";
+        var idHoaDon = $("input[name='id']").val();
 
-                var params = {
-                    id: idHoaDon
-                };
+        var params = {
+            id: idHoaDon
+        };
 
-                $.post(url, params, function (response) {
-                    if (response === 0) {
-                        form.submit();
-                    } else if (response === 1) {
-                        showThongBaoModal("Vui Lòng Chọn Một Hóa Đơn Chờ Để Hủy!");
-                    } else {
-                        showErrorModal("Lỗi Phản Hồi ! ");
-                    }
-                }).fail(function () {
-                    showErrorModal("Không Thể Kết Nối !");
-                });
-                return false;
+        $.post(url, params, function (response) {
+            if (response === 0) {
+                form.submit();
+            } else if (response === 1) {
+                showThongBaoModal("Vui Lòng Chọn 1 Hóa Đơn Đơn Để Hủy !");
+            } else {
+                showErrorModal("Lỗi !");
             }
+        }).fail(function () {
+            showErrorModal("Lỗi");
+        });
+        return false;
+    }
 
-            function truyenSoLuongTon(button) {
-                // Set giá trị soLuongTon cho trường ẩn tương
-                let soLuongTon = button.getAttribute('data-so-luong-ton');
+    function truyenSoLuongTon(button) {
+        // Set giá trị soLuongTon cho trường ẩn tương
+        let soLuongTon = button.getAttribute('data-so-luong-ton');
 
-                console.log(soLuongTon);
-                document.getElementById("soLuongTon").value = soLuongTon;
-                console.log("Số lượng 2: " + document.getElementById("soLuongTon").value)
+        console.log(soLuongTon);
+        document.getElementById("soLuongTon").value = soLuongTon;
+        console.log("Số lượng 2: " + document.getElementById("soLuongTon").value)
+    }
+
+    function checkSoLuong(form) {
+        var soLuongTon = $("input[name='soLuongTon']").val();
+        var soLuong = form.soLuong.value;
+
+        var url = "/admin/ban-hang/them-san-pham/check-so-luong/" + soLuongTon;
+
+        var params = {
+            soLuong: soLuong
+        };
+
+        $.post(url, params, function (response) {
+            if (response === 0) {
+                form.submit();
+            } else if (response === 1) {
+                showThongBaoModal("Vui Lòng Nhập Số Lượng Sản Phẩm !");
+            } else if (response === 2) {
+                showThongBaoModal("Số Lượng Sản Phẩm Phải Lớn Hơn 0 ! ");
+            } else if (response === 3) {
+                showThongBaoModal("Số Lượng Sản Phẩm Thêm Vào Giỏ Hàng Phải Nhỏ Hơn Hoặc Bằng số Lượng Tồn !");
+            } else if (response === 4) {
+                showThongBaoModal("Số Lượng Nhập Phải Là Số!");
+            } else {
+                showErrorModal("Lỗi ");
             }
+        }).fail(function () {
+            showErrorModal("Lỗi ");
+        });
 
-            function checkSoLuong(form) {
-                var soLuongTon = $("input[name='soLuongTon']").val();
-                var soLuong = form.soLuong.value;
+        return false;
+    }
 
-                var url = "/admin/ban-hang/them-san-pham/check-so-luong/" + soLuongTon;
+    function truyenIdHoaDonChiTiet(button) {
+        // Set giá trị soLuongTon cho trường ẩn tương
+        let idHDCT = button.getAttribute('data-id-hdct');
 
-                var params = {
-                    soLuong: soLuong
-                };
-
-                $.post(url, params, function (response) {
-                    if (response === 0) {
-                        form.submit();
-                    } else if (response === 1) {
-                        showThongBaoModal("Vui Lòng Nhập Số Lượng !");
-                    } else if (response === 2) {
-                        showThongBaoModal("Số Lượng Phải Lớn Hơn 0 !");
-                    } else if (response === 3) {
-
-                        showThongBaoModal("Số lượng phải Nhỏ Hơn Hoặc Bằng Số Lượng Tồn");
-                    } else if (response === 4) {
-                        showThongBaoModal("Số Lượng Nhập Phải Là Số!");
-                    } else {
-                        showErrorModal("Lỗi Phản Hồi ! ");
-                    }
-                }).fail(function () {
-                    showErrorModal("Không Thể Kết Nối !");
-                });
-                return false;
+        console.log(idHDCT);
+        document.getElementById("idHDCT").value = idHDCT;
+        console.log("Số lượng 2: " + document.getElementById("idHDCT").value)
+    }
 
 
+
+
+</script>
+<!--thư viện js tích tìm kiếm-->
+<script>
+    new DataTable('#hoa-don-chi-tiet');
+    new DataTable('#kh');
+    new DataTable('#san-pham');
+    new DataTable('#vc');
+</script>
+<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+<!--phân trang các bảng -->
+<script>
+    $(document).ready(function () {
+        $('#hoa-don-chi-tiet').DataTable({
+            "paging": true,
+            "pageLength": 5,
+            lengthMenu: "",
+            lengthChange: false,
+            searching: false,
+            "language": {
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
             }
+        });
+        $('#kh').DataTable({
+            "paging": true,
+            "pageLength": 5,
+            // // lengthMenu: "",
+            lengthChange: false,
+            // // searching: false,
+            "language": {
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            }
+        });
+        $('#san-pham').DataTable({
+            "paging": true, // Bật chức năng phân trang
+            "pageLength": 5, // Hiển thị 5 phần tử trên mỗi trang
+            // lengthMenu: "",
+            lengthChange: false,
+            // searching: false,
+            "language": {
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            }
+        });
+        $('#vc').DataTable({
+            "paging": true, // Bật chức năng phân trang
+            "pageLength": 5, // Hiển thị 5 phần tử trên mỗi trang
+            // // lengthMenu: "",
+            lengthChange: false,
+            // // searching: false,
+            "language": {
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
+                "search": "Tìm kiếm:",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#hoa-don-chi-tiet').DataTable();
+        $('#kh').DataTable();
+        $('#san-pham').DataTable();
+        $('#vc').DataTable();
+    })
+</script>
 
-        </script>
-        <!--thư viện js tích tìm kiếm-->
-        <script>
-            new DataTable('#hoa-don-chi-tiet');
-            new DataTable('#kh');
-            new DataTable('#san-pham');
-            new DataTable('#vc');
-        </script>
-        <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
-        <script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
-        <script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
-        <script>
-            $(document).ready(function () {
-                $('#hoa-don-chi-tiet').DataTable({
-                    "paging": true, // Bật chức năng phân trang
-                    "pageLength": 5, // Hiển thị 5 phần tử trên mỗi trang
-                    lengthMenu: "",
-                    lengthChange: false,
-                    searching: false,
-                    "language": {
-                        "zeroRecords": "Không tìm thấy bản ghi nào",
-                        "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
-                        "infoEmpty": "Không có bản ghi nào",
-                        "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
-                        "search": "Tìm kiếm:",
-                        "paginate": {
-                            "first": "Đầu",
-                            "last": "Cuối",
-                            "next": "Tiếp",
-                            "previous": "Trước"
-                        }
-                    }
-                });
-                $('#kh').DataTable({
-                    "paging": true, // Bật chức năng phân trang
-                    "pageLength": 5, // Hiển thị 5 phần tử trên mỗi trang
-                    // // lengthMenu: "",
-                    lengthChange: false,
-                    // // searching: false,
-                    "language": {
-                        "zeroRecords": "Không tìm thấy bản ghi nào",
-                        "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
-                        "infoEmpty": "Không có bản ghi nào",
-                        "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
-                        "search": "Tìm kiếm:",
-                        "paginate": {
-                            "first": "Đầu",
-                            "last": "Cuối",
-                            "next": "Tiếp",
-                            "previous": "Trước"
-                        }
-                    }
-                });
-                $('#san-pham').DataTable({
-                    "paging": true, // Bật chức năng phân trang
-                    "pageLength": 5, // Hiển thị 5 phần tử trên mỗi trang
-                    // lengthMenu: "",
-                    lengthChange: false,
-                    // searching: false,
-                    "language": {
-                        "zeroRecords": "Không tìm thấy bản ghi nào",
-                        "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
-                        "infoEmpty": "Không có bản ghi nào",
-                        "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
-                        "search": "Tìm kiếm:",
-                        "paginate": {
-                            "first": "Đầu",
-                            "last": "Cuối",
-                            "next": "Tiếp",
-                            "previous": "Trước"
-                        }
-                    }
-                });
-                $('#vc').DataTable({
-                    "paging": true, // Bật chức năng phân trang
-                    "pageLength": 5, // Hiển thị 5 phần tử trên mỗi trang
-                    // // lengthMenu: "",
-                    lengthChange: false,
-                    // // searching: false,
-                    "language": {
-                        "zeroRecords": "Không tìm thấy bản ghi nào",
-                        "info": "Trang _PAGE_ trên tổng _PAGES_ trang",
-                        "infoEmpty": "Không có bản ghi nào",
-                        "infoFiltered": "(được lọc từ tổng số _MAX_ bản ghi)",
-                        "search": "Tìm kiếm:",
-                        "paginate": {
-                            "first": "Đầu",
-                            "last": "Cuối",
-                            "next": "Tiếp",
-                            "previous": "Trước"
-                        }
-                    }
-                });
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                $('#hoa-don-chi-tiet').DataTable();
-                $('#kh').DataTable();
-                $('#san-pham').DataTable();
-                $('#vc').DataTable();
-            })
-        </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $(".inHoaDon").hide();
+    });
+</script>
+<!--vnpay-->
+<script>
+    function startVnPayPayment() {
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                $(".inHoaDon").hide();
-            });
-        </script>
-        <!--thư viện js tích tìm kiếm end-->
-        <!-- JavaScript Libraries -->
-        <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/../../lib/chart/chart.min.js"></script>
-        <script src="/../../lib/easing/easing.min.js"></script>
-        <script src="/../../lib/waypoints/waypoints.min.js"></script>
-        <script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="/../../lib/tempusdominus/js/moment.min.js"></script>
-        <script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        var idHoaDonChoEl = document.querySelector('input[name="idHoaDonCho"]');
 
-        <!-- Template Javascript -->
-        <script src="/../../js/admin/main.js"></script>
-        <script src="/js/admin/index_form.js"></script>
-        <script src="/js/admin/decimal.js"></script>
+
+        var  idHoaDonCho = idHoaDonChoEl.value;
+
+
+        var vnpayUrl = "/admin/ban-hang/vnPay/" + idHoaDonCho;
+
+
+
+        var xuInput = document.getElementById("xuTichDiem");
+        var xuTichDiemValue = xuInput.checked ? "true" : "false";
+
+
+        var tongTienEl = document.querySelector('input[name="tongTien"]');
+        var thanhTienEl = document.getElementById("thanhTienInput");
+
+        if(tongTienEl && thanhTienEl) {
+
+                 var params = {
+            tongTien:  tongTienEl.value,
+            thanhTien : thanhTienEl.value,
+            xuTichDiem : xuTichDiemValue,
+            xuTichDiemAmount : xuInput.value
+
+        };
+
+
+        // Create query string
+        var query = Object.keys(params)
+            .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(params[k]))
+            .join("&");
+
+        // Redirect to VNPay
+        window.location.href = vnpayUrl + "?" + query;
+
+
+
+        }
+
+        // Prepare parameters
+
+    }
+</script>
+<!--thư viện js tích tìm kiếm end-->
+<!-- JavaScript Libraries -->
+<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/../../lib/chart/chart.min.js"></script>
+<script src="/../../lib/easing/easing.min.js"></script>
+<script src="/../../lib/waypoints/waypoints.min.js"></script>
+<script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="/../../js/admin/main.js"></script>
+<script src="/js/admin/index_form.js"></script>
+<script src="/js/admin/decimal.js"></script>
 </body>
 
 </html>

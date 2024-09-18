@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-
+//Spring Security dùng đối tượng này để so sánh tên đăng nhập, mật khẩu và kiểm tra các quyền của tài khoản. role admin
 public class CustomNhanVienDetail implements UserDetails {
     private final NhanVien nhanVien;
 

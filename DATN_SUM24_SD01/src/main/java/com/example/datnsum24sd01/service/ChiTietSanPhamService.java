@@ -23,4 +23,6 @@ public interface ChiTietSanPhamService {
 
     void thayDoiTrangThai(Long id);
 
+    ChiTietSanPham findByColorAndSize(Long colorId, Long sizeId, Long productId);
+
 }

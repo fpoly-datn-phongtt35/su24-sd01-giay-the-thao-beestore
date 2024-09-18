@@ -9,6 +9,7 @@ import com.example.datnsum24sd01.enumation.TrangThaiDonHang;
 import com.example.datnsum24sd01.responsitory.ChiTietSanPhamResponsitory;
 import com.example.datnsum24sd01.responsitory.GioHangChiTietRepository;
 import com.example.datnsum24sd01.responsitory.HoaDonRepo;
+import com.example.datnsum24sd01.sendmail.EmailService;
 import com.example.datnsum24sd01.service.BanHangService;
 import com.example.datnsum24sd01.service.ChiTietSanPhamService;
 import com.example.datnsum24sd01.service.HoaDonService;
@@ -38,10 +39,10 @@ public class HoaDonServiceImpl implements HoaDonService {
         this.repository = repository;
         this.gioHangChiTietRepository = gioHangChiTietRepository;
         this.chiTietSanPhamRepository = chiTietSanPhamRepository;
-//        this.sendMailService = sendMailService;
+
         this.banHangService = banHangService;
     }
-
+// view hóa đơn theo
     public List<HoaDon> getAll() {
         List<HoaDon> sortedList = repository.findAll().stream()
                 .sorted(Comparator.comparing(HoaDon::getId).reversed())
@@ -91,7 +92,7 @@ public class HoaDonServiceImpl implements HoaDonService {
                 .sorted(Comparator.comparing(HoaDon::getId).reversed())
                 .collect(Collectors.toList());
     }
-
+//thay đổi trạng thái hóa đơn
     @Override
     public boolean validate(HoaDon hoaDon, TrangThaiDonHang trangThai, String newGhiChu) {
         hoaDon.setTrangThai(trangThai);
@@ -99,16 +100,18 @@ public class HoaDonServiceImpl implements HoaDonService {
         if (hoaDon.getTrangThai() == TrangThaiDonHang.DANG_GIAO || hoaDon.getTrangThai() == TrangThaiDonHang.XAC_NHAN_TRA_HANG || hoaDon.getTrangThai() == TrangThaiDonHang.DOI_HANG) {
             hoaDon.setNgayThanhToan(LocalDate.now());
         }
+
         if(hoaDon.getTrangThai() == TrangThaiDonHang.DA_GIAO|| hoaDon.getTrangThai() == TrangThaiDonHang.DANG_CHUAN_BI|| hoaDon.getTrangThai() == TrangThaiDonHang.DA_HUY){
-//            sendMailService.sendEmail1(hoaDon.getKhachHang(),hoaDon);
 
         }
+        //hoàn thành thì tích điểm
         if(hoaDon.getTrangThai()==TrangThaiDonHang.HOAN_THANH){
             banHangService.tichDiem(hoaDon.getKhachHang().getId(),hoaDon.getThanhToan().toString());
         }
         hoaDon = repository.save(hoaDon);
         return hoaDon.getTrangThai().equals(trangThai);
     }
+    //hòa trả hóa đơn
     @Override
     public HoaDon createHdHoanTra(HoaDon hoaDon, Long idHd) {
         HoaDon hoaDonNew = new HoaDon();
@@ -140,7 +143,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
 
-
+//trả hàng
     @Override
     public ChiTietSanPham refund(GioHangChiTiet gioHangChiTiet) {
         if (gioHangChiTiet.getTrangThai().equals(TrangThai.YEU_CAU_TRA_HANG)) {
@@ -151,6 +154,7 @@ public class HoaDonServiceImpl implements HoaDonService {
         }
         return null;
     }
+    //nếu quá 3 ngày từ trạng thái đã giao mà không xác nhận thì tự động chuyển sang trạng thái hoàn thành
     @Scheduled(fixedRate = 300000)
     public void updateHoaDonEveryDay(){
         List<HoaDon> hoaDons= repository.findAll();

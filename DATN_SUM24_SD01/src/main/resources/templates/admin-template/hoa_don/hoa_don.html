@@ -129,13 +129,18 @@
                     </div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0" >Phạm Văn Dương</h6>
+                    <label>Nhân Viên </label>
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
 
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
-                    Hàng</a>
+                <!-- Menu Items -->
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/admin/ban-hang}" class="nav-item nav-link d-inline-flex align-items-center">
+                        <i class="fa fa-laptop "></i>Bán Hàng Tại Quầy
+                    </a>
+                </div>
                 <div class="nav-item dropdown">
                     <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                             class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
@@ -174,9 +179,6 @@
             </div>
         </nav>
     </div>
-    <!-- Sidebar End -->
-
-    <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -185,20 +187,18 @@
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="fa fa-sign-out"></div>
                 <div class="nav-item dropdown">
-                    <a  href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa fa-bars"></i>
-
 
 
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-
-                        <a  class="dropdown-item">Đăng xuất</a>
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                     </div>
                 </div>
             </div>
         </nav>
-        <!-- Navbar End -->
+
         <div id="errorMessageDate"></div>
         <div th:if="${not #strings.isEmpty(err)}" class="error-message">
             <p  class="alert alert-danger" th:text="${err}"></p>
@@ -213,7 +213,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/hoa-don">Tất cả</a>
                 </li>
-                <li class="nav-item" th:each="tt : ${trangThais}">
+                <li style="margin-left: 15px" class="nav-item" th:each="tt : ${trangThais}">
                     <a th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')"
                        th:href="@{/admin/hoa-don/trang-thai/{status}(status=${tt})}"
                        th:text="${tt.getDisplayName()}">
@@ -276,163 +276,7 @@
                             </tr>
                             </thead>
                             <tbody>
-<!--                            <tr th:each="hd,state : ${hoadons}">-->
-<!--                                <td>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${state.index+1}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${state.index+1}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${hd.ma}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${hd.ma}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"-->
-<!--                                       th:text="${hd.loaiHoaDon.getDisplayName()}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"-->
-<!--                                       th:text="${hd.loaiHoaDon.getDisplayName()}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"-->
-<!--                                       th:text="${hd.trangThai.getDisplayName()}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"-->
-<!--                                       th:text="${hd.trangThai.getDisplayName()}"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"-->
-<!--                                       th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
-<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"-->
-<!--                                       th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"-->
-<!--                                       style="color: black;"></a>-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    <div style="display: flex; align-items: center;">-->
-<!--                                        <button class="btn btn-outline-success"-->
-<!--                                                data-bs-toggle="modal"-->
-<!--                                                th:data-bs-target="'#ghiChu' + ${hd.id}"-->
-<!--                                                th:disabled="${hd.trangThai ==-->
-<!--            T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).HOAN_THANH}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_TRA_HANG}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}-->
-<!--            or ${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE}"-->
-<!--                                                style="margin-right: 10px;">-->
-<!--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">-->
-<!--                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>-->
-<!--                                            </svg>-->
-<!--                                            Xác nhận-->
-<!--                                        </button>-->
 
-<!--                                        <button class="btn btn-outline-danger"-->
-<!--                                                data-bs-toggle="modal"-->
-<!--                                                th:data-bs-target="'#huyDon' + ${hd.id}"-->
-<!--                                                th:disabled="${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).HOAN_THANH}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_TRA_HANG}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DANG_GIAO}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DANG_CHUAN_BI}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_GIAO}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}-->
-<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}-->
-<!--            or ${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE}"-->
-<!--                                                style="margin-left: 3px;">-->
-<!--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">-->
-<!--                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>-->
-<!--                                            </svg>-->
-<!--                                            Huỷ-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-
-<!--                                    <div class="modal fade" th:id="'ghiChu' + ${hd.id}"-->
-<!--                                         data-bs-backdrop="static" data-bs-keyboard="false"-->
-<!--                                         tabindex="-1"-->
-<!--                                         aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--                                        <div class="modal-dialog modal-dialog-centered">-->
-<!--                                            <div class="modal-content">-->
-<!--                                                <form th:action="@{/admin/hoa-don/validation}" method="post"-->
-<!--                                                      class="my-form reduced-height">-->
-<!--                                                    &lt;!&ndash;                                                      onsubmit="return checkTrong(this);"&ndash;&gt;-->
-<!--                                                    <div class="modal-header">-->
-<!--                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Chuyển Trạng Thái Đơn Hàng</h1>-->
-<!--                                                        <button type="button" class="btn-close"-->
-<!--                                                                data-bs-dismiss="modal"-->
-<!--                                                                aria-label="Close"></button>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="modal-body">-->
-<!--                                                        <input type="hidden" name="id" th:value="${hd.id}"/>-->
-
-<!--                                                        <input type="text" class="form-control mb-3" name="id"-->
-<!--                                                               th:value="${hd.ghiChu}" readonly/>-->
-
-
-<!--                                                        <label class="form-label">Ghi chú</label>-->
-<!--                                                        <input type="text" class="form-control mb-3" name="ghiChu"-->
-<!--                                                               th:value="${ghiChu}"/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="modal-footer">-->
-<!--                                                        <button type="button" class="btn btn-danger"-->
-<!--                                                                data-bs-dismiss="modal">Đóng-->
-<!--                                                        </button>-->
-<!--                                                        <button type="submit" class="btn btn-primary">Chuyển Trạng Thái</button>-->
-<!--                                                    </div>-->
-<!--                                                </form>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="modal fade" th:id="'huyDon' + ${hd.id}"-->
-<!--                                         data-bs-backdrop="static" data-bs-keyboard="false"-->
-<!--                                         tabindex="-1"-->
-<!--                                         aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--                                        <div class="modal-dialog modal-dialog-centered">-->
-<!--                                            <div class="modal-content">-->
-<!--                                                <form th:action="@{/admin/hoa-don/validation/deny}" method="post"-->
-<!--                                                      class="my-form reduced-height">-->
-<!--                                                    &lt;!&ndash;                                                      onsubmit="return checkTrong(this);"&ndash;&gt;-->
-<!--                                                    <div class="modal-header">-->
-<!--                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Huỷ Đơn Hàng</h1>-->
-<!--                                                        <button type="button" class="btn-close"-->
-<!--                                                                data-bs-dismiss="modal"-->
-<!--                                                                aria-label="Close"></button>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="modal-body">-->
-<!--                                                        <input type="hidden" name="id" th:value="${hd.id}"/>-->
-<!--                                                        <input type="text" class="form-control mb-3" name="id"-->
-<!--                                                               th:value="${hd.ghiChu}" readonly/>-->
-<!--                                                        <label class="form-label">Lý Do Huỷ Đơn Hàng</label>-->
-<!--                                                        <input type="text" class="form-control mb-3" name="ghiChu"-->
-<!--                                                               th:value="${ghiChu}"/>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="modal-footer">-->
-<!--                                                        <button type="button" class="btn btn-danger"-->
-<!--                                                                data-bs-dismiss="modal">Đóng-->
-<!--                                                        </button>-->
-<!--                                                        <button type="submit" class="btn btn-primary">Huỷ Đơn</button>-->
-<!--                                                    </div>-->
-<!--                                                </form>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                            </tr>-->
 <tr th:each="hd,state : ${hoadons}">
     <td>
         <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
@@ -480,6 +324,8 @@
            th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"
            style="color: black;"></a>
     </td>
+
+<!--    xác nhận hóa đơn-->
     <td>
         <div style="display: flex; align-items: center;">
             <button class="btn btn-outline-success"
@@ -492,12 +338,10 @@
                 or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}
                 or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}"
                     style="margin-right: 10px;">
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">-->
-<!--                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>-->
-<!--                </svg>-->
+
                 Xác nhận
             </button>
-
+<!--c           làm mờ nút hủy đơn hàng đối với các trạng thái trên -->
             <button class="btn btn-outline-danger"
                     th:if="${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE}"
                     data-bs-toggle="modal"
@@ -510,11 +354,10 @@
                 or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}
                 or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}"
                     style="margin-left: 3px;">
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">-->
-<!--                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>-->
-<!--                </svg>-->
-                Huỷ Đơn
+
+                Huỷ
             </button>
+
         </div>
                                             <div class="modal fade" th:id="'ghiChu' + ${hd.id}"
                                                  data-bs-backdrop="static" data-bs-keyboard="false"
@@ -526,27 +369,29 @@
                                                               class="my-form reduced-height">
                                                             <!--                                                      onsubmit="return checkTrong(this);"-->
                                                             <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Trạng Thái Đơn Hàng</h1>
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Xác Nhận Đơn Hàng</h1>
                                                                 <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal"
                                                                         aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="id" th:value="${hd.id}"/>
-                                                                <label class="form-label">Ghi chú trước</label>
-                                                                <input type="text" class="form-control mb-3" name="id"
+                                                                <label hidden class="form-label">Ghi chú trước</label>
+                                                                <input  hidden type="text" class="form-control mb-3" name="id"
                                                                        th:value="${hd.ghiChu}" readonly/>
 
 
-                                                                <label class="form-label">Ghi chú</label>
-                                                                <input type="text" class="form-control mb-3" name="ghiChu"
-                                                                       th:value="${ghiChu}"/>
+                                                                <label class="form-label">Mô tả</label>
+                                                                <textarea class="form-control mb-3" name="ghiChu"
+                                                                          th:value="${ghiChu}"
+                                                                          placeholder="Nhập ghi chú tại đây"
+                                                                          rows="3"
+                                                                          style="width: 100%; max-width: 500px;"></textarea>
+
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger"
-                                                                        data-bs-dismiss="modal">Đóng
-                                                                </button>
-                                                                <button type="submit" class="btn btn-primary">Chuyển Trạng Thái</button>
+
+                                                                <button type="submit" class="btn btn-primary">Xác Nhận</button>
                                                             </div>
                                                         </form>
                                                     </div>

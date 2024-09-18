@@ -17,4 +17,6 @@ public interface KhichThuocService {
     KichThuoc findById(Long id);
 
     KichThuoc update(KichThuoc kichThuoc);
+
+    List<KichThuoc> findByProductId(Long productId);
 }
